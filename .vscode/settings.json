@@ -16,7 +16,6 @@
             "source.organizeImports": true
         }
     },
-    "window.zoomLevel": 1,
     "extensions.ignoreRecommendations": true,
     "telemetry.enableCrashReporter": false,
     "telemetry.enableTelemetry": false
