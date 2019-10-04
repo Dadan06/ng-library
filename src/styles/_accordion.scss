@@ -1,0 +1,87 @@
+%accordion {
+    input[type='checkbox'].toggle {
+        position: absolute;
+        opacity: 0;
+    }
+
+    label,
+    a {
+        position: relative;
+        display: block;
+        color: #fff;
+        background-color: #4c4c4c;
+        padding: 0 20px;
+        margin-bottom: 2px;
+        user-select: none;
+    }
+
+    ul {
+        display: none;
+        padding: 0;
+
+        li:not(.has-children) {
+            padding: 0 20px;
+            color: #636363;
+
+            &:nth-child(even) {
+                background: #f2f2f2;
+            }
+        }
+    }
+
+    .toggle:checked + label + ul,
+    .toggle:checked + label:nth-of-type(n) + ul {
+        display: block;
+    }
+
+    .toggle + label {
+        display: grid;
+        grid-template-columns: auto 40px;
+        cursor: pointer;
+
+        & > .arrow {
+            background: url('/assets/images/acc-arrow-right.png') center no-repeat;
+        }
+    }
+
+    .toggle:checked + label {
+        & > .arrow {
+            background: url('/assets/images/acc-arrow-down.png') center no-repeat;
+        }
+    }
+}
+
+%simple-accordion {
+    .accordion {
+        height: 40px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 30px;
+        padding-right: 15px;
+    }
+
+    .accordion:nth-of-type(even) {
+        background-color: #f2f2f2;
+    }
+
+    .separator {
+        height: 2px;
+        width: 100%;
+    }
+
+    .closed {
+        background-image: url('/assets/images/acc-arrow-up-black.png');
+        background-position: 3% center;
+        background-repeat: no-repeat;
+        background-size: 10px;
+    }
+
+    .open {
+        background-image: url('/assets/images/acc-arrow-down-black.png');
+        background-position: 3% center;
+        background-repeat: no-repeat;
+        background-size: 10px;
+    }
+}

@@ -1,0 +1,35 @@
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom(s)</th>
+                <th>Login</th>
+                <th>Rôle</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody data-simplebar>
+            <tr *ngFor="let user of users" [class.selected-row]="user._id === currentUser?._id">
+                <td>{{ user.lastname | uppercase }}</td>
+                <td>{{ user.firstname | titlecase }}</td>
+                <td>{{ user.login }}</td>
+                <td>{{ user.role?.name }}</td>
+                <td class="actions">
+                    <img
+                        (click)="view.emit(user); currentUser = user"
+                        src="/assets/images/ico-details.png"
+                    />
+                    <img
+                        (click)="editEnabled && edit.emit(user); currentUser = user"
+                        [src]="
+                            editEnabled
+                                ? '/assets/images/ico-edit.png'
+                                : '/assets/images/ico-edit-disabled.png'
+                        "
+                    />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

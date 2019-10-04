@@ -1,0 +1,17 @@
+@import "colors.scss";
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 1px solid $checkbox-default-border;
+    border-radius: 3px;
+    outline:0;
+}
+
+input[type="checkbox"]:checked {
+    background-color: $checkbox-checked-background;
+    border: 1px solid $checkbox-checked-background;
+}

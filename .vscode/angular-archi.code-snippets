@@ -1,0 +1,239 @@
+{
+    "Action type enum": {
+        "prefix": "ngactiontype",
+        "body": [
+            "export const enum ${1:EntityName}ActionTypes {",
+                "\tLOAD_${1/(.*)/${1:/upcase}/}S = '[${1:EntityName}] Load ${1:EntityName}s',",
+                "\tLOAD_${1/(.*)/${1:/upcase}/}S_FAIL = '[${1:EntityName}] Load ${1:EntityName}s Fail',",
+                "\tLOAD_${1/(.*)/${1:/upcase}/}S_SUCCESS = '[${1:EntityName}] Load ${1:EntityName}s Success',",
+            "}",
+            "$0"
+        ]
+    },
+    "Action class": {
+        "prefix": "ngaction",
+        "body":[
+            "export class ${1:ActionName} implements Action {",
+            "\treadonly type = ${2:EntityName}ActionTypes.${3:ACTION_TYPE};$0",
+            "}",
+            ""
+        ]
+    },
+    "Reducer boilerplate": {
+        "prefix": "ngreducer",
+        "body": [
+            "export interface ${1:EntityName}State {",
+            "\t${1/(.*)/${1:/downcase}/}s: ${1:EntityName}[];",
+            "\t${1/(.*)/${1:/downcase}/}sLoaded: boolean;",
+            "\t${1/(.*)/${1:/downcase}/}sLoading: boolean;",
+            "}",
+            "const initialState: ${1:EntityName}State = {",
+            "\t${1/(.*)/${1:/downcase}/}s: [],",
+            "\t${1/(.*)/${1:/downcase}/}sLoaded: false,",
+            "\t${1/(.*)/${1:/downcase}/}sLoading: false,",
+            "};",
+            "",
+            "const load${1:EntityName}s = (state: ${1:EntityName}State, action: Load${1:EntityName}s): ${1:EntityName}State => ({",
+            "\t...state,",
+            "\t${1/(.*)/${1:/downcase}/}sLoaded: false,",
+            "\t${1/(.*)/${1:/downcase}/}sLoading: true",
+            "});",
+            "",
+            "const load${1:EntityName}sFail = (state: ${1:EntityName}State, action: Load${1:EntityName}sFail): ${1:EntityName}State => ({",
+            "\t...state,",
+            "\t${1/(.*)/${1:/downcase}/}sLoaded: false,",
+            "\t${1/(.*)/${1:/downcase}/}sLoading: false",
+            "});",
+            "",
+            "const load${1:EntityName}sSuccess = (state: ${1:EntityName}State, action: Load${1:EntityName}sSuccess): ${1:EntityName}State => ({",
+            "\t...state,",
+            "\t${1/(.*)/${1:/downcase}/}sLoaded: true,",
+            "\t${1/(.*)/${1:/downcase}/}sLoading: false,",
+            "\t${1/(.*)/${1:/downcase}/}s: action.payload",
+            "});",
+            "",
+            "export function ${1/(.*)/${1:/downcase}/}Reducer(",
+            "\tstate: ${1:EntityName}State = initialState,",
+            "\taction: ${1:EntityName}Action",
+            "): ${1:EntityName}State {",
+            "\tswitch (action.type) {",
+            "\t\tcase ${1:EntityName}ActionTypes.LOAD_${1/(.*)/${1:/upcase}/}S:",
+            "\t\t\treturn load${1:EntityName}s(state, action);",
+            "\t\tcase ${1:EntityName}ActionTypes.LOAD_${1/(.*)/${1:/upcase}/}S_FAIL:",
+            "\t\t\treturn load${1:EntityName}sFail(state, action);",
+            "\t\tcase ${1:EntityName}ActionTypes.LOAD_${1/(.*)/${1:/upcase}/}S_SUCCESS:",
+            "\t\t\treturn load${1:EntityName}sSuccess(state, action);",
+            "\t\tdefault:",
+            "\t\t\treturn state;",
+            "\t}",
+            "}",
+            "$0"
+        ]
+    },
+    "Reducer case function": {
+        "prefix": "ngreducercasefunction",
+        "body": [
+            "const ${1:functionName} = (state: ${2:EntityName}State, action: ${1/(.*)/${1:/capitalize}/}): ${2:EntityName}State => ({",
+            "\t...state,",
+            "\t$0",
+            "});"
+        ]
+    },
+    "Effect class": {
+        "prefix": "ngeffectclass",
+        "body": [
+            "import { Injectable } from '@angular/core';",
+            "import { Actions, Effect } from '@ngrx/effects';",
+            "import { Observable, of } from 'rxjs';",
+            "import { catchError, map, switchMap } from 'rxjs/operators';",
+            "import { ${1:EntityName} } from '../../types/${1/(.*)/${1:/downcase}/}.interface';",
+            "import { ${1:EntityName}Service } from '../../services/${1/(.*)/${1:/downcase}/}.service';",
+            "",
+            "@Injectable()",
+            "export class ${1:EntityName}Effects {",
+            "\tconstructor(private action$: Actions, private ${1/(.*)/${1:/downcase}/}Service: ${1:EntityName}Service) {}",
+            "\t$0",
+            "}"
+        ]
+    },
+    "Effect for async call": {
+        "prefix": "ngeffectasync",
+        "body": [
+            "@Effect()",
+            "${1:effectName}\\$ = this.action\\$.pipe(",
+            "\tofType(${2:EntityName}ActionTypes.${1/([a-z]*)(([A-Z])+([a-z]+))?/${1:/upcase}${2:+_}$3${4:/upcase}/g}),",
+            "\tswitchMap((action: ${1/(.*)/${1:/capitalize}/}) => this.${3:serviceInstance}.${1:effectName}(${4:arg}).pipe(",
+            "\t\tmap((response: ${5:ServiceReturnType}) => new ${1/(.*)/${1:/capitalize}/}Success(response)),",
+            "\t\tcatchError(error => of(new ${1/(.*)/${1:/capitalize}/}Fail(error)))",
+            "\t))",
+            ");",
+            "",
+            "$0"
+        ]
+    },
+    "Effect for navigation": {
+        "prefix": "ngeffectroute",
+        "body": [
+            "@Effect()",
+            "${1:effectName}\\$ = this.action\\$.pipe(",
+            "\tofType(${2:EntityName}ActionTypes.${1/([a-z]*)(([A-Z])+([a-z]+))?/${1:/upcase}${2:+_}$3${4:/upcase}/g}),",
+            "\tmap((action: ${1/(.*)/${1:/capitalize}/}) => action.payload),",
+            "\tmap((${2/(.*)/${1:/downcase}/}: ${2/(.*)/${1:/capitalize}/}) => new Go({ path: ['${5:routerPath}'] })),",
+            ");",
+            "",
+            "$0"
+        ]
+    },
+    "Effect for reload": {
+        "prefix": "ngeffectreload",
+        "body": [
+            "@Effect()",
+            "${1:effectName}\\$ = this.action\\$.pipe(",
+            "\tofType(${2:EntityName}ActionTypes.${1/([a-z]*)(([A-Z])+([a-z]+))?/${1:/upcase}${2:+_}$3${4:/upcase}/g}),",
+            "\twithLatestFrom(this.store.pipe(select(${3:criteriaSelector}))),",
+            "\tmap(([action, criteria]) => new ${4:Action}(criteria))",
+            ");",
+            "",
+            "$0"
+        ]
+    },
+    "Feature selector": {
+        "prefix": "ngfeatureselector",
+        "body": [
+            "import { createFeatureSelector, createSelector } from '@ngrx/store';",
+            "import { ${1:EntityName}State } from '../reducers/${1/(.*)/${1:/downcase}/}.reducers';",
+            "export const get${1:EntityName}State = createFeatureSelector<${1:EntityName}State>('${1/(.*)/${1:/downcase}/}');",
+            "$0"
+        ]
+    },
+    "Selector": {
+        "prefix": "ngselector",
+        "body": [
+            "export const get${1:Selection} = createSelector<${2:EntityName}State, ${2:EntityName}State, ${3:typeOfSelection}>(",
+            "\tget${2:EntityName}State,",
+            "\t(state: ${2:EntityName}State) => state.${1:Selection}",
+            ");",
+            "$0"
+        ]
+    },
+    "Service interface": {
+        "prefix": "ngserviceinterface",
+        "body": [
+            "import { Observable } from 'rxjs';",
+            "import { ${1:EntityName} } from '../types/${1/(.*)/${1:/downcase}/}.interface';",
+            "",
+            "export interface ${1:EntityName}ServiceInterface {",
+            "\t$0",
+            "}"
+        ]
+    },
+    "Service mock": {
+        "prefix": "ngservicemock",
+        "body": [
+            "import { Injectable } from '@angular/core';",
+            "import { Observable, of } from 'rxjs';",
+            "import { ${1:EntityName} } from '../types/${1/(.*)/${1:/downcase}/}.interface';",
+            "import { ${1/(.*)/${1:/upcase}/}S_MOCK } from '../models/${1/(.*)/${1:/downcase}/}s.mock';",
+            "import { ${1:EntityName}ServiceInterface } from './${1/(.*)/${1:/downcase}/}-service.interface';",
+            "",
+            "@Injectable()",
+            "export class ${1:EntityName}MockService implements ${1:EntityName}ServiceInterface {",
+            "\t$0",
+            "}"
+        ]
+    },
+    "Service": {
+        "prefix": "ngservice",
+        "body": [
+            "import { HttpClient } from '@angular/common/http';",
+            "import { Injectable } from '@angular/core';",
+            "import { Observable } from 'rxjs';",
+            "import { map } from 'rxjs/operators';",
+            "import { ApiResponse } from 'src/app/shared/types/api-response.interface';",
+            "import { environment } from 'src/environments/environment';",
+            "import {  ${1:EntityName} } from '../types/${1/(.*)/${1:/downcase}/}.interface';",
+            "import {  ${1:EntityName}ServiceInterface } from './${1/(.*)/${1:/downcase}/}-service.interface';",
+            "",
+            "const NOT_IMPLEMENTED = 'Not implemented';",
+            "",
+            "@Injectable()",
+            "export class  ${1:EntityName}Service implements  ${1:EntityName}ServiceInterface {",
+            "\tconstructor(private http: HttpClient) {}",
+            "",
+            "\t$0",
+            "}"
+        ]
+    },
+    "HttpClient Get": {
+        "prefix": "nghttpget",
+        "body": [
+            "return this.http",
+            "\t.get(`${environment.apiBaseUrl}/${1:route}`, { params: ${2:params} })",
+            "\t.pipe(map((response: ApiResponse) => response.data as ${3:TypeOfReturn}));$0"
+        ]
+    },
+    "HttpClient Post": {
+        "prefix": "nghttppost",
+        "body": [
+            "return this.http",
+            "\t.post(`${environment.apiBaseUrl}/${1:route}`, ${2:body})",
+            "\t.pipe(map((response: ApiResponse) => response.data as ${3:TypeOfReturn}));$0"
+        ]
+    },
+    "HttpClient Put": {
+        "prefix": "nghttpput",
+        "body": [
+            "return this.http",
+            "\t.put(`${environment.apiBaseUrl}/${1:route}/${2:objectId}`, ${3:body})",
+            "\t.pipe(map((response: ApiResponse) => response.data as ${4:TypeOfReturn}));$0"
+        ]
+    },
+    "HttpClient Delete": {
+        "prefix": "nghttpdelete",
+        "body": [
+            "return this.http",
+            "\t.delete(`${environment.apiBaseUrl}/${1:route}/${2:objectId}`)",
+            "\t.pipe(map((response: ApiResponse) => response.message === '${3:EntityName} successfully deleted'));$0"
+        ]
+    }
+}

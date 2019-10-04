@@ -1,0 +1,23 @@
+@import "colors.scss";
+@import "fonts.scss";
+
+$feature-title-color: #0367ef;
+$list-detail-title-color: #00dc94;
+
+%feature-title {
+    font-family: $worksans-regular;
+    color: $feature-title-color;
+    font-size: 18px;
+}
+
+%form-title {
+    font-family: $worksans-regular;
+    color: $feature-title-color;
+    font-size: 16px;
+}
+
+%list-detail-title {
+    font-family: $worksans-medium;
+    color: $list-detail-title-color;
+    font-size: 14px;
+}

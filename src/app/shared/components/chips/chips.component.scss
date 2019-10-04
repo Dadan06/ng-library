@@ -1,0 +1,43 @@
+@import "colors.scss";
+
+.chips {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 296px;
+    height: 28px;
+    font-size: 14px;
+    border-radius: 15px;
+    color: white;
+    background-color: $chips-background;
+    padding-left: 12px;
+    padding-right: 12px;
+    cursor: pointer;
+
+    div:nth-child(1) {
+        padding-right: 8px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    div:nth-child(2) {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    div:last-child {
+        margin-left: auto;
+        font-size: 10px;
+        transform: rotate(-90deg);
+    }
+}
+
+.expanded {
+    background-color: $chips-expanded-background;
+    div:last-child {
+        transform: rotate(90deg);
+    }
+}

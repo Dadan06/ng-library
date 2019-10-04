@@ -1,0 +1,86 @@
+// Never modify the below generic styles !!! :
+
+// FILTERED MASTER DETAIL:
+
+@import 'texts.scss';
+@import "headers-and-titles.scss";
+@import "buttons.scss";
+
+%list-detail-header {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 20px;
+}
+
+%filtered-master-detail {
+    background-color: #ffffff;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 325px 25px auto 25px 400px 25px;
+    grid-template-rows: 50px 52px 52px minmax(0, 1fr) 50px;
+    padding: 25px 25px 25px 25px;
+    grid-template-areas:
+        'header     header  header      header  header          header'
+        'filter     .       list-header .       detail-header   .'
+        'filter     .       search-bar  .       detail          .'
+        'filter     .       list        .       detail          .'
+        'filter     .       footer      .       detail          .';
+
+    header {
+        grid-area: header;
+        @extend %feature-title;
+    }
+
+    .filter {
+        grid-area: filter;
+        .filter-wrapper {
+            height: 100%;
+            margin-right: 7px;
+        }
+    }
+
+    .bordered-wrapper {
+        grid-column: 2 / 7;
+        grid-row: 2 / 6;
+        border: solid 1px $light-gray;
+        border-radius: 8px;
+    }
+
+    .search-bar {
+        grid-area: search-bar;
+    }
+
+    .list-header {
+        grid-area: list-header;
+        @extend %list-detail-title;
+        @extend %list-detail-header;
+    }
+
+    .list {
+        grid-area: list;
+    }
+
+    footer {
+        grid-area: footer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .detail-header {
+        grid-area: detail-header;
+        @extend %list-detail-title;
+        @extend %list-detail-header;
+    }
+
+    .detail {
+        grid-area: detail;
+        margin-bottom: 25px;
+        border: solid 1px $light-gray;
+        border-radius: 8px;
+    }
+
+    .btn-new {
+        @extend %add-button;
+    }
+}

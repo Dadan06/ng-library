@@ -1,0 +1,52 @@
+// Never modify the below generic styles !!! :
+
+// MASTER DETAIL:
+
+@import 'buttons.scss';
+@import 'texts.scss';
+
+%master-detail {
+    background-color: #ffffff;
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto 500px;
+    grid-template-rows: 67px 52px auto 50px;
+    padding: 25px 25px 25px 25px;
+    grid-template-areas:
+        "header     header"
+        "search-bar detail"
+        "list       detail"
+        "footer     detail";
+
+    header {
+        grid-area: header;
+        @extend %feature-title;
+    }
+
+    .search-bar {
+        grid-area: search-bar;
+    }
+
+    .list {
+        grid-area: list;
+    }
+
+    footer {
+        grid-area: footer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .detail {
+        grid-area: detail;
+        margin-left: 30px;
+        border: solid 1px $light-gray;
+        border-radius: 8px;
+        padding: 25px;
+    }
+
+    .btn-new {
+        @extend %add-button;
+    }
+}

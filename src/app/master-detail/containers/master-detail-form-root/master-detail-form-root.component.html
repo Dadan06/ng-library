@@ -1,0 +1,25 @@
+<div class="container">
+    <app-master-detail-form
+        *ngIf="(masterDetailModel$ | async) as masterDetailModel"
+        [masterDetailModel]="masterDetailModel$ | async"
+        [isEditing]="isEditing$ | async"
+        [editEnabled]="masterDetailModelEditEnabled$ | async"
+        (edit)="onEdit($event)"
+        (save)="onSave($event)"
+        (cancel)="onCancelEdit(masterDetailModel)"
+    ></app-master-detail-form>
+</div>
+
+<modal #successfullSavingModal class="popup-modal success">
+    <ng-template #modalHeader>
+        Succès
+    </ng-template>
+    <ng-template #modalBody>
+        Element enregistré avec success
+    </ng-template>
+    <ng-template #modalFooter>
+        <button class="orange" (click)="successfullSavingModal.close()">
+            OK
+        </button>
+    </ng-template>
+</modal>

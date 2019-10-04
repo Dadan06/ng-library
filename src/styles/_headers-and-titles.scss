@@ -1,0 +1,20 @@
+@import 'fonts.scss';
+@import 'colors.scss';
+
+$header-title-color: #0367ef;
+
+%page-header-title {
+    font-family: $worksans-regular;
+    color: $header-title-color;
+    font-size: 18px;
+}
+
+%h3-title {
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    line-height: 15px;
+    color: #14df9c;
+    font-size: 13px;
+    font-family: $worksans-regular;
+}

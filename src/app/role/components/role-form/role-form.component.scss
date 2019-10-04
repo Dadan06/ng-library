@@ -1,0 +1,92 @@
+@import 'forms.scss';
+@import 'buttons.scss';
+@import 'colors.scss';
+@import 'buttons.scss';
+@import 'accordion.scss';
+
+form {
+    @extend %generic-form;
+    max-width: unset;
+    max-height: calc(100vh - 170px - 20px * 2 - 30px * 2 - 67px - 90px - 40px);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .controls {
+        flex: 1;
+    }
+}
+
+h3 {
+    @extend %generic-form-title;
+    text-transform: uppercase;
+}
+
+label {
+    @extend %default-form-text;
+}
+
+.role-container {
+    @extend %default-form-container;
+    height: 100%;
+    padding: 0;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+
+    li {
+        line-height: 40px;
+    }
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.accordion {
+    @extend %accordion;
+
+    label {
+        display: inline;
+    }
+
+    input[formControlName] + label {
+        background: transparent;
+        color: #4c4c4c;
+    }
+
+    ul {
+        li:not(.has-children) {
+            display: flex;
+            align-items: center;
+        }
+    }
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+
+    .fill {
+        flex: 1 1 auto;
+    }
+
+    button {
+        @extend %button;
+    }
+
+    .purple {
+        @extend %purple-button;
+    }
+
+    .dark-purple {
+        @extend %dark-purple-button;
+    }
+}

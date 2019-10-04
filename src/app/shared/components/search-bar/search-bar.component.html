@@ -1,0 +1,9 @@
+<div class="container">
+    <img src="assets/images/ico-search.png">
+    <input
+        type="text"
+        placeholder="Rechercher par nom, prénom, addresse, ..."
+        [(ngModel)]="searchTerm"
+        (input)="onChange()"
+    >
+</div>

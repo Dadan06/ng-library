@@ -1,0 +1,11 @@
+@import "forms.scss";
+@import "buttons.scss";
+
+form{
+    @extend %generic-form;
+}
+
+button {
+    @extend %button;
+    @extend %blue-button;
+}

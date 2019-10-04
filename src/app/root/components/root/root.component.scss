@@ -1,0 +1,21 @@
+@import "sizes.scss";
+
+.container {
+    height: 100%;
+    max-height: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: $header-height minmax(0, 100%);
+    grid-template-areas:
+        "header"
+        "main";
+    header {
+        grid-area: header;
+        overflow: hidden;
+        background-color: lightgray;
+        box-shadow: 0 2px 8px #d6d6d6;
+    }
+    main {
+        grid-area: main;
+    }
+}

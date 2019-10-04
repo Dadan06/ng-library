@@ -1,0 +1,55 @@
+<div *ngIf="form" class="container">
+    <div class="role-container">
+        <form (submit)="onSubmit()" [formGroup]="form">
+            <div class="controls" data-simplebar>
+                <div class="control">
+                    <label for="name">Nom *</label>
+                    <input #name formControlName="name" id="name" type="text" />
+                    <app-validation-error [control]="form.controls['name']"></app-validation-error>
+                </div>
+
+                <div class="privilege-container" formGroupName="privileges">
+                    <ul *ngFor="let category of categories" class="accordion">
+                        <li [formArrayName]="category" class="has-children">
+                            <input [id]="category" checked class="toggle" type="checkbox" />
+                            <label [for]="category">
+                                <span>{{ categoryLabels[category] | titlecase }}</span>
+                                <div class="arrow"></div>
+                            </label>
+                            <ul>
+                                <li
+                                    *ngFor="
+                                        let privilege of getCategoryPrivileges(category);
+                                        let i = index
+                                    "
+                                    [formGroupName]="i"
+                                >
+                                    <input
+                                        [id]="privilege.get('name').value"
+                                        formControlName="active"
+                                        type="checkbox"
+                                    />
+                                    <label [for]="privilege.get('name').value">
+                                        {{
+                                            userPrivilegeLabels[privilege.get('name').value]
+                                                | titlecase
+                                        }}
+                                    </label>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="button-container">
+        <div class="fill"></div>
+        <button (click)="onSubmit()" class="purple" type="submit">
+            ENREGISTRER
+        </button>
+        <button (click)="cancel.emit(role)" class="dark-purple" type="button">
+            ANNULER
+        </button>
+    </div>
+</div>

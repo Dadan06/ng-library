@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="form-title">Détails</div>
+    <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
+        <div class="control">
+            <label>
+                Prop1
+            </label>
+            <input #first formControlName="prop1" type="text" />
+            <app-validation-error [control]="form.controls['prop1']"></app-validation-error>
+        </div>
+
+        <div class="control">
+            <label>
+                Prop2
+            </label>
+            <input formControlName="prop2" type="text" />
+            <app-validation-error [control]="form.controls['prop2']"></app-validation-error>
+        </div>
+
+        <div class="buttons">
+            <button class="blue" *ngIf="!form.enabled" (click)="edit.emit(form.value)" [disabled]="!editEnabled">
+                MODIFIER
+            </button>
+            <button class="blue" *ngIf="form.enabled" type="submit">ENREGISTRER</button>
+            <button class="green" *ngIf="form.enabled" (click)="cancel.emit()">ANNULER</button>
+        </div>
+    </form>
+</div>

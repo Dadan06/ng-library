@@ -1,0 +1,23 @@
+{
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    "editor.mouseWheelZoom": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "tslint.exclude": "**/src/**/*.mock.ts",
+    "prettier.bracketSpacing": true,
+    "prettier.printWidth": 100,
+    "prettier.singleQuote": true,
+    "prettier.tabWidth": 4,
+    "explorer.confirmDragAndDrop": false,
+    "[typescript]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "window.zoomLevel": 1,
+    "extensions.ignoreRecommendations": true,
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false
+}

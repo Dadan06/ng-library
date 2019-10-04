@@ -1,0 +1,28 @@
+<div class="container">
+    <img src="assets/images/header/logo.png" />
+    <label class="title">Archi</label>
+    <div class="wrapper">
+        <form [formGroup]="form" (submit)="logIn.emit(form.value)">
+            <div>
+                <div class="login">
+                    <div class="img">
+                        <img src="assets/images/ico-user.png" />
+                    </div>
+                    <input formControlName="login" placeholder="Entrez votre identifiant" />
+                </div>
+            </div>
+            <div>
+                <div class="password">
+                    <div class="img">
+                        <img src="assets/images/ico-pass.png" />
+                    </div>
+                    <input formControlName="password" type="password" placeholder="Mot de passe" />
+                </div>
+            </div>
+            <div><button type="submit">SE CONNECTER</button></div>
+        </form>
+    </div>
+    <p class="auth-error">
+        {{ loginErrorMessage }}
+    </p>
+</div>

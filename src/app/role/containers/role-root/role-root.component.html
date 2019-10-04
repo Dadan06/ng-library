@@ -1,0 +1,51 @@
+<div class="container">
+    <header>Gestion des rôles</header>
+    <div class="search-bar">
+        <app-search-bar (search)="onSearch($event)"></app-search-bar>
+    </div>
+    <div class="list">
+        <app-loader [isLoading]="rolesLoading$ | async">
+            <app-role-list
+                (delete)="deleteRole($event)"
+                (view)="onViewDetails($event)"
+                (edit)="onEdit($event)"
+                [roles]="roles$ | async"
+                [currentRole]="selectedRole$ | async"
+                [editEnabled]="roleEditEnabled$ | async"
+                [deleteEnabled]="roleDeleteEnabled$ | async"
+            ></app-role-list>
+        </app-loader>
+    </div>
+    <footer>
+        <button class="btn-new" (click)="onCreate()" [disabled]="!(roleCreatedEnabled$ | async)">
+            +
+        </button>
+        <app-pagination
+            [totalItems]="totalItems$ | async"
+            (paginate)="onPaginate($event)"
+        ></app-pagination>
+    </footer>
+    <div class="detail">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+<modal #saveSuccessModal class="popup-modal success">
+    <ng-template #modalHeader>
+        Succès
+    </ng-template>
+    <ng-template #modalBody> Rôle enregistré avec succès</ng-template>
+    <ng-template #modalFooter>
+        <button (click)="saveSuccessModal.close()" class="green">OK</button>
+    </ng-template>
+</modal>
+<modal #deleteWarningModal class="popup-modal warning">
+    <ng-template #modalHeader>
+        Attention
+    </ng-template>
+    <ng-template #modalBody> Voulez vous vraiment supprimer ce rôle?<br /> </ng-template>
+    <ng-template #modalFooter>
+        <button (click)="onDeleteRole()" class="green">OUI</button>
+        <button (click)="deleteWarningModal.close()" class="red">ANNULER</button>
+    </ng-template>
+</modal>

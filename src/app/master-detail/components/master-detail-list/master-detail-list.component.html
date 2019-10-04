@@ -1,0 +1,38 @@
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Col1</th>
+                <th>Col2</th>
+                <th>Col3</th>
+                <th>Col4</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody data-simplebar>
+            <tr
+                *ngFor="let masterDetailModel of masterDetailModels"
+                [class.selected]="masterDetailModel._id === currentMasterDetailModel?._id"
+            >
+                <td>{{ masterDetailModel.prop1 }}</td>
+                <td>{{ masterDetailModel.prop2 }}</td>
+                <td>{{ masterDetailModel.prop3 }}</td>
+                <td>{{ masterDetailModel.prop4 }}</td>
+                <td class="actions">
+                    <img
+                        (click)="view.emit(masterDetailModel); currentMasterDetailModel=masterDetailModel;"
+                        src="/assets/images/ico-details.png"
+                    />
+                    <img
+                        (click)="editEnabled && edit.emit(masterDetailModel); currentMasterDetailModel=masterDetailModel;"
+                        [src]="editEnabled ? '/assets/images/ico-edit.png' : '/assets/images/ico-edit-disabled.png'"
+                    />
+                    <img
+                        (click)="deleteEnabled && delete.emit(masterDetailModel)"
+                        [src]="deleteEnabled ? '/assets/images/ico-delete.png' : '/assets/images/ico-delete-disabled.png'"
+                    />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

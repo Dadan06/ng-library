@@ -1,0 +1,26 @@
+contact-detail works!<br>
+
+<h4> Generic style for detail: </h4>
+
+<div class="details" *ngIf="contact">
+    <div>
+        <label><strong>Firstname:</strong></label>
+        {{ contact.firstname }}
+    </div>
+    <div>
+        <label><strong>Lastname:</strong></label>
+        {{ contact.lastname }}
+    </div>
+    <div>
+        <label><strong>Address:</strong></label>
+        {{ contact.address }}
+    </div>
+    <div>
+        <label><strong>Email:</strong></label>
+        {{ contact.email }}
+    </div>
+    <div>
+        <label><strong>Phone:</strong></label>
+        {{ contact.phone }}
+    </div>
+</div>

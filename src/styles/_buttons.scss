@@ -1,0 +1,116 @@
+@import 'colors.scss';
+
+// Shapes:
+$button-width: 180px;
+$button-height: 40px;
+$button-border-radius: 5px;
+
+// Colors:
+$green: #00ee9a;
+$green-hover: #00da86;
+$blue: #0367ef;
+$blue-hover: #0053db;
+$red: #fe3678;
+$red-hover: #ea2264;
+$disabled: #d6d6d6;
+
+// Button main placeholder:
+%button {
+    outline: 0;
+    margin: 0 10px;
+    text-align: center;
+    width: $button-width;
+    height: $button-height;
+    color: #fff;
+    font-size: 12px;
+    border-radius: $button-border-radius;
+    border: none;
+    transition-duration: 0.3s;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+%green-button {
+    background: $green;
+}
+
+%green-button:hover {
+    background: $green-hover;
+}
+
+%blue-button {
+    background: $blue;
+}
+
+%blue-button:hover {
+    background: $blue-hover;
+}
+
+%red-button {
+    background: $red;
+}
+
+%red-button:hover {
+    background: $red-hover;
+}
+
+%grey-button {
+    background: #757575;
+}
+
+%grey-button:hover {
+    background: #6b6b6b;
+}
+
+%purple-button {
+    background: $purple;
+}
+
+%purple-button:hover {
+    background: $purple-hover;
+}
+
+%dark-purple-button {
+    background: $dark-purple;
+}
+
+%dark-purple-button:hover {
+    background: $dark-purple-hover;
+}
+
+%disabled-button {
+    background: $disabled;
+}
+
+%button-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+%control-button {
+    @extend %button;
+    margin: 0;
+    margin-bottom: 5px;
+    padding: 0;
+    width: 125px;
+    height: 30px;
+}
+
+%add-button {
+    transition-duration: 0.3s;
+    outline: none;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    color: white;
+    background-color: $green;
+    border: none;
+    border-radius: 2px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}

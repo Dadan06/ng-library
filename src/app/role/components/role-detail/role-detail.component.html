@@ -1,0 +1,27 @@
+<div *ngIf="role" class="container">
+    <div class="role-container">
+        <div class="role-list" data-simplebar>
+            <ul *ngFor="let category of categoryList" class="accordion">
+                <li class="has-children">
+                    <input [id]="category" checked class="toggle" type="checkbox" />
+                    <label [for]="category">
+                        <span>{{ categoryLabels[category] | titlecase }}</span>
+                        <span class="arrow"></span>
+                    </label>
+                    <ul>
+                        <li *ngFor="let privilege of groupedPrivileges[category]">
+                            <span [ngClass]="{ checked: userHasPrivilege(privilege) }"></span>
+                            <span>{{ userPrivilegeLabels[privilege.name] | titlecase }}</span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div *ngIf="categoryList" class="button-container">
+        <button (click)="edit()" class="purple" type="button">
+            MODIFIER
+        </button>
+        <button class="purple" *ngIf="isEditing" type="submit">ENREGISTRER</button>
+    </div>
+</div>

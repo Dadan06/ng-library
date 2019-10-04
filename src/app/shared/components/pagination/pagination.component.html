@@ -1,0 +1,38 @@
+<div class="wrapper">
+    <div class="paginator">
+            <ul>
+                <ng-container *ngIf="totalItems">
+                    <li class="btn left-left-arrow" (click)="nbPage > 0 && setPage(1)">
+                        <span><img src="/assets/images/left-left-arrow.png" alt="left-left-arrow"></span>
+                    </li>
+                    <li class="btn left-arrow" (click)="page > 1 && setPage(page - 1)">
+                        <span><img src="/assets/images/left-arrow.png" alt="left-arrow"></span>
+                    </li>
+                    <li class="btn" (click)="morePagesBackward()" *ngIf="start > 1">...</li>
+                    <li class="btn" (click)="setPage(p)" *ngFor="let p of pages" [class.current]="page === p">{{ p }}</li>
+                    <li class="btn" (click)="morePagesForward()" *ngIf="nbPage > end">...</li>
+                    <li class="btn right-arrow" (click)="page < nbPage && setPage(page + 1)">
+                        <span><img src="/assets/images/right-arrow.png" alt="right-arrow"></span>
+                    </li>
+                    <li class="btn right-right-arrow" (click)="nbPage > 0 && setPage(nbPage)">
+                        <span><img src="/assets/images/right-right-arrow.png" alt="right-right-arrow"></span>
+                    </li>
+
+                </ng-container>
+            </ul>
+            <div class="page-size">
+                <label>Afficher </label>
+                <app-input-number
+                    [min]="pageSizeOptions[0]"
+                    [max]="max"
+                    [step]="pageSizeOptions[0]"
+                    [value]="pageSize"
+                    (increment)="onIncrementPageSize($event)"
+                    (decrement)="onDecrementPageSize($event)">
+                </app-input-number>
+
+                <label for="pagesize">Page</label>
+
+            </div>
+    </div>
+</div>

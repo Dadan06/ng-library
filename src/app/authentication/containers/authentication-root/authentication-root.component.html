@@ -1,0 +1,5 @@
+<div class="container">
+    <app-loader [isLoading]="userLoggingIn$ | async">
+        <app-authentication (logIn)="onLogIn($event)" [loginErrorMessage]="loginErrorMessage$ | async"></app-authentication>
+    </app-loader>
+</div>

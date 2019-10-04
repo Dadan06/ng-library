@@ -1,0 +1,32 @@
+@import "fonts.scss";
+@import "modal.scss";
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: $worksans-regular;
+}
+
+@font-face {
+    font-family: 'WorkSans-Bold';
+    src: url('/assets/fonts/WorkSans-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'WorkSans-Light';
+    src: url('/assets/fonts/WorkSans-Light.ttf');
+}
+
+@font-face {
+    font-family: 'WorkSans-Medium';
+    src: url('/assets/fonts/WorkSans-Medium.ttf');
+}
+
+@font-face {
+    font-family: 'WorkSans-Regular';
+    src: url('/assets/fonts/WorkSans-Regular.ttf');
+}

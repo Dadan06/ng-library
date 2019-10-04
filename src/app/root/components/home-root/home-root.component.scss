@@ -1,0 +1,8 @@
+@import "layouts.scss";
+
+.container {
+    @extend %feature-root-layout;
+    aside {
+        background-color: gray;
+    }
+}

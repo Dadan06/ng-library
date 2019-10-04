@@ -1,0 +1,140 @@
+@import "colors.scss";
+@import "buttons.scss";
+@import "fonts.scss";
+
+// COMMON:
+.modal {
+    opacity: 0; /* Fade in/out animation. */
+    transition: opacity 0.2s ease-in;
+    background-color: rgba(3, 103, 239, 0.5) !important;
+}
+
+.modal-dialog {
+    position: relative;
+}
+
+.modal-header .close {
+    display: none;
+}
+
+// POP-UP MODAL:
+
+// Shapes:
+$border-radius: 9px;
+$popup-width: 540px;
+$popup-height: 280px;
+$popup-header-height: 65px;
+$popup-body-height: 133px;
+$popup-footer-height: 80px;
+
+// Colors:
+$popup-error-header: red;
+$popup-info-header: blue;
+$popup-success-header: green;
+$popup-warning-header: orange;
+$popup-text-color: black;
+
+// Classes:
+.popup-modal {
+    .modal-content {
+        background-color: #fff;
+        width: $popup-width !important;
+        height: $popup-height !important;
+        border-radius: $border-radius !important;
+    }
+    .modal-header {
+        position: relative;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: $worksans-medium;
+        font-size: 22px;
+        height: $popup-header-height;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+    }
+
+    .modal-header::before {
+        position: absolute;
+        left: 60px;
+    }
+
+    .modal-body {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        line-height: 30px;
+        height: $popup-body-height;
+        text-align: center;
+        font-family: $worksans-regular;
+        font-size: 15px;
+        color: $popup-text-color;
+    }
+    .modal-footer {
+        height: $popup-footer-height;
+        text-align: center;
+        button { @extend %button; }
+        .blue { @extend %blue-button; }
+        .green { @extend %green-button; }
+        .red { @extend %red-button; }
+    }
+}
+
+.error {
+    .modal-header {
+        background-color: $popup-error-header;
+    }
+    .modal-header::before {
+        content:  url('/assets/images/dialog-error.png');
+    }
+}
+
+.infos {
+    .modal-header {
+        background-color: $popup-info-header;
+    }
+    .modal-header::before {
+        content:  url('/assets/images/dialog-info.png');
+    }
+}
+
+.success {
+    .modal-header {
+        background-color: $popup-success-header;
+    }
+    .modal-header::before {
+        content:  url('/assets/images/dialog-success.png');
+    }
+}
+
+.warning {
+    .modal-header {
+        background-color: $popup-warning-header;
+    }
+    .modal-header::before {
+        content:  url('/assets/images/dialog-warning.png');
+    }
+}
+
+// LARGE MODAL:
+
+.large-modal {
+    .modal-content {
+        background-color: #fff;
+        width: 1190px;
+        height: 567px;
+        border-radius: 9px;
+    }
+
+    .modal-body {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        z-index: 10000000;
+    }
+}

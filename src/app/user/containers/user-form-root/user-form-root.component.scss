@@ -1,0 +1,5 @@
+@import 'buttons.scss';
+
+.blue {
+    @extend %blue-button;
+}

@@ -1,0 +1,39 @@
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+            </tr>
+        </thead>
+        <tbody data-simplebar>
+            <tr
+                *ngFor="let role of roles; let i = index"
+                [class.selected-row]="role._id === currentRole?._id"
+            >
+                <td>{{ role.name }}</td>
+                <td class="actions">
+                    <img
+                        (click)="view.emit(role); currentRole = role"
+                        src="/assets/images/ico-details.png"
+                    />
+                    <img
+                        (click)="editEnabled && edit.emit(role); currentRole = role"
+                        [src]="
+                            editEnabled
+                                ? '/assets/images/ico-edit.png'
+                                : '/assets/images/ico-edit-disabled.png'
+                        "
+                    />
+                    <img
+                        (click)="delete.emit(role); currentRole = role"
+                        [src]="
+                            deleteEnabled
+                                ? '/assets/images/ico-delete.png'
+                                : '/assets/images/ico-delete-disabled.png'
+                        "
+                    />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,53 @@
+<div class="container">
+    <section>
+        <div class="left-content">
+            <div>
+                <img src="assets/images/header/logo.png" />
+            </div>
+            <div>
+                <h1>Archi</h1>
+            </div>
+        </div>
+        <div class="right-content">
+            <div class="actions">
+                <div>
+                    <input type="text" placeholder="Aide..." />
+                    <img src="assets/images/header/ico-aide.png" />
+                </div>
+                <div>
+                    <img src="assets/images/header/ico-notification.png" />
+                </div>
+                <div>
+                    <label class="dropdown">
+                        <div class="dd-button">
+                            <img src="assets/images/header/ico-id.png" />
+                            <p>{{ (user$ | async)?.login }}</p>
+                        </div>
+                        <input type="checkbox" class="dd-input" id="test" />
+                        <ul class="dd-menu">
+                            <li (click)="logOut()">Déconnexion</li>
+                        </ul>
+                    </label>
+                </div>
+            </div>
+            <div class="nav">
+                <div class="nav__separator"></div>
+                <nav>
+                    <a
+                        *ngFor="let menu of menus"
+                        [routerLink]="menu.routerLink"
+                        routerLinkActive="active"
+                        #item
+                    >
+                        <img
+                            [src]="item.classList.contains('active') ? menu.iconActive : menu.icon"
+                            alt=""
+                        />
+                        <h3>{{ menu.title }}</h3>
+                        <div class="arrow-up" *ngIf="item.classList.contains('active')"></div>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </section>
+</div>

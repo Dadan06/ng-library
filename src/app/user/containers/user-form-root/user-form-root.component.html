@@ -1,0 +1,25 @@
+<div class="container">
+    <app-user-form
+        *ngIf="user$ | async as user"
+        [user]="user$ | async"
+        [roles]="roles$ | async"
+        [isEditing]="isEditing$ | async"
+        [editEnabled]="userEditEnabled$ | async"
+        (edit)="onEdit($event)"
+        (save)="onSave($event)"
+        (cancel)="onCancelEdit(user)"
+    ></app-user-form>
+</div>
+<modal #userSavingErrorModal class="popup-modal error" [closeOnOutsideClick]="false">
+    <ng-template #modalHeader>
+        Echec
+    </ng-template>
+    <ng-template #modalBody>
+        <p>
+            {{ getError }}
+        </p>
+    </ng-template>
+    <ng-template #modalFooter>
+        <button (click)="onCloseUserSavingErrorModal()" class="blue">OK</button>
+    </ng-template>
+</modal>

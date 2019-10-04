@@ -1,0 +1,325 @@
+@import 'colors.scss';
+@import 'fonts.scss';
+@import 'sizes.scss';
+@import 'selects.scss';
+@import 'buttons.scss';
+
+@keyframes delete-alert-animation {
+    0% {
+        border-color: $generic-form-border-focus;
+    }
+    10% {
+        border-color: #f44336;
+    }
+    20% {
+        border-color: $generic-form-border-focus;
+    }
+    30% {
+        border-color: #f44336;
+    }
+    40% {
+        border-color: $generic-form-border-focus;
+    }
+    50% {
+        border-color: #f44336;
+    }
+    60% {
+        border-color: $generic-form-border-focus;
+    }
+    70% {
+        border-color: #f44336;
+    }
+}
+
+%default-form-container {
+    padding: 0 35px;
+}
+
+%alert-form {
+    padding: 0 10px 10px 10px;
+    @extend %border-focus-alert;
+
+    p {
+        font-size: 13px;
+    }
+
+    div {
+        @extend %button-container;
+    }
+
+    button {
+        @extend %control-button;
+    }
+}
+
+$date-padding: 5px;
+
+%input-date-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &::-webkit-clear-button {
+        display: none;
+    }
+
+    &::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    &::-webkit-calendar-picker-indicator {
+        color: black;
+    }
+
+    &::-webkit-calendar-picker-indicator:hover {
+        background-color: white;
+    }
+}
+
+%default-form-text {
+    font-family: $worksans-regular;
+    font-size: 13px;
+}
+
+%input-focus {
+    @extend %border-focus;
+    outline: none;
+    background: transparent;
+    padding-right: 0px;
+}
+
+%border-focus {
+    border: solid 1px $generic-form-border-focus;
+}
+
+%border-focus-alert {
+    border: solid 1px $generic-form-border-focus;
+    animation-name: delete-alert-animation;
+    animation-duration: 4s;
+}
+
+%generic-input-layout {
+    height: $generic-form-height;
+    border: solid 1px $generic-form-placeholder-border;
+    border-radius: 4px;
+    background: transparent;
+    padding-left: 10px;
+    min-width: 10px;
+}
+
+%readonly-input-label {
+    margin-bottom: 25px;
+    label {
+        font-size: 13px;
+    }
+    input {
+        margin-left: 15px;
+        border: none;
+        background: none;
+        font-size: 12px;
+    }
+}
+
+%generic-textarea-input {
+    textarea {
+        grid-area: input;
+        padding: 10px;
+        resize: none;
+        border-color: $generic-form-border;
+        line-height: 1.5;
+    }
+
+    textarea:disabled {
+        border-color: $generic-form-border-disabled;
+    }
+
+    textarea:focus {
+        border-color: $generic-form-border-focus;
+        outline: none;
+    }
+
+    textarea.ng-invalid.ng-dirty {
+        border: solid 1px $generic-form-error-border;
+        background-color: $generic-form-error-background;
+    }
+}
+
+%input-container-with-delete {
+    @extend %generic-input;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 5px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 15px;
+
+    input {
+        width: calc(100% - 20px);
+        border: none;
+        outline: none;
+    }
+
+    input:disabled {
+        background-color: transparent;
+    }
+
+    img {
+        height: 20px;
+        width: 20px;
+        flex-basis: auto;
+    }
+}
+
+%generic-input {
+    grid-area: input;
+    @extend %generic-input-layout;
+    @extend %default-form-text;
+
+    &::placeholder {
+        color: $generic-form-placeholder-color;
+    }
+
+    &.ng-invalid:focus,
+    &:focus {
+        @extend %input-focus;
+    }
+
+    &.ng-invalid.ng-dirty {
+        border: solid 1px $generic-form-error-border;
+
+        background: url('/assets/images/ico-erreur.png') no-repeat scroll calc(100% - 7px) 5px,
+            $generic-form-error-background;
+
+        // padding-right: 30px;
+    }
+
+    &[type='date'] {
+        @extend %input-date-content;
+    }
+}
+
+%generic-ng-select {
+    @extend %custom-select;
+    grid-area: input;
+    height: $generic-form-height;
+    outline: none;
+
+    ::ng-deep .ng-select.ng-select-single .ng-select-container {
+        border: 1px solid $generic-form-placeholder-border;
+    }
+
+    ::ng-deep .ng-select.ng-select-single.ng-invalid.ng-dirty .ng-select-container,
+    ::ng-deep .ng-select.ng-select-single.ng-invalid.ng-dirty.ng-untouched .ng-select-container,
+    ::ng-deep .ng-select.ng-select-single.ng-invalid.ng-select-focused .ng-select-container {
+        border: 1px solid $generic-form-error-border;
+        background: #ffe5f2;
+    }
+
+    ::ng-deep .ng-select.ng-select-single.ng-invalid.ng-untouched .ng-select-container {
+        background: #fff;
+        border: 1px solid $generic-form-placeholder-border;
+    }
+
+    ::ng-deep .ng-select .ng-arrow-wrapper .ng-arrow {
+        border-color: $generic-form-placeholder-border transparent transparent;
+
+        &.ng-invalid.ng-dirty {
+            border-color: $generic-form-error-border transparent transparent;
+        }
+    }
+
+    ::ng-deep .ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+        border-color: $green;
+        box-shadow: none;
+    }
+}
+
+%generic-print-error {
+    justify-content: end;
+    color: $generic-form-error-border;
+    text-align: end;
+}
+
+%generic-control-element {
+    label {
+        grid-area: label;
+        @extend %default-form-text;
+        min-height: 22px;
+        padding-bottom: 1px;
+    }
+
+    input,
+    select {
+        @extend %generic-input;
+        font-size: 12px;
+    }
+
+    .custom-select {
+        @extend %generic-ng-select;
+    }
+
+    .custom-select.no-label {
+        @extend %generic-ng-select;
+        margin-bottom: 20px;
+        margin-top: 0px;
+    }
+
+    .error-text,
+    app-validation-error {
+        @extend %generic-print-error, %default-form-text;
+        grid-area: error;
+    }
+}
+
+%generic-control {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto $generic-form-height;
+    grid-template-areas:
+        'label error'
+        'input input';
+    padding-bottom: 25px;
+    @extend %generic-control-element;
+}
+
+%generic-control-no-label {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: $generic-form-height;
+    grid-template-areas: 'input input';
+    padding-bottom: 15px;
+    @extend %generic-control-element;
+}
+
+%generic-form {
+    max-width: $generic-form-width;
+
+    .control {
+        @extend %generic-control;
+    }
+
+    .control-no-label {
+        @extend %generic-control-no-label;
+    }
+}
+
+%generic-form-title {
+    color: $generic-form-title-color;
+    font-size: 13px;
+    font-family: $worksans-medium;
+}
+
+%generic-two-columns-control {
+    display: grid;
+    grid-template-columns: 48% auto;
+    grid-template-rows: auto;
+    grid-auto-flow: row;
+    grid-column-gap: 20px;
+    align-items: center;
+
+    .error-content {
+        @extend %generic-print-error;
+        height: 20px;
+    }
+}
