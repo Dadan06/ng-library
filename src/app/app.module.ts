@@ -1,5 +1,7 @@
+import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import localeFr from '@angular/common/locales/fr';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
@@ -13,6 +15,8 @@ import { authenticationReducer } from './authentication/store/reducers/authentic
 import { tokenGetter } from './authentication/utils/token-getter';
 import { CoreModule } from './core/core.module';
 import { appRouterReducer } from './core/store/reducers/router.reducers';
+
+registerLocaleData(localeFr, 'fr');
 
 // tslint:disable-next-line:no-any
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
@@ -50,6 +54,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
          */
         StoreModule.forFeature('authentication', authenticationReducer)
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    providers: [{ provide: LOCALE_ID, useValue: 'fr' }]
 })
 export class AppModule {}
