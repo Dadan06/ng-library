@@ -135,16 +135,17 @@ $arrow-height: 10px;
 
     footer {
         color: white;
-        font-size: 17px;
-        height: 66px;
-        width: 78%;
-        margin-right: auto;
-        margin-left: auto;
+        padding-bottom: 45px;
+        padding-left: 30px;
+
         .day-display {
             font-family: $worksans-light;
+            font-size: 1.4rem;
         }
+
         .hour-display {
             font-family: $worksans-regular;
+            font-size: 1.4rem;
         }
     }
 }
