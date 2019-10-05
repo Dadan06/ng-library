@@ -1,6 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription, timer } from 'rxjs';
 import { Menu } from '../../types/menu.interface';
 
 @Component({
@@ -8,12 +7,10 @@ import { Menu } from '../../types/menu.interface';
     templateUrl: './side-nav.component.html',
     styleUrls: ['./side-nav.component.scss']
 })
-export class SideNavComponent implements OnInit, OnDestroy {
+export class SideNavComponent implements OnInit {
     @Input() menus: Menu[] = [];
     activeMenuIndex?: number;
     activeSubMenuIndex?: number;
-    today: number = Date.now();
-    todaySubsrciption: Subscription;
 
     constructor(private router: Router) {}
 
@@ -29,11 +26,6 @@ export class SideNavComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.activateMenuForCurrentUrl(this.router.url);
-        this.todaySubsrciption = timer(0, 1000).subscribe(() => (this.today = Date.now()));
-    }
-
-    ngOnDestroy(): void {
-        this.todaySubsrciption.unsubscribe();
     }
 
     activateMenu(index: number) {
