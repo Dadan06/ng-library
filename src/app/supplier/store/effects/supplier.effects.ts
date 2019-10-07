@@ -30,7 +30,7 @@ import { getSupplierCriteria } from '../selectors/supplier.selectors';
 export class SupplierEffects {
     constructor(
         private action$: Actions,
-        private masterDetailService: SupplierService,
+        private supplierServiceService: SupplierService,
         private store: Store<SupplierState>
     ) {}
 
@@ -39,7 +39,7 @@ export class SupplierEffects {
         ofType(SupplierActionTypes.LOAD_SUPPLIER_MODELS),
         switchMap(
             (action: LoadSuppliers): Observable<Paginated<Supplier>> =>
-                this.masterDetailService.loadSuppliers(action.payload)
+                this.supplierServiceService.loadSuppliers(action.payload)
         ),
         map((response: Paginated<Supplier>) => new LoadSuppliersSuccess(response)),
         catchError(error => of(new LoadSuppliersFail(error)))
@@ -50,7 +50,7 @@ export class SupplierEffects {
         ofType(SupplierActionTypes.LOAD_SUPPLIER_MODEL),
         switchMap(
             (action: LoadSupplier): Observable<Supplier> =>
-                this.masterDetailService.loadSupplier(action.payload)
+                this.supplierServiceService.loadSupplier(action.payload)
         ),
         map((response: Supplier) => new LoadSupplierSuccess(response)),
         catchError(error => of(new LoadSupplierFail(error)))
@@ -61,7 +61,7 @@ export class SupplierEffects {
         ofType(SupplierActionTypes.SAVE_SUPPLIER_MODEL),
         switchMap(
             (action: SaveSupplier): Observable<Supplier> =>
-                this.masterDetailService.saveSupplier(action.payload)
+                this.supplierServiceService.saveSupplier(action.payload)
         ),
         map((response: Supplier) => new SaveSupplierSuccess(response)),
         catchError(error => of(new SaveSupplierFail(error)))
@@ -79,7 +79,7 @@ export class SupplierEffects {
         ofType(SupplierActionTypes.DELETE_SUPPLIER_MODEL),
         switchMap(
             (action: DeleteSupplier): Observable<void> =>
-                this.masterDetailService.deleteSupplier(action.payload)
+                this.supplierServiceService.deleteSupplier(action.payload)
         ),
         mergeMap(() => [
             new DeleteSupplierSuccess(),
