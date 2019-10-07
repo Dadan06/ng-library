@@ -2,21 +2,25 @@
     <nav *ngIf="menus">
         <div *ngFor="let menu of menus; let i = index">
             <div
-                (click)="!menuContainer.classList.contains('menu-active') && activateMenu(i); activateSubMenu(0)"
-                [routerLink]="menu.routerLink"
-                routerLinkActive="menu-active"
+                [class.menu-active]="activeMenuIndex === i"
                 class="menu"
+                (click)="activateMenu(i)"
+                [routerLink]="menu.routerLink"
                 #menuContainer
             >
                 <img alt="" src="{{ menu.icon }}" /> {{ menu.title | uppercase }}
             </div>
-            <nav [class.closed]="activeMenuIndex !== i" [class.opened]="activeMenuIndex === i" class="submenu-container">
+            <nav
+                [class.opened]="activeMenuIndex === i"
+                [class.closed]="activeMenuIndex !== i"
+                class="submenu-container"
+            >
                 <div
+                    class="submenu"
+                    [class.submenu-active]="activeSubMenuIndex === j"
                     (click)="activateSubMenu(j)"
                     *ngFor="let subMenu of menu.children; let j = index"
-                    [class.submenu-active]="activeSubMenuIndex === j"
                     [routerLink]="subMenu.routerLink"
-                    class="submenu"
                 >
                     {{ subMenu.title }}
                 </div>
