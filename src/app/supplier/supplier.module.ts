@@ -12,7 +12,7 @@ import { SupplierRootComponent } from './containers/supplier-root/supplier-root.
 import { SupplierService } from './services/supplier.service';
 import { SupplierRouterEffects } from './store/effects/supplier-router.effects';
 import { SupplierEffects } from './store/effects/supplier.effects';
-import { masterDetailReducer } from './store/reducers/supplier.reducers';
+import { supplierReducer } from './store/reducers/supplier.reducers';
 import { SupplierRoutingModule } from './supplier-routing.module';
 
 @NgModule({
@@ -27,7 +27,7 @@ import { SupplierRoutingModule } from './supplier-routing.module';
         SupplierRoutingModule,
         SharedModule,
         ReactiveFormsModule,
-        StoreModule.forFeature('supplier', masterDetailReducer),
+        StoreModule.forFeature('supplier', supplierReducer),
         EffectsModule.forFeature([SupplierEffects, SupplierRouterEffects]),
         ModalModule
     ],
