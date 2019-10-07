@@ -1,16 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { markFormAsTouchedAndDirty } from 'src/app/shared/utils/form.utils';
+import { Product } from '../../types/product.interface';
 
 @Component({
     selector: 'app-product-form',
     templateUrl: './product-form.component.html',
     styleUrls: ['./product-form.component.scss']
 })
-export class ProductFormComponent implements OnInit {
-    constructor() {
-        /** */
+export class ProductFormComponent {
+    @Input() isEditing: boolean;
+    @Input() set product(product: Product) {
+        if (product) {
+            this.form = this.initForm(product);
+            this.isEditing ? this.form.enable() : this.form.disable();
+            setTimeout(() => this.isEditing && this.setFocusOnFirstInput());
+        }
+    }
+    @Input() editEnabled = true;
+
+    @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
+    @Output() save: EventEmitter<Product> = new EventEmitter<Product>();
+    @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
+
+    form: FormGroup;
+    @ViewChild('first') firstInput: ElementRef;
+
+    constructor(private formBuilder: FormBuilder) {}
+
+    onSubmit(form: FormGroup) {
+        this.form.valid ? this.save.emit(form.value) : this.showErrors();
     }
 
-    ngOnInit() {
-        /** */
+    private setFocusOnFirstInput() {
+        this.firstInput.nativeElement.focus();
+    }
+
+    private showErrors() {
+        markFormAsTouchedAndDirty(this.form);
+    }
+
+    private initForm(product: Product): FormGroup {
+        return this.formBuilder.group({
+            _id: [product._id],
+            name: [product.name, Validators.required],
+            costPrice: [product.costPrice, Validators.required],
+            sellingPrice: [product.sellingPrice, Validators.required]
+        });
     }
 }

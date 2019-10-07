@@ -1,3 +1,42 @@
-<p>
-  product-form works!
-</p>
+<div class="container">
+    <div class="form-title">Détails</div>
+    <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
+        <div class="control">
+            <label>
+                Nom
+            </label>
+            <input #first formControlName="name" type="text" />
+            <app-validation-error [control]="form.controls['name']"></app-validation-error>
+        </div>
+
+        <div class="control">
+            <label>
+                Prix Unitaire
+            </label>
+            <input formControlName="costPrice" type="text" />
+            <app-validation-error [control]="form.controls['costPrice']"></app-validation-error>
+        </div>
+
+        <div class="control">
+            <label>
+                Prix de vente
+            </label>
+            <input formControlName="sellingPrice" type="text" />
+            <app-validation-error [control]="form.controls['sellingPrice']"></app-validation-error>
+        </div>
+
+        <div class="buttons">
+            <button
+                class="blue"
+                *ngIf="!form.enabled"
+                (click)="edit.emit(form.value)"
+                [disabled]="!editEnabled"
+            >
+                MODIFIER
+            </button>
+            <button class="blue" *ngIf="form.enabled" type="submit">ENREGISTRER</button>
+            <button class="green" *ngIf="form.enabled" (click)="cancel.emit()">ANNULER</button>
+        </div>
+    </form>
+</div>
+>
