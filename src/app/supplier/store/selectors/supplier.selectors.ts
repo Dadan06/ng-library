@@ -59,20 +59,17 @@ export const getSupplierSaved = createSelector<SupplierState, SupplierState, boo
 
 export const getSupplierEditEnabled = createSelector<AuthenticationState, Privilege[], boolean>(
     getUserPrivileges,
-    (privileges: Privilege[]) =>
-        privileges.some(p => p.name === UserPrivileges.EDIT_MASTER_DETAIL_MODEL)
+    (privileges: Privilege[]) => privileges.some(p => p.name === UserPrivileges.EDIT_SUPPLIER)
 );
 
 export const getSupplierDeleteEnabled = createSelector<AuthenticationState, Privilege[], boolean>(
     getUserPrivileges,
-    (privileges: Privilege[]) =>
-        privileges.some(p => p.name === UserPrivileges.DELETE_MASTER_DETAIL_MODEL)
+    (privileges: Privilege[]) => privileges.some(p => p.name === UserPrivileges.DELETE_SUPPLIER)
 );
 
 export const getSupplierCreateEnabled = createSelector<AuthenticationState, Privilege[], boolean>(
     getUserPrivileges,
-    (privileges: Privilege[]) =>
-        privileges.some(p => p.name === UserPrivileges.CREATE_MASTER_DETAIL_MODEL)
+    (privileges: Privilege[]) => privileges.some(p => p.name === UserPrivileges.CREATE_SUPPLIER)
 );
 
 export const getSupplierEditing = createSelector<
