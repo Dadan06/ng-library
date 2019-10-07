@@ -3,22 +3,35 @@
     <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
         <div class="control">
             <label>
-                Prop1
+                Nom
             </label>
-            <input #first formControlName="prop1" type="text" />
-            <app-validation-error [control]="form.controls['prop1']"></app-validation-error>
+            <input #first formControlName="name" type="text" />
+            <app-validation-error [control]="form.controls['name']"></app-validation-error>
         </div>
 
         <div class="control">
             <label>
-                Prop2
+                Adresse
             </label>
-            <input formControlName="prop2" type="text" />
-            <app-validation-error [control]="form.controls['prop2']"></app-validation-error>
+            <input formControlName="address" type="text" />
+            <app-validation-error [control]="form.controls['address']"></app-validation-error>
+        </div>
+
+        <div class="control">
+            <label>
+                Contact
+            </label>
+            <input formControlName="contact" type="text" />
+            <app-validation-error [control]="form.controls['contact']"></app-validation-error>
         </div>
 
         <div class="buttons">
-            <button class="blue" *ngIf="!form.enabled" (click)="edit.emit(form.value)" [disabled]="!editEnabled">
+            <button
+                class="blue"
+                *ngIf="!form.enabled"
+                (click)="edit.emit(form.value)"
+                [disabled]="!editEnabled"
+            >
                 MODIFIER
             </button>
             <button class="blue" *ngIf="form.enabled" type="submit">ENREGISTRER</button>
