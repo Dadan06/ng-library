@@ -1,5 +1,5 @@
 import { Privilege } from 'src/app/role/types/privilege.interface';
-import { Menu, SubMenu } from '../types/menu.interface';
+import { Menu } from '../types/menu.interface';
 
 export const generateMenusDependingOnUserRights = (
     allMenus: Menu[],
@@ -9,7 +9,7 @@ export const generateMenusDependingOnUserRights = (
     const userPrivileges = privileges.map(p => p.name);
     allMenus.forEach((menu: Menu) => {
         if (menu.children) {
-            const filteredChildren: SubMenu[] = (menu.children || []).filter(({ accessRight }) =>
+            const filteredChildren: Menu[] = (menu.children || []).filter(({ accessRight }) =>
                 userPrivileges.includes(accessRight)
             );
             if (filteredChildren.length) {
