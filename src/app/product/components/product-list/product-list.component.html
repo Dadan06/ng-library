@@ -1,3 +1,44 @@
-<p>
-  product-list works!
-</p>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>PU</th>
+                <th>PV</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody data-simplebar>
+            <tr
+                *ngFor="let product of products"
+                [class.selected]="product._id === currentProduct?._id"
+            >
+                <td>{{ product.name }}</td>
+                <td>{{ product.address }}</td>
+                <td>{{ product.contact }}</td>
+                <td class="actions">
+                    <img
+                        (click)="view.emit(product); currentProduct = product"
+                        src="/assets/images/ico-details.png"
+                    />
+                    <img
+                        (click)="editEnabled && edit.emit(product); currentProduct = product"
+                        [src]="
+                            editEnabled
+                                ? '/assets/images/ico-edit.png'
+                                : '/assets/images/ico-edit-disabled.png'
+                        "
+                    />
+                    <img
+                        (click)="deleteEnabled && delete.emit(product)"
+                        [src]="
+                            deleteEnabled
+                                ? '/assets/images/ico-delete.png'
+                                : '/assets/images/ico-delete-disabled.png'
+                        "
+                    />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
