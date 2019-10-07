@@ -1,0 +1,46 @@
+<div class="container">
+    <header>Feature name Here</header>
+    <div class="search-bar">
+        <app-search-bar (search)="onSearch($event)"></app-search-bar>
+    </div>
+    <div class="list">
+        <app-loader [isLoading]="suppliersLoading$ | async">
+            <app-supplier-list
+                [suppliers]="suppliers$ | async"
+                [currentSupplier]="currentSupplier$ | async"
+                [editEnabled]="supplierEditEnabled$ | async"
+                [deleteEnabled]="supplierDeleteEnabled$ | async"
+                (view)="onViewDetail($event)"
+                (edit)="onEdit($event)"
+                (delete)="onDelete($event)"
+            ></app-supplier-list>
+        </app-loader>
+    </div>
+    <footer>
+        <button class="btn-new" [disabled]="!(supplierCreateEnabled$ | async)" (click)="onCreate()">
+            +
+        </button>
+        <app-pagination
+            [totalItems]="totalItems$ | async"
+            (paginate)="onPaginate($event)"
+        ></app-pagination>
+    </footer>
+    <div class="detail">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+<modal #deletionConfirmModal class="popup-modal warning">
+    <ng-template #modalHeader>
+        Confirmation
+    </ng-template>
+    <ng-template #modalBody>
+        Êtes-vous sûr de vouloir supprimer l'element?
+    </ng-template>
+    <ng-template #modalFooter>
+        <button class="blue" (click)="deletionConfirmModal.close(); onConfirmDeletion()">
+            OUI
+        </button>
+        <button class="green" (click)="deletionConfirmModal.close()">NON</button>
+    </ng-template>
+</modal>
