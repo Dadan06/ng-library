@@ -3,8 +3,8 @@ import { select, Store } from '@ngrx/store';
 import { ModalComponent } from 'angular-custom-modal';
 import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
+import { go } from 'src/app/shared/utils/go.utils';
 import { subscribeModal } from 'src/app/shared/utils/modal.utils';
-import { Go } from '../../../core/store/actions/router.actions';
 import { SUPPLIER_BASE_ROUTE } from '../../constants/supplier.constants';
 import { SaveSupplier } from '../../store/actions/supplier.actions';
 import { SupplierState } from '../../store/reducers/supplier.reducers';
@@ -41,7 +41,7 @@ export class SupplierFormRootComponent implements OnInit {
     }
 
     onEdit(supplier: Supplier) {
-        this.go([`${SUPPLIER_BASE_ROUTE}/edit`, supplier._id]);
+        go(this.supplierStore, [`${SUPPLIER_BASE_ROUTE}/edit`, supplier._id]);
     }
 
     onSave(supplier: Supplier) {
@@ -49,7 +49,8 @@ export class SupplierFormRootComponent implements OnInit {
     }
 
     onCancelEdit(supplier: Supplier) {
-        this.go(
+        go(
+            this.supplierStore,
             supplier._id
                 ? [`${SUPPLIER_BASE_ROUTE}/edit`, supplier._id]
                 : [`${SUPPLIER_BASE_ROUTE}`]
@@ -58,9 +59,5 @@ export class SupplierFormRootComponent implements OnInit {
 
     private subscribeModals() {
         subscribeModal(this.supplierStore, getSupplierSaved, true, this.successfullSavingModal);
-    }
-
-    private go(path: string[]) {
-        this.supplierStore.dispatch(new Go({ path }));
     }
 }

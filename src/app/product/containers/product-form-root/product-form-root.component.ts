@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { ModalComponent } from 'angular-custom-modal';
 import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
-import { Go } from 'src/app/core/store/actions/router.actions';
+import { go } from 'src/app/shared/utils/go.utils';
 import { subscribeModal } from 'src/app/shared/utils/modal.utils';
 import { PRODUCT_BASE_ROUTE } from '../../constants/product.constants';
 import { SaveProduct } from '../../store/actions/product.actions';
@@ -41,7 +41,7 @@ export class ProductFormRootComponent implements OnInit {
     }
 
     onEdit(product: Product) {
-        this.go([`${PRODUCT_BASE_ROUTE}/edit`, product._id]);
+        go(this.productStore, [`${PRODUCT_BASE_ROUTE}/edit`, product._id]);
     }
 
     onSave(product: Product) {
@@ -49,16 +49,13 @@ export class ProductFormRootComponent implements OnInit {
     }
 
     onCancelEdit(product: Product) {
-        this.go(
+        go(
+            this.productStore,
             product._id ? [`${PRODUCT_BASE_ROUTE}/edit`, product._id] : [`${PRODUCT_BASE_ROUTE}`]
         );
     }
 
     private subscribeModals() {
         subscribeModal(this.productStore, getProductSaved, true, this.successfullSavingModal);
-    }
-
-    private go(path: string[]) {
-        this.productStore.dispatch(new Go({ path }));
     }
 }
