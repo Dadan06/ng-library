@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { subscribeModal } from 'src/app/shared/utils/modal.utils';
 import { Go } from '../../../core/store/actions/router.actions';
-import { SUPPLIER_BASE_ROUTE } from '../../constants/supplierl.constants';
+import { SUPPLIER_BASE_ROUTE } from '../../constants/supplier.constants';
 import { SaveSupplier } from '../../store/actions/supplier.actions';
 import { SupplierState } from '../../store/reducers/supplier.reducers';
 import {
