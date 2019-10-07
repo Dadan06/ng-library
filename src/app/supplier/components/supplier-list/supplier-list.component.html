@@ -1,0 +1,44 @@
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Contact</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody data-simplebar>
+            <tr
+                *ngFor="let supplier of suppliers"
+                [class.selected]="supplier._id === currentSupplier?._id"
+            >
+                <td>{{ supplier.name }}</td>
+                <td>{{ supplier.address }}</td>
+                <td>{{ supplier.contact }}</td>
+                <td class="actions">
+                    <img
+                        (click)="view.emit(supplier); currentSupplier = supplier"
+                        src="/assets/images/ico-details.png"
+                    />
+                    <img
+                        (click)="editEnabled && edit.emit(supplier); currentSupplier = supplier"
+                        [src]="
+                            editEnabled
+                                ? '/assets/images/ico-edit.png'
+                                : '/assets/images/ico-edit-disabled.png'
+                        "
+                    />
+                    <img
+                        (click)="deleteEnabled && delete.emit(supplier)"
+                        [src]="
+                            deleteEnabled
+                                ? '/assets/images/ico-delete.png'
+                                : '/assets/images/ico-delete-disabled.png'
+                        "
+                    />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
