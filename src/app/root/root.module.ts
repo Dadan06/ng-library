@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
-import { environment } from 'src/environments/environment';
-import { AuthenticationMockService } from '../authentication/services/authentication-mock.service';
 import { AuthenticationService } from '../authentication/services/authentication.service';
 import { AuthenticationEffects } from '../authentication/store/effects/authentication.effects';
 import { AccessManagementRootComponent } from './components/access-management-root/access-management-root.component';
@@ -32,13 +30,6 @@ import { RootRoutingModule } from './root-routing.module';
         SideNavComponent,
         AccessManagementRootComponent
     ],
-    providers: [
-        AuthenticationGuard,
-        PrivilegeGuard,
-        {
-            provide: AuthenticationService,
-            useClass: environment.mock ? AuthenticationMockService : AuthenticationService
-        }
-    ]
+    providers: [AuthenticationGuard, PrivilegeGuard, AuthenticationService]
 })
 export class RootModule {}
