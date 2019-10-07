@@ -53,13 +53,17 @@ export const USER_PRIVILEGE_LABELS: Record<UserPrivileges, string> = {
 export const enum PrivilegeCategories {
     CONTACT = 'CONTACT',
     USER = 'USER',
-    ROLE = 'ROLE'
+    ROLE = 'ROLE',
+    PRODUCT = 'PRODUCT',
+    SUPPLIER = 'SUPPLIER'
 }
 
 export const PRIVILEGE_CATEGORY_LABELS = {
     [PrivilegeCategories.CONTACT]: 'Contact',
     [PrivilegeCategories.USER]: 'Utilisateur',
-    [PrivilegeCategories.ROLE]: 'Rôle'
+    [PrivilegeCategories.ROLE]: 'Rôle',
+    [PrivilegeCategories.PRODUCT]: 'Produit',
+    [PrivilegeCategories.SUPPLIER]: 'Fournisseur'
 };
 
 export const PRIVILEGE_ROUTE = 'privilege';
