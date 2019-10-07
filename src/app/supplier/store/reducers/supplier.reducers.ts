@@ -129,7 +129,7 @@ const deleteSupplierSuccess = (
 });
 
 // tslint:disable-next-line:cyclomatic-complexity
-export function masterDetailReducer(
+export function supplierReducer(
     state: SupplierState = initialState,
     action: SupplierAction
 ): SupplierState {
