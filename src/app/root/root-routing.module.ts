@@ -5,7 +5,10 @@ import { AdminRootComponent } from './components/admin-root/admin-root.component
 import { HomeRootComponent } from './components/home-root/home-root.component';
 import { ParamRootComponent } from './components/param-root/param-root.component';
 import { RootComponent } from './components/root/root.component';
+import { ACCESS_MANAGEMENT_MENU } from './constants/access-management.constant';
+import { HOME_MENU } from './constants/home.constant';
 import { AuthenticationGuard } from './guards/authentication.guard';
+import { DefaultRedirectionGuard } from './guards/default-redirection.guard';
 
 const routes: Routes = [
     {
@@ -17,8 +20,9 @@ const routes: Routes = [
             {
                 path: 'home',
                 component: HomeRootComponent,
+                data: { menus: HOME_MENU },
+                canActivate: [DefaultRedirectionGuard],
                 children: [
-                    { path: '', redirectTo: 'product', pathMatch: 'full' },
                     {
                         path: 'product',
                         loadChildren: '../product/product.module#ProductModule'
@@ -34,6 +38,8 @@ const routes: Routes = [
             {
                 path: 'access-management',
                 component: AccessManagementRootComponent,
+                data: { menus: ACCESS_MANAGEMENT_MENU },
+                canActivate: [DefaultRedirectionGuard],
                 children: [
                     { path: '', redirectTo: 'user', pathMatch: 'full' },
                     {

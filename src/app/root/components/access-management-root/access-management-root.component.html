@@ -1,6 +1,6 @@
 <div class="container">
     <aside>
-        <app-side-nav [menus]="accessManagementMenus"></app-side-nav>
+        <app-side-nav [url]="url$ | async" [menus]="accessManagementMenus"></app-side-nav>
     </aside>
     <main>
         <router-outlet></router-outlet>
