@@ -20,8 +20,8 @@ export class AuthenticationComponent implements OnInit {
 
     private initForm(): FormGroup {
         return this.formBuilder.group({
-            login: ['admin@dreamslab.fr', [Validators.required, Validators.email]],
-            password: ['adminadmin', Validators.required]
+            login: ['', [Validators.required, Validators.email]],
+            password: ['', Validators.required]
         });
     }
 }

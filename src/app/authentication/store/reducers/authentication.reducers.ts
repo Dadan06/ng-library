@@ -43,7 +43,8 @@ const logInSuccess = (state: AuthenticationState, action: LogInSuccess): Authent
     userLoggedIn: true,
     userLoggingIn: false,
     user: action.payload.user,
-    token: action.payload.token
+    token: action.payload.token,
+    loginError: undefined
 });
 
 const logOut = (state: AuthenticationState, action: LogOut): AuthenticationState => ({
