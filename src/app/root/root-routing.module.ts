@@ -18,14 +18,14 @@ const routes: Routes = [
                 path: 'home',
                 component: HomeRootComponent,
                 children: [
-                    { path: '', redirectTo: 'master-detail', pathMatch: 'full' },
+                    { path: '', redirectTo: 'product', pathMatch: 'full' },
                     {
-                        path: 'master-detail',
-                        loadChildren: '../master-detail/master-detail.module#MasterDetailModule'
+                        path: 'product',
+                        loadChildren: '../product/product.module#ProductModule'
                     },
                     {
-                        path: 'contact',
-                        loadChildren: '../contact/contact.module#ContactModule'
+                        path: 'supplier',
+                        loadChildren: '../supplier/supplier.module#SupplierModule'
                     }
                 ]
             },
