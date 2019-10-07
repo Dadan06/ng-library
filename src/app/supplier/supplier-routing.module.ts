@@ -10,25 +10,25 @@ const routes: Routes = [
         path: '',
         component: SupplierRootComponent,
         canActivate: [PrivilegeGuard],
-        data: { privilege: UserPrivileges.VIEW_MASTER_DETAIL_MODEL },
+        data: { privilege: UserPrivileges.VIEW_SUPPLIER },
         children: [
             {
-                path: 'detail/:masterDetailModelId',
+                path: 'detail/:supplierId',
                 component: SupplierFormRootComponent,
                 canActivate: [PrivilegeGuard],
-                data: { privilege: UserPrivileges.VIEW_MASTER_DETAIL_MODEL }
+                data: { privilege: UserPrivileges.VIEW_SUPPLIER }
             },
             {
-                path: 'edit/:masterDetailModelId',
+                path: 'edit/:supplierId',
                 component: SupplierFormRootComponent,
                 canActivate: [PrivilegeGuard],
-                data: { privilege: UserPrivileges.EDIT_MASTER_DETAIL_MODEL }
+                data: { privilege: UserPrivileges.EDIT_SUPPLIER }
             },
             {
                 path: 'new',
                 component: SupplierFormRootComponent,
                 canActivate: [PrivilegeGuard],
-                data: { privilege: UserPrivileges.CREATE_MASTER_DETAIL_MODEL }
+                data: { privilege: UserPrivileges.CREATE_SUPPLIER }
             }
         ]
     }
