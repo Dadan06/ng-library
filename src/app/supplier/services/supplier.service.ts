@@ -6,7 +6,7 @@ import { ApiResponse } from 'src/app/shared/types/api-response.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
 import { flatten } from 'src/app/shared/utils/flatten';
 import { environment } from 'src/environments/environment';
-import { EMPTY_SUPPLIER_MODEL, SUPPLIER_API_ROUTE } from '../constants/supplierl.constants';
+import { EMPTY_SUPPLIER_MODEL, SUPPLIER_API_ROUTE } from '../constants/supplier.constants';
 import { SupplierCriteria } from '../types/supplier-criteria.interface';
 import { Supplier } from '../types/supplier.interface';
 import { SupplierServiceInterface } from './supplier-service.interface';

@@ -6,10 +6,7 @@ import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { Page } from 'src/app/shared/types/page.interface';
 import { Go } from '../../../core/store/actions/router.actions';
-import {
-    SUPPLIER_BASE_ROUTE,
-    SUPPLIER_DEFAULT_CRITERIA
-} from '../../constants/supplierl.constants';
+import { SUPPLIER_BASE_ROUTE, SUPPLIER_DEFAULT_CRITERIA } from '../../constants/supplier.constants';
 import { DeleteSupplier, LoadSuppliers } from '../../store/actions/supplier.actions';
 import { SupplierState } from '../../store/reducers/supplier.reducers';
 import {

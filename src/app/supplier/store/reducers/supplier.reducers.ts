@@ -1,5 +1,5 @@
 import { Paginated } from 'src/app/shared/types/paginated.interface';
-import { SUPPLIER_DEFAULT_CRITERIA } from '../../constants/supplierl.constants';
+import { SUPPLIER_DEFAULT_CRITERIA } from '../../constants/supplier.constants';
 import { SupplierCriteria } from '../../types/supplier-criteria.interface';
 import { Supplier } from '../../types/supplier.interface';
 import {

@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
 import { Go } from 'src/app/core/store/actions/router.actions';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
-import { SUPPLIER_BASE_ROUTE } from '../../constants/supplierl.constants';
+import { SUPPLIER_BASE_ROUTE } from '../../constants/supplier.constants';
 import { SupplierService } from '../../services/supplier.service';
 import { Supplier } from '../../types/supplier.interface';
 import {
