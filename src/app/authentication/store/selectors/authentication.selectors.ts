@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Privilege } from 'src/app/role/types/privilege.interface';
 import { Role } from 'src/app/role/types/role.interface';
@@ -21,12 +22,16 @@ export const getUserLoggingIn = createSelector<AuthenticationState, Authenticati
     (state: AuthenticationState) => state.userLoggingIn
 );
 
-export const getLoginError = createSelector<AuthenticationState, AuthenticationState, Error>(
+export const getLoginError = createSelector<
+    AuthenticationState,
+    AuthenticationState,
+    HttpErrorResponse
+>(
     getAuthenticationState,
     (state: AuthenticationState) => state.loginError
 );
 
-export const getLoginErrorMessage = createSelector<AuthenticationState, Error, string>(
+export const getLoginErrorMessage = createSelector<AuthenticationState, HttpErrorResponse, string>(
     getLoginError,
     (loginError: Error) => loginError && loginError.message
 );

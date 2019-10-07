@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 import { AuthenticationResponse } from '../../types/authentication-response.interface';
 import { Credentials } from '../../types/credentials.interface';
@@ -16,7 +17,7 @@ export class LogIn implements Action {
 
 export class LogInFail implements Action {
     readonly type = AuthenticationActionTypes.LOG_IN_FAIL;
-    constructor(public payload: Error) {}
+    constructor(public payload: HttpErrorResponse) {}
 }
 
 export class LogInSuccess implements Action {

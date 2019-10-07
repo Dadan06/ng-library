@@ -21,7 +21,7 @@ export class AuthenticationEffects {
         switchMap((action: LogIn) =>
             this.authenticationService.logIn(action.payload).pipe(
                 map((response: AuthenticationResponse) => new LogInSuccess(response)),
-                catchError(error => of(new LogInFail(error)))
+                catchError(loginError => of(new LogInFail(loginError && loginError.error)))
             )
         )
     );

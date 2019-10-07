@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/user/types/user.interface';
 import {
     AuthenticationAction,
@@ -13,7 +14,7 @@ export interface AuthenticationState {
     userLoggedIn: boolean;
     userLoggingIn: boolean;
     token: string;
-    loginError: Error;
+    loginError: HttpErrorResponse;
 }
 
 const initialState: AuthenticationState = {
