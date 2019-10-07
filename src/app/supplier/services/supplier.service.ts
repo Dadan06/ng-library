@@ -9,10 +9,9 @@ import { environment } from 'src/environments/environment';
 import { EMPTY_SUPPLIER_MODEL, SUPPLIER_API_ROUTE } from '../constants/supplier.constants';
 import { SupplierCriteria } from '../types/supplier-criteria.interface';
 import { Supplier } from '../types/supplier.interface';
-import { SupplierServiceInterface } from './supplier-service.interface';
 
 @Injectable()
-export class SupplierService implements SupplierServiceInterface {
+export class SupplierService {
     constructor(private http: HttpClient) {}
 
     loadSuppliers(criteria: SupplierCriteria): Observable<Paginated<Supplier>> {

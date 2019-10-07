@@ -9,10 +9,9 @@ import { environment } from 'src/environments/environment';
 import { EMPTY_PRODUCT_MODEL, PRODUCT_API_ROUTE } from '../constants/product.constants';
 import { ProductCriteria } from '../types/product-criteria.interface';
 import { Product } from '../types/product.interface';
-import { ProductServiceInterface } from './product-service.interface';
 
 @Injectable()
-export class ProductService implements ProductServiceInterface {
+export class ProductService {
     constructor(private http: HttpClient) {}
 
     loadProducts(criteria: ProductCriteria): Observable<Paginated<Product>> {

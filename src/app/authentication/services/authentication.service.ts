@@ -6,12 +6,9 @@ import { ApiResponse } from 'src/app/shared/types/api-response.interface';
 import { environment } from 'src/environments/environment';
 import { AuthenticationResponse } from '../types/authentication-response.interface';
 import { Credentials } from '../types/credentials.interface';
-import { AuthenticationServiceInterface } from './authentication-service.interface';
-
-const NOT_IMPLEMENTED = 'Not implemented';
 
 @Injectable()
-export class AuthenticationService implements AuthenticationServiceInterface {
+export class AuthenticationService {
     constructor(private http: HttpClient) {}
 
     logIn(credentials: Credentials): Observable<AuthenticationResponse> {
