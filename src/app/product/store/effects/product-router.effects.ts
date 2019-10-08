@@ -4,6 +4,7 @@ import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 import { select, Store } from '@ngrx/store';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { AppRouterState } from 'src/app/core/store/reducers/router.reducers';
+import { PRODUCT_API_ROUTE } from '../../constants/product.constants';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../types/product.interface';
 import {
@@ -29,7 +30,7 @@ export class ProductRouterEffects {
     productRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes('product')),
+        filter(state => state.url.includes(`${PRODUCT_API_ROUTE}`)),
         withLatestFrom(
             this.store.pipe(select(getProducts)),
             this.store.pipe(select(getProductCriteria))
@@ -45,7 +46,11 @@ export class ProductRouterEffects {
     productFormRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes('product/detail') || state.url.includes('product/edit')),
+        filter(
+            state =>
+                state.url.includes(`${PRODUCT_API_ROUTE}/detail`) ||
+                state.url.includes(`${PRODUCT_API_ROUTE}/edit`)
+        ),
         map(routerState => new LoadProduct(routerState.params.productModelId))
     );
 
@@ -53,7 +58,7 @@ export class ProductRouterEffects {
     productNewRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes('product/new')),
+        filter(state => state.url.includes(`${PRODUCT_API_ROUTE}/new`)),
         switchMap(() =>
             this.productService
                 .productFactory()
@@ -64,7 +69,11 @@ export class ProductRouterEffects {
     allSupplierRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes('product/edit') || state.url.includes('product/new')),
+        filter(
+            state =>
+                state.url.includes(`${PRODUCT_API_ROUTE}/edit`) ||
+                state.url.includes(`${PRODUCT_API_ROUTE}/new`)
+        ),
         map(routerState => new LoadAllSupplier())
     );
 }
