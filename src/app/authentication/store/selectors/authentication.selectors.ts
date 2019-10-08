@@ -43,5 +43,5 @@ export const getUserRole = createSelector<AuthenticationState, User, Role>(
 
 export const getUserPrivileges = createSelector<AuthenticationState, Role, Privilege[]>(
     getUserRole,
-    (role: Role) => role && role.privileges
+    (role: Role) => (role ? role.privileges : [])
 );
