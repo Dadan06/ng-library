@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { ModalModule } from 'angular-custom-modal';
@@ -24,6 +25,7 @@ import { productReducer } from './store/reducers/product.reducers';
     ],
     imports: [
         CommonModule,
+        NgSelectModule,
         ProductRoutingModule,
         SharedModule,
         ReactiveFormsModule,
