@@ -4,6 +4,7 @@ import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 import { select, Store } from '@ngrx/store';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { AppRouterState } from 'src/app/core/store/reducers/router.reducers';
+import { SUPPLIER_API_ROUTE } from '../../constants/supplier.constants';
 import { SupplierService } from '../../services/supplier.service';
 import { Supplier } from '../../types/supplier.interface';
 import { LoadSupplier, LoadSuppliers, LoadSupplierSuccess } from '../actions/supplier.actions';
@@ -24,7 +25,7 @@ export class SupplierRouterEffects {
     supplierRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes('master-detail')),
+        filter(state => state.url.includes(`${SUPPLIER_API_ROUTE}`)),
         withLatestFrom(
             this.store.pipe(select(getSuppliers)),
             this.store.pipe(select(getSupplierCriteria))
@@ -42,8 +43,8 @@ export class SupplierRouterEffects {
         map(this.mapToRouterStateUrl),
         filter(
             state =>
-                state.url.includes('master-detail/detail') ||
-                state.url.includes('master-detail/edit')
+                state.url.includes(`${SUPPLIER_API_ROUTE}/detail`) ||
+                state.url.includes(`${SUPPLIER_API_ROUTE}/edit`)
         ),
         map(routerState => new LoadSupplier(routerState.params.supplierModelId))
     );
@@ -52,7 +53,7 @@ export class SupplierRouterEffects {
     supplierNewRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes('master-detail/new')),
+        filter(state => state.url.includes(`${SUPPLIER_API_ROUTE}/new`)),
         switchMap(() =>
             this.supplierService
                 .supplierFactory()
