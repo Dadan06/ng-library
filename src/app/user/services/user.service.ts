@@ -11,10 +11,9 @@ import { flatten } from 'src/app/shared/utils/flatten';
 import { environment } from 'src/environments/environment';
 import { EMPTY_USER, USER_ROUTE } from '../constants/user.constant';
 import { User } from '../types/user.interface';
-import { UserServiceInterface } from './user-service.interface';
 
 @Injectable()
-export class UserService implements UserServiceInterface {
+export class UserService {
     constructor(private http: HttpClient) {}
 
     loadUsers(criteria: ListCriteria): Observable<Paginated<User>> {
