@@ -8,7 +8,7 @@ import { getUrl } from 'src/app/core/store/selectors/router.selectors';
 import { Privilege } from 'src/app/role/types/privilege.interface';
 import { ACCESS_MANAGEMENT_MENU } from '../../constants/access-management.constant';
 import { Menu } from '../../types/menu.interface';
-import { generateMenusDependingOnUserRights } from '../../utils/menu-filter';
+import { generateSideNavMenusDependingOnUserRights } from '../../utils/menu-filter';
 
 @Component({
     selector: 'app-access-management-root',
@@ -28,7 +28,7 @@ export class AccessManagementRootComponent implements OnInit {
         this.authenticationStore
             .pipe(select(getUserPrivileges))
             .subscribe((privileges: Privilege[]) => {
-                this.accessManagementMenus = generateMenusDependingOnUserRights(
+                this.accessManagementMenus = generateSideNavMenusDependingOnUserRights(
                     ACCESS_MANAGEMENT_MENU,
                     privileges
                 );

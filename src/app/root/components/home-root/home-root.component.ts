@@ -8,7 +8,7 @@ import { getUrl } from 'src/app/core/store/selectors/router.selectors';
 import { Privilege } from 'src/app/role/types/privilege.interface';
 import { HOME_MENU } from '../../constants/home.constant';
 import { Menu } from '../../types/menu.interface';
-import { generateMenusDependingOnUserRights } from '../../utils/menu-filter';
+import { generateSideNavMenusDependingOnUserRights } from '../../utils/menu-filter';
 
 @Component({
     selector: 'app-home-root',
@@ -28,7 +28,7 @@ export class HomeRootComponent implements OnInit {
         this.authenticationStore
             .pipe(select(getUserPrivileges))
             .subscribe((privileges: Privilege[]) => {
-                this.homeMenus = generateMenusDependingOnUserRights(HOME_MENU, privileges);
+                this.homeMenus = generateSideNavMenusDependingOnUserRights(HOME_MENU, privileges);
             });
         this.url$ = this.routerStore.pipe(select(getUrl));
     }
