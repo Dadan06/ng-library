@@ -11,6 +11,7 @@ import { ParamRootComponent } from './components/param-root/param-root.component
 import { RootComponent } from './components/root/root.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { AuthenticationGuard } from './guards/authentication.guard';
+import { DefaultRedirectionGuard } from './guards/default-redirection.guard';
 import { PrivilegeGuard } from './guards/privileges.guard';
 import { RootRoutingModule } from './root-routing.module';
 /**
@@ -30,6 +31,6 @@ import { RootRoutingModule } from './root-routing.module';
         SideNavComponent,
         AccessManagementRootComponent
     ],
-    providers: [AuthenticationGuard, PrivilegeGuard, AuthenticationService]
+    providers: [AuthenticationGuard, PrivilegeGuard, DefaultRedirectionGuard, AuthenticationService]
 })
 export class RootModule {}

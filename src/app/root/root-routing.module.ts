@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccessManagementRootComponent } from './components/access-management-root/access-management-root.component';
-import { AdminRootComponent } from './components/admin-root/admin-root.component';
 import { HomeRootComponent } from './components/home-root/home-root.component';
-import { ParamRootComponent } from './components/param-root/param-root.component';
 import { RootComponent } from './components/root/root.component';
 import { ACCESS_MANAGEMENT_MENU } from './constants/access-management.constant';
 import { HOME_MENU } from './constants/home.constant';
@@ -33,15 +31,12 @@ const routes: Routes = [
                     }
                 ]
             },
-            { path: 'admin', component: AdminRootComponent },
-            { path: 'param', component: ParamRootComponent },
             {
                 path: 'access-management',
                 component: AccessManagementRootComponent,
                 data: { menus: ACCESS_MANAGEMENT_MENU },
                 canActivate: [DefaultRedirectionGuard],
                 children: [
-                    { path: '', redirectTo: 'user', pathMatch: 'full' },
                     {
                         path: 'user',
                         loadChildren: '../user/user.module#UserModule'
