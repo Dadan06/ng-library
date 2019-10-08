@@ -2,7 +2,7 @@
     <img src="assets/images/header/logo.png" />
     <label class="title">Library Management</label>
     <div class="wrapper">
-        <form [formGroup]="form" (submit)="logIn.emit(form.value)">
+        <form [formGroup]="form" (submit)="onSubmit()">
             <div>
                 <div class="login">
                     <div class="img">
@@ -11,6 +11,7 @@
                     <input formControlName="login" placeholder="Entrez votre identifiant" />
                 </div>
             </div>
+            <app-validation-error [control]="form.controls['login']"></app-validation-error>
             <div>
                 <div class="password">
                     <div class="img">
@@ -19,7 +20,10 @@
                     <input formControlName="password" type="password" placeholder="Mot de passe" />
                 </div>
             </div>
-            <div><button type="submit">SE CONNECTER</button></div>
+            <app-validation-error [control]="form.controls['password']"></app-validation-error>
+            <div>
+                <button type="submit">SE CONNECTER</button>
+            </div>
         </form>
     </div>
     <p class="auth-error">
