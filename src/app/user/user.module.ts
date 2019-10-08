@@ -5,13 +5,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { ModalModule } from 'angular-custom-modal';
-import { environment } from 'src/environments/environment';
 import { SharedModule } from '../shared/shared.module';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserFormRootComponent } from './containers/user-form-root/user-form-root.component';
 import { UserRootComponent } from './containers/user-root/user-root.component';
-import { UserMockService } from './services/user-mock.service';
 import { UserService } from './services/user.service';
 import { UserRouterEffects } from './store/effects/user-router.effects';
 import { UserEffects } from './store/effects/user.effects';
@@ -30,11 +28,6 @@ import { UserRoutingModule } from './user-routing.module';
         EffectsModule.forFeature([UserEffects, UserRouterEffects]),
         ModalModule
     ],
-    providers: [
-        {
-            provide: UserService,
-            useClass: environment.mock ? UserMockService : UserService
-        }
-    ]
+    providers: [UserService]
 })
 export class UserModule {}
