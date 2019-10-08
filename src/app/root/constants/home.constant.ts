@@ -9,7 +9,7 @@ export const HOME_MENU: Menu[] = [
         accessRight: UserPrivileges.VIEW_PRODUCT
     },
     {
-        title: `rôles`,
+        title: `Fournisseurs`,
         icon: '',
         routerLink: '/root/home/supplier',
         accessRight: UserPrivileges.VIEW_SUPPLIER
