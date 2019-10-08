@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { markFormAsTouchedAndDirty } from 'src/app/shared/utils/form.utils';
+import { Supplier } from 'src/app/supplier/types/supplier.interface';
 import { Product } from '../../types/product.interface';
 
 @Component({
@@ -18,6 +19,7 @@ export class ProductFormComponent {
         }
     }
     @Input() editEnabled = true;
+    @Input() suppliers: Supplier[];
 
     @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
     @Output() save: EventEmitter<Product> = new EventEmitter<Product>();
@@ -45,7 +47,8 @@ export class ProductFormComponent {
             _id: [product._id],
             name: [product.name, Validators.required],
             costPrice: [product.costPrice, Validators.required],
-            sellingPrice: [product.sellingPrice, Validators.required]
+            sellingPrice: [product.sellingPrice, Validators.required],
+            supplier: [product.supplier, Validators.required]
         });
     }
 }

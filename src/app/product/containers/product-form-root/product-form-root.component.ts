@@ -5,10 +5,12 @@ import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { go } from 'src/app/shared/utils/go.utils';
 import { subscribeModal } from 'src/app/shared/utils/modal.utils';
+import { Supplier } from 'src/app/supplier/types/supplier.interface';
 import { PRODUCT_BASE_ROUTE } from '../../constants/product.constants';
 import { SaveProduct } from '../../store/actions/product.actions';
 import { ProductState } from '../../store/reducers/product.reducers';
 import {
+    getAllSupplier,
     getProduct,
     getProductEditEnabled,
     getProductEditing,
@@ -23,6 +25,7 @@ import { Product } from '../../types/product.interface';
 })
 export class ProductFormRootComponent implements OnInit {
     product$: Observable<Product>;
+    suppliers$: Observable<Supplier[]>;
     isEditing$: Observable<boolean>;
     productEditEnabled$: Observable<boolean>;
 
@@ -35,6 +38,7 @@ export class ProductFormRootComponent implements OnInit {
 
     ngOnInit() {
         this.product$ = this.productStore.pipe(select(getProduct));
+        this.suppliers$ = this.productStore.pipe(select(getAllSupplier));
         this.isEditing$ = this.productStore.pipe(select(getProductEditing));
         this.productEditEnabled$ = this.authenticationStore.pipe(select(getProductEditEnabled));
         this.subscribeModals();

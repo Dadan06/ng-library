@@ -3,28 +3,38 @@
     <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
         <div class="control">
             <label>
-                Nom
+                Nom *
             </label>
             <input #first formControlName="name" type="text" />
             <app-validation-error [control]="form.controls['name']"></app-validation-error>
         </div>
-
         <div class="control">
             <label>
-                Prix Unitaire
+                Prix Unitaire *
             </label>
             <input formControlName="costPrice" type="text" />
             <app-validation-error [control]="form.controls['costPrice']"></app-validation-error>
         </div>
-
         <div class="control">
             <label>
-                Prix de vente
+                Prix de vente *
             </label>
             <input formControlName="sellingPrice" type="text" />
             <app-validation-error [control]="form.controls['sellingPrice']"></app-validation-error>
         </div>
-
+        <div class="control">
+            <label for="supplier">Fournisseur *</label>
+            <div class="custom-select">
+                <ng-select
+                    [dropdownPosition]="'bottom'"
+                    [items]="suppliers"
+                    [searchable]="false"
+                    bindLabel="name"
+                    formControlName="supplier"
+                ></ng-select>
+            </div>
+            <app-validation-error [control]="form.controls['supplier']"></app-validation-error>
+        </div>
         <div class="buttons">
             <button
                 class="blue"

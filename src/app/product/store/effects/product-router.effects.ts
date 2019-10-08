@@ -6,7 +6,12 @@ import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { AppRouterState } from 'src/app/core/store/reducers/router.reducers';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../types/product.interface';
-import { LoadProduct, LoadProducts, LoadProductSuccess } from '../actions/product.actions';
+import {
+    LoadAllSupplier,
+    LoadProduct,
+    LoadProducts,
+    LoadProductSuccess
+} from '../actions/product.actions';
 import { ProductState } from '../reducers/product.reducers';
 import { getProductCriteria, getProducts } from '../selectors/product.selectors';
 
@@ -24,7 +29,7 @@ export class ProductRouterEffects {
     productRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes('master-detail')),
+        filter(state => state.url.includes('product')),
         withLatestFrom(
             this.store.pipe(select(getProducts)),
             this.store.pipe(select(getProductCriteria))
@@ -40,11 +45,7 @@ export class ProductRouterEffects {
     productFormRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(
-            state =>
-                state.url.includes('master-detail/detail') ||
-                state.url.includes('master-detail/edit')
-        ),
+        filter(state => state.url.includes('product/detail') || state.url.includes('product/edit')),
         map(routerState => new LoadProduct(routerState.params.productModelId))
     );
 
@@ -52,11 +53,18 @@ export class ProductRouterEffects {
     productNewRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes('master-detail/new')),
+        filter(state => state.url.includes('product/new')),
         switchMap(() =>
             this.productService
                 .productFactory()
                 .pipe(map((response: Product) => new LoadProductSuccess(response)))
         )
+    );
+
+    allSupplierRoute$ = this.action$.pipe(
+        ofType(ROUTER_NAVIGATION),
+        map(this.mapToRouterStateUrl),
+        filter(state => state.url.includes('product/edit') || state.url.includes('product/new')),
+        map(routerState => new LoadAllSupplier())
     );
 }

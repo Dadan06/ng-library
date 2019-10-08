@@ -10,7 +10,8 @@ export const EMPTY_PRODUCT_MODEL: Product = {
     _id: null,
     name: null,
     costPrice: 0,
-    sellingPrice: 0
+    sellingPrice: 0,
+    supplier: null
 };
 
 export const PRODUCT_API_ROUTE = 'product';

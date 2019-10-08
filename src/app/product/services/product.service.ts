@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 import { ApiResponse } from 'src/app/shared/types/api-response.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
 import { flatten } from 'src/app/shared/utils/flatten';
+import { SUPPLIER_API_ROUTE } from 'src/app/supplier/constants/supplier.constants';
+import { Supplier } from 'src/app/supplier/types/supplier.interface';
 import { environment } from 'src/environments/environment';
 import { EMPTY_PRODUCT_MODEL, PRODUCT_API_ROUTE } from '../constants/product.constants';
 import { ProductCriteria } from '../types/product-criteria.interface';
@@ -49,5 +51,11 @@ export class ProductService {
             : this.http
                   .post(`${environment.apiBaseUrl}/${PRODUCT_API_ROUTE}`, masterDetailModel)
                   .pipe(map((response: ApiResponse) => response.data as Product));
+    }
+
+    loadSuppliers(): Observable<Supplier[]> {
+        return this.http
+            .get(`${environment.apiBaseUrl}/${SUPPLIER_API_ROUTE}/all`)
+            .pipe(map((response: ApiResponse) => response.data as Supplier[]));
     }
 }

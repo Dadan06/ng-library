@@ -3,8 +3,9 @@
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>PU</th>
-                <th>PV</th>
+                <th>Prix unitaire</th>
+                <th>Prix de vente</th>
+                <th>Fournisseur</th>
                 <th></th>
             </tr>
         </thead>
@@ -13,9 +14,10 @@
                 *ngFor="let product of products"
                 [class.selected]="product._id === currentProduct?._id"
             >
-                <td>{{ product.name }}</td>
+                <td>{{ product.name | titlecase }}</td>
                 <td>{{ product.address }}</td>
                 <td>{{ product.contact }}</td>
+                <td>{{ product.supplier.name | uppercase }}</td>
                 <td class="actions">
                     <img
                         (click)="view.emit(product); currentProduct = product"
