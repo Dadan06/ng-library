@@ -12,6 +12,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
+import { DigitOnlyDirective } from './directives/digit-only.directive';
 
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalModule, NgSelectModule],
@@ -24,7 +25,8 @@ import { ValidationErrorComponent } from './components/validation-error/validati
         ListBoxComponent,
         ListBoxFilterComponent,
         SearchBarComponent,
-        InputNumberComponent
+        InputNumberComponent,
+        DigitOnlyDirective
     ],
     exports: [
         CommonModule,
@@ -38,7 +40,8 @@ import { ValidationErrorComponent } from './components/validation-error/validati
         ListBoxComponent,
         ListBoxFilterComponent,
         SearchBarComponent,
-        InputNumberComponent
+        InputNumberComponent,
+        DigitOnlyDirective
     ]
 })
 export class SharedModule {}
