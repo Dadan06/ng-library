@@ -58,4 +58,13 @@ export class ProductService {
             .get(`${environment.apiBaseUrl}/${SUPPLIER_API_ROUTE}/all`)
             .pipe(map((response: ApiResponse) => response.data as Supplier[]));
     }
+
+    checkDuplicate(product: Product): Observable<object | null> {
+        return this.http
+            .post(`${environment.apiBaseUrl}/${PRODUCT_API_ROUTE}/check-duplicate`, product)
+            .pipe(
+                map((response: ApiResponse) => (response.data as unknown) as boolean),
+                map(hasDuplicate => (hasDuplicate ? { duplicateEntry: true } : null))
+            );
+    }
 }

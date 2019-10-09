@@ -6,7 +6,10 @@
                 Nom *
             </label>
             <input #first formControlName="name" type="text" />
-            <app-validation-error [control]="form.controls['name']"></app-validation-error>
+            <app-validation-error
+                [control]="form.controls['name']"
+                [customErrorLabels]="{ duplicateEntry: 'Ce nom existe déjà' }"
+            ></app-validation-error>
         </div>
         <div class="control">
             <label>

@@ -1,7 +1,8 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { markFormAsTouchedAndDirty } from 'src/app/shared/utils/form.utils';
 import { Supplier } from 'src/app/supplier/types/supplier.interface';
+import { ProductService } from '../../services/product.service';
 import { Product } from '../../types/product.interface';
 
 @Component({
@@ -15,6 +16,8 @@ export class ProductFormComponent {
         if (product) {
             this.form = this.initForm(product);
             this.isEditing ? this.form.enable() : this.form.disable();
+            this.form.get('name').setAsyncValidators(this.checkDuplicate.bind(this));
+            this.form.get('name').updateValueAndValidity();
             setTimeout(() => this.isEditing && this.setFocusOnFirstInput());
         }
     }
@@ -28,7 +31,7 @@ export class ProductFormComponent {
     form: FormGroup;
     @ViewChild('first') firstInput: ElementRef;
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(private formBuilder: FormBuilder, private productService: ProductService) {}
 
     onSubmit(form: FormGroup) {
         this.form.valid ? this.save.emit(form.value) : this.showErrors();
@@ -51,5 +54,9 @@ export class ProductFormComponent {
             quantity: [product.quantity, Validators.required],
             supplier: [product.supplier, Validators.required]
         });
+    }
+
+    private checkDuplicate(control: AbstractControl) {
+        return this.productService.checkDuplicate({ ...this.form.value, name: control.value });
     }
 }
