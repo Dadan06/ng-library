@@ -66,6 +66,7 @@ export class ProductRouterEffects {
         )
     );
 
+    @Effect()
     allSupplierRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),

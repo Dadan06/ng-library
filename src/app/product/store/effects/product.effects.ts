@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
 import { Go } from 'src/app/core/store/actions/router.actions';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
+import { Supplier } from 'src/app/supplier/types/supplier.interface';
 import { PRODUCT_BASE_ROUTE } from '../../constants/product.constants';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../types/product.interface';
@@ -12,6 +13,9 @@ import {
     DeleteProduct,
     DeleteProductFail,
     DeleteProductSuccess,
+    LoadAllSupplier,
+    LoadAllSupplierFail,
+    LoadAllSupplierSuccess,
     LoadProduct,
     LoadProductFail,
     LoadProducts,
@@ -30,7 +34,7 @@ import { getProductCriteria } from '../selectors/product.selectors';
 export class ProductEffects {
     constructor(
         private action$: Actions,
-        private supplierService: ProductService,
+        private productService: ProductService,
         private store: Store<ProductState>
     ) {}
 
@@ -39,7 +43,7 @@ export class ProductEffects {
         ofType(ProductActionTypes.LOAD_PRODUCT_MODELS),
         switchMap(
             (action: LoadProducts): Observable<Paginated<Product>> =>
-                this.supplierService.loadProducts(action.payload)
+                this.productService.loadProducts(action.payload)
         ),
         map((response: Paginated<Product>) => new LoadProductsSuccess(response)),
         catchError(error => of(new LoadProductsFail(error)))
@@ -50,7 +54,7 @@ export class ProductEffects {
         ofType(ProductActionTypes.LOAD_PRODUCT_MODEL),
         switchMap(
             (action: LoadProduct): Observable<Product> =>
-                this.supplierService.loadProduct(action.payload)
+                this.productService.loadProduct(action.payload)
         ),
         map((response: Product) => new LoadProductSuccess(response)),
         catchError(error => of(new LoadProductFail(error)))
@@ -61,7 +65,7 @@ export class ProductEffects {
         ofType(ProductActionTypes.SAVE_PRODUCT_MODEL),
         switchMap(
             (action: SaveProduct): Observable<Product> =>
-                this.supplierService.saveProduct(action.payload)
+                this.productService.saveProduct(action.payload)
         ),
         map((response: Product) => new SaveProductSuccess(response)),
         catchError(error => of(new SaveProductFail(error)))
@@ -79,7 +83,7 @@ export class ProductEffects {
         ofType(ProductActionTypes.DELETE_PRODUCT_MODEL),
         switchMap(
             (action: DeleteProduct): Observable<void> =>
-                this.supplierService.deleteProduct(action.payload)
+                this.productService.deleteProduct(action.payload)
         ),
         mergeMap(() => [
             new DeleteProductSuccess(),
@@ -95,5 +99,15 @@ export class ProductEffects {
         ofType(ProductActionTypes.DELETE_PRODUCT_MODEL_SUCCESS),
         withLatestFrom(this.store.pipe(select(getProductCriteria))),
         map(([action, criteria]) => new LoadProducts(criteria))
+    );
+
+    @Effect()
+    loadAllSupplier$ = this.action$.pipe(
+        ofType(ProductActionTypes.LOAD_ALL_SUPPLIER),
+        switchMap(
+            (action: LoadAllSupplier): Observable<Supplier[]> => this.productService.loadSuppliers()
+        ),
+        map((response: Supplier[]) => new LoadAllSupplierSuccess(response)),
+        catchError(error => of(new LoadAllSupplierFail(error)))
     );
 }
