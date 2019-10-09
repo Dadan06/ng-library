@@ -28,6 +28,14 @@
                                 : '/assets/images/ico-edit-disabled.png'
                         "
                     />
+                    <img
+                        (click)="deleteEnabled && delete.emit(user)"
+                        [src]="
+                            deleteEnabled
+                                ? '/assets/images/ico-delete.png'
+                                : '/assets/images/ico-delete-disabled.png'
+                        "
+                    />
                 </td>
             </tr>
         </tbody>
