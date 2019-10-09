@@ -5,7 +5,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { ModalModule } from 'angular-custom-modal';
-import { environment } from 'src/environments/environment';
 import { SharedModule } from '../shared/shared.module';
 import { RoleDetailComponent } from './components/role-detail/role-detail.component';
 import { RoleFormComponent } from './components/role-form/role-form.component';
@@ -14,7 +13,6 @@ import { RoleDetailRootComponent } from './containers/role-detail-container/role
 import { RoleFormRootComponent } from './containers/role-form-root/role-form-root.component';
 import { RoleRootComponent } from './containers/role-root/role-root.component';
 import { RoleRoutingModule } from './role-routing.module';
-import { RoleMockService } from './services/role-mock.service';
 import { RoleService } from './services/role.service';
 import { RoleEffects } from './store/effects/role.effects';
 import { RoleRouterEffects } from './store/effects/role.router-effects';
@@ -39,11 +37,6 @@ import { roleReducer } from './store/reducers/role.reducer';
         EffectsModule.forFeature([RoleEffects, RoleRouterEffects]),
         ModalModule
     ],
-    providers: [
-        {
-            provide: RoleService,
-            useClass: environment.mock ? RoleMockService : RoleService
-        }
-    ]
+    providers: [RoleService]
 })
 export class RoleModule {}
