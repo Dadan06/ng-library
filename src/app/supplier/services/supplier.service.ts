@@ -22,9 +22,9 @@ export class SupplierService {
             .pipe(map((response: ApiResponse) => response.data as Paginated<Supplier>));
     }
 
-    loadSupplier(masterDetailModelId: string): Observable<Supplier> {
+    loadSupplier(supplierId: string): Observable<Supplier> {
         return this.http
-            .get(`${environment.apiBaseUrl}/${SUPPLIER_API_ROUTE}/${masterDetailModelId}`)
+            .get(`${environment.apiBaseUrl}/${SUPPLIER_API_ROUTE}/${supplierId}`)
             .pipe(map((response: ApiResponse) => response.data as Supplier));
     }
 
@@ -32,22 +32,19 @@ export class SupplierService {
         return of(EMPTY_SUPPLIER_MODEL);
     }
 
-    deleteSupplier(masterDetailModel: Supplier): Observable<void> {
+    deleteSupplier(supplier: Supplier): Observable<void> {
         return this.http
-            .delete(`${environment.apiBaseUrl}/${SUPPLIER_API_ROUTE}/${masterDetailModel._id}`)
+            .delete(`${environment.apiBaseUrl}/${SUPPLIER_API_ROUTE}/${supplier._id}`)
             .pipe(map(() => null));
     }
 
-    saveSupplier(masterDetailModel: Supplier): Observable<Supplier> {
-        return masterDetailModel._id
+    saveSupplier(supplier: Supplier): Observable<Supplier> {
+        return supplier._id
             ? this.http
-                  .put(
-                      `${environment.apiBaseUrl}/${SUPPLIER_API_ROUTE}/${masterDetailModel._id}`,
-                      masterDetailModel
-                  )
+                  .put(`${environment.apiBaseUrl}/${SUPPLIER_API_ROUTE}/${supplier._id}`, supplier)
                   .pipe(map((response: ApiResponse) => response.data as Supplier))
             : this.http
-                  .post(`${environment.apiBaseUrl}/${SUPPLIER_API_ROUTE}`, masterDetailModel)
+                  .post(`${environment.apiBaseUrl}/${SUPPLIER_API_ROUTE}`, supplier)
                   .pipe(map((response: ApiResponse) => response.data as Supplier));
     }
 }

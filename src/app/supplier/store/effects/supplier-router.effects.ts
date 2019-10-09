@@ -30,11 +30,8 @@ export class SupplierRouterEffects {
             this.store.pipe(select(getSuppliers)),
             this.store.pipe(select(getSupplierCriteria))
         ),
-        filter(([routerState, supplierModels]) => supplierModels.length === 0),
-        map(
-            ([routerState, supplierModels, supplierModelCriteria]) =>
-                new LoadSuppliers(supplierModelCriteria)
-        )
+        filter(([routerState, suppliers]) => suppliers.length === 0),
+        map(([routerState, suppliers, supplierCriteria]) => new LoadSuppliers(supplierCriteria))
     );
 
     @Effect()
@@ -46,7 +43,7 @@ export class SupplierRouterEffects {
                 state.url.includes(`${SUPPLIER_API_ROUTE}/detail`) ||
                 state.url.includes(`${SUPPLIER_API_ROUTE}/edit`)
         ),
-        map(routerState => new LoadSupplier(routerState.params.supplierModelId))
+        map(routerState => new LoadSupplier(routerState.params.supplierId))
     );
 
     @Effect()
