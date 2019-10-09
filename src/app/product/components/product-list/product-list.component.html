@@ -3,8 +3,8 @@
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Prix unitaire</th>
-                <th>Prix de vente</th>
+                <th>Prix unitaire (Ar)</th>
+                <th>Prix de vente (Ar)</th>
                 <th>Quantité</th>
                 <th>Fournisseur</th>
                 <th></th>
@@ -16,8 +16,8 @@
                 [class.selected]="product._id === currentProduct?._id"
             >
                 <td>{{ product.name | titlecase }}</td>
-                <td>{{ product.address }}</td>
-                <td>{{ product.contact }}</td>
+                <td>{{ product.costPrice | number: '1.0-0' }}</td>
+                <td>{{ product.sellingPrice | number: '1.0-0' }}</td>
                 <td>{{ product.quantity }}</td>
                 <td>{{ product.supplier.name | uppercase }}</td>
                 <td class="actions">
