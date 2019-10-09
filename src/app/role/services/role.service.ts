@@ -11,10 +11,8 @@ import { PRIVILEGE_ROUTE } from '../constants/privilege.constants';
 import { EMPTY_ROLE, ROLE_ROUTE } from '../constants/role.constant';
 import { Privilege } from '../types/privilege.interface';
 import { Role } from '../types/role.interface';
-import { RoleServiceInterface } from './role-service.interface';
-
 @Injectable()
-export class RoleService implements RoleServiceInterface {
+export class RoleService {
     constructor(private http: HttpClient) {}
 
     loadRoles(criteria: ListCriteria): Observable<Paginated<Role>> {
