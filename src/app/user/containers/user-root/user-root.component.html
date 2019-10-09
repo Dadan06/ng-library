@@ -17,6 +17,9 @@
         </app-loader>
     </div>
     <footer>
+        <button class="btn-new" [disabled]="!(userCreateEnabled$ | async)" (click)="onCreate()">
+            +
+        </button>
         <app-pagination
             [totalItems]="totalItems$ | async"
             (paginate)="onPaginate($event)"

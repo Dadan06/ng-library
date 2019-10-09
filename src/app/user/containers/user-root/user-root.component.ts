@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Page } from 'src/app/shared/types/page.interface';
+import { go } from 'src/app/shared/utils/go.utils';
 import { subscribeModal } from 'src/app/shared/utils/modal.utils';
-import { Go } from '../../../core/store/actions/router.actions';
 import { USER_BASE_ROUTE, USER_DEFAULT_CRITERIA } from '../../constants/user.constant';
 import { DeleteUser, LoadUsers } from '../../store/actions/user.actions';
 import { UserState } from '../../store/reducers/user.reducers';
@@ -64,11 +64,11 @@ export class UserRootComponent implements OnInit {
     }
 
     onViewDetail(user: User) {
-        this.go([`${USER_BASE_ROUTE}/detail`, user._id]);
+        go(this.userStore, [`${USER_BASE_ROUTE}/detail`, user._id]);
     }
 
     onEdit(user: User) {
-        this.go([`${USER_BASE_ROUTE}/edit`, user._id]);
+        go(this.userStore, [`${USER_BASE_ROUTE}/edit`, user._id]);
     }
 
     onDelete(user: User) {
@@ -82,15 +82,11 @@ export class UserRootComponent implements OnInit {
     }
 
     onCreate() {
-        this.go([`${USER_BASE_ROUTE}/new`]);
+        go(this.userStore, [`${USER_BASE_ROUTE}/new`]);
     }
 
     onConfirmDeletion() {
         this.userStore.dispatch(new DeleteUser(this.toBeDeletedUser));
-    }
-
-    private go(path: string[]) {
-        this.userStore.dispatch(new Go({ path }));
     }
 
     private subscribeModals() {

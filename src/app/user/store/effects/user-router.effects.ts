@@ -59,7 +59,10 @@ export class UserRouterEffects {
     loadRoles$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes(`${USER_ROUTE}/edit`)),
+        filter(
+            state =>
+                state.url.includes(`${USER_ROUTE}/new`) || state.url.includes(`${USER_ROUTE}/edit`)
+        ),
         map(() => new LoadAllRole())
     );
 }
