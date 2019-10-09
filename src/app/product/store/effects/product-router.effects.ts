@@ -35,11 +35,8 @@ export class ProductRouterEffects {
             this.store.pipe(select(getProducts)),
             this.store.pipe(select(getProductCriteria))
         ),
-        filter(([routerState, productModels]) => productModels.length === 0),
-        map(
-            ([routerState, productModels, productModelCriteria]) =>
-                new LoadProducts(productModelCriteria)
-        )
+        filter(([routerState, products]) => products.length === 0),
+        map(([routerState, products, productCriteria]) => new LoadProducts(productCriteria))
     );
 
     @Effect()
@@ -51,7 +48,7 @@ export class ProductRouterEffects {
                 state.url.includes(`${PRODUCT_API_ROUTE}/detail`) ||
                 state.url.includes(`${PRODUCT_API_ROUTE}/edit`)
         ),
-        map(routerState => new LoadProduct(routerState.params.productModelId))
+        map(routerState => new LoadProduct(routerState.params.productId))
     );
 
     @Effect()

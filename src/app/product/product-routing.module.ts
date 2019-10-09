@@ -13,13 +13,13 @@ const routes: Routes = [
         data: { privilege: UserPrivileges.VIEW_PRODUCT },
         children: [
             {
-                path: 'detail/:supplierId',
+                path: 'detail/:productId',
                 component: ProductFormRootComponent,
                 canActivate: [PrivilegeGuard],
                 data: { privilege: UserPrivileges.VIEW_PRODUCT }
             },
             {
-                path: 'edit/:supplierId',
+                path: 'edit/:productId',
                 component: ProductFormRootComponent,
                 canActivate: [PrivilegeGuard],
                 data: { privilege: UserPrivileges.EDIT_PRODUCT }

@@ -24,9 +24,9 @@ export class ProductService {
             .pipe(map((response: ApiResponse) => response.data as Paginated<Product>));
     }
 
-    loadProduct(masterDetailModelId: string): Observable<Product> {
+    loadProduct(productId: string): Observable<Product> {
         return this.http
-            .get(`${environment.apiBaseUrl}/${PRODUCT_API_ROUTE}/${masterDetailModelId}`)
+            .get(`${environment.apiBaseUrl}/${PRODUCT_API_ROUTE}/${productId}`)
             .pipe(map((response: ApiResponse) => response.data as Product));
     }
 
@@ -34,22 +34,19 @@ export class ProductService {
         return of(EMPTY_PRODUCT_MODEL);
     }
 
-    deleteProduct(masterDetailModel: Product): Observable<void> {
+    deleteProduct(product: Product): Observable<void> {
         return this.http
-            .delete(`${environment.apiBaseUrl}/${PRODUCT_API_ROUTE}/${masterDetailModel._id}`)
+            .delete(`${environment.apiBaseUrl}/${PRODUCT_API_ROUTE}/${product._id}`)
             .pipe(map(() => null));
     }
 
-    saveProduct(masterDetailModel: Product): Observable<Product> {
-        return masterDetailModel._id
+    saveProduct(product: Product): Observable<Product> {
+        return product._id
             ? this.http
-                  .put(
-                      `${environment.apiBaseUrl}/${PRODUCT_API_ROUTE}/${masterDetailModel._id}`,
-                      masterDetailModel
-                  )
+                  .put(`${environment.apiBaseUrl}/${PRODUCT_API_ROUTE}/${product._id}`, product)
                   .pipe(map((response: ApiResponse) => response.data as Product))
             : this.http
-                  .post(`${environment.apiBaseUrl}/${PRODUCT_API_ROUTE}`, masterDetailModel)
+                  .post(`${environment.apiBaseUrl}/${PRODUCT_API_ROUTE}`, product)
                   .pipe(map((response: ApiResponse) => response.data as Product));
     }
 

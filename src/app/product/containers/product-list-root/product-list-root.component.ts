@@ -4,8 +4,8 @@ import { ModalComponent } from 'angular-custom-modal';
 import * as cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
-import { Go } from 'src/app/core/store/actions/router.actions';
 import { Page } from 'src/app/shared/types/page.interface';
+import { go } from 'src/app/shared/utils/go.utils';
 import { PRODUCT_BASE_ROUTE, PRODUCT_DEFAULT_CRITERIA } from '../../constants/product.constants';
 import { DeleteProduct, LoadProducts } from '../../store/actions/product.actions';
 import { ProductState } from '../../store/reducers/product.reducers';
@@ -60,15 +60,11 @@ export class ProductListRootComponent implements OnInit {
     }
 
     onViewDetail(product: Product) {
-        this.productStore.dispatch(
-            new Go({
-                path: [`${PRODUCT_BASE_ROUTE}/detail`, product._id]
-            })
-        );
+        go(this.productStore, [`${PRODUCT_BASE_ROUTE}/detail`, product._id]);
     }
 
     onEdit(product: Product) {
-        this.go([`${PRODUCT_BASE_ROUTE}/edit`, product._id]);
+        go(this.productStore, [`${PRODUCT_BASE_ROUTE}/edit`, product._id]);
     }
 
     onDelete(product: Product) {
@@ -82,14 +78,10 @@ export class ProductListRootComponent implements OnInit {
     }
 
     onCreate() {
-        this.go([`${PRODUCT_BASE_ROUTE}/new`]);
+        go(this.productStore, [`${PRODUCT_BASE_ROUTE}/new`]);
     }
 
     onConfirmDeletion() {
         this.productStore.dispatch(new DeleteProduct(this.toBeDeletedProduct));
-    }
-
-    private go(path: string[]) {
-        this.productStore.dispatch(new Go({ path }));
     }
 }
