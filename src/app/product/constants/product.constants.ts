@@ -11,6 +11,7 @@ export const EMPTY_PRODUCT_MODEL: Product = {
     name: null,
     costPrice: 0,
     sellingPrice: 0,
+    quantity: 0,
     supplier: null
 };
 

@@ -5,5 +5,6 @@ export interface Product {
     name: string;
     costPrice: number;
     sellingPrice: number;
+    quantity: number;
     supplier: Supplier;
 }

@@ -48,6 +48,7 @@ export class ProductFormComponent {
             name: [product.name, Validators.required],
             costPrice: [product.costPrice, Validators.required],
             sellingPrice: [product.sellingPrice, Validators.required],
+            quantity: [product.quantity, Validators.required],
             supplier: [product.supplier, Validators.required]
         });
     }

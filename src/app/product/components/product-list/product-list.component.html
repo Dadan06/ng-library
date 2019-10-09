@@ -5,6 +5,7 @@
                 <th>Nom</th>
                 <th>Prix unitaire</th>
                 <th>Prix de vente</th>
+                <th>Quantité</th>
                 <th>Fournisseur</th>
                 <th></th>
             </tr>
@@ -17,6 +18,7 @@
                 <td>{{ product.name | titlecase }}</td>
                 <td>{{ product.address }}</td>
                 <td>{{ product.contact }}</td>
+                <td>{{ product.quantity }}</td>
                 <td>{{ product.supplier.name | uppercase }}</td>
                 <td class="actions">
                     <img
