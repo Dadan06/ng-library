@@ -1,3 +1,8 @@
-<p>
-  admin-root works!
-</p>
+<div class="container">
+    <aside>
+        <app-side-nav [url]="url$ | async" [menus]="adminMenus"></app-side-nav>
+    </aside>
+    <main>
+        <router-outlet></router-outlet>
+    </main>
+</div>

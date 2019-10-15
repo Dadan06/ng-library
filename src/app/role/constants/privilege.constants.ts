@@ -1,7 +1,4 @@
 export const enum UserPrivileges {
-    CONTACT_LIST = 'VIEW_CONTACT',
-    CONTACT_FORM = 'EDIT_CONTACT',
-    CONTACT_DELETE = 'DELETE_CONTACT',
     VIEW_USER = 'VIEW_USER',
     CREATE_USER = 'CREATE_USER',
     EDIT_USER = 'EDIT_USER',
@@ -18,16 +15,11 @@ export const enum UserPrivileges {
     CREATE_SUPPLIER = 'CREATE_SUPPLIER',
     EDIT_SUPPLIER = 'EDIT_SUPPLIER',
     DELETE_SUPPLIER = 'DELETE_SUPPLIER',
-    VIEW_MASTER_DETAIL_MODEL = 'VIEW_MASTER_DETAIL_MODEL',
-    EDIT_MASTER_DETAIL_MODEL = 'EDIT_MASTER_DETAIL_MODEL',
-    CREATE_MASTER_DETAIL_MODEL = 'CREATE_MASTER_DETAIL_MODEL',
-    DELETE_MASTER_DETAIL_MODEL = 'DELETE_MASTER_DETAIL_MODEL'
+    VIEW_TRADES = 'VIEW_TRADES',
+    CREATE_TRADE = 'CREATE_TRADE'
 }
 
 export const USER_PRIVILEGE_LABELS: Record<UserPrivileges, string> = {
-    [UserPrivileges.CONTACT_LIST]: 'Consultation contact',
-    [UserPrivileges.CONTACT_FORM]: 'Edition contact',
-    [UserPrivileges.CONTACT_DELETE]: 'Suppression contact',
     [UserPrivileges.VIEW_USER]: 'Consultation utilisateurs',
     [UserPrivileges.CREATE_USER]: 'Création utilisateur',
     [UserPrivileges.EDIT_USER]: 'Modification utilisateur',
@@ -44,10 +36,8 @@ export const USER_PRIVILEGE_LABELS: Record<UserPrivileges, string> = {
     [UserPrivileges.CREATE_SUPPLIER]: 'Création fournisseur',
     [UserPrivileges.EDIT_SUPPLIER]: 'Modification fournisseur',
     [UserPrivileges.DELETE_SUPPLIER]: 'Suppression fournisseur',
-    [UserPrivileges.VIEW_MASTER_DETAIL_MODEL]: 'Consultation Master Detail Model',
-    [UserPrivileges.EDIT_MASTER_DETAIL_MODEL]: 'Edition Master Detail Model',
-    [UserPrivileges.CREATE_MASTER_DETAIL_MODEL]: 'Création Master Detail Model',
-    [UserPrivileges.DELETE_MASTER_DETAIL_MODEL]: 'Suppression Master Detail Model'
+    [UserPrivileges.VIEW_TRADES]: 'Consultation ventes',
+    [UserPrivileges.CREATE_TRADE]: 'Création vente'
 };
 
 export const enum PrivilegeCategories {

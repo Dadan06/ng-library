@@ -4,6 +4,7 @@ import { AccessManagementRootComponent } from './components/access-management-ro
 import { HomeRootComponent } from './components/home-root/home-root.component';
 import { RootComponent } from './components/root/root.component';
 import { ACCESS_MANAGEMENT_MENU } from './constants/access-management.constant';
+import { ADMIN_MENU } from './constants/admin.constant';
 import { HOME_MENU } from './constants/home.constant';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { DefaultRedirectionGuard } from './guards/default-redirection.guard';
@@ -44,6 +45,18 @@ const routes: Routes = [
                     {
                         path: 'role',
                         loadChildren: '../role/role.module#RoleModule'
+                    }
+                ]
+            },
+            {
+                path: 'admin',
+                component: AccessManagementRootComponent,
+                data: { menus: ADMIN_MENU },
+                canActivate: [DefaultRedirectionGuard],
+                children: [
+                    {
+                        path: 'trade',
+                        loadChildren: '../trade/trade.module#TradeModule'
                     }
                 ]
             }
