@@ -5,7 +5,7 @@ import { LogOut } from 'src/app/authentication/store/actions/authentication.acti
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { getLoggedUser } from 'src/app/authentication/store/selectors/authentication.selectors';
 import { User } from 'src/app/user/types/user.interface';
-import { HEADER_MENU } from '../../constants/header-menu.interface';
+import { HEADER_MENU } from '../../constants/header-menu.constant';
 import { Menu } from '../../types/menu.interface';
 
 @Component({
