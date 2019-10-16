@@ -1,0 +1,21 @@
+<div class="container">
+    <header>Gestion des ventes</header>
+    <div class="selectable-product-container">
+        <main>
+            <app-loader [isLoading]="productsLoading$ | async">
+                <app-selectable-product-list
+                    [products]="products$ | async"
+                ></app-selectable-product-list>
+            </app-loader>
+        </main>
+        <footer>
+            <app-pagination
+                [totalItems]="totalItems$ | async"
+                (paginate)="onPaginate($event)"
+            ></app-pagination>
+        </footer>
+    </div>
+    <div class="selected-product-container">
+        <app-selected-product-list></app-selected-product-list>
+    </div>
+</div>
