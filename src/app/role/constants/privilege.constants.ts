@@ -15,8 +15,8 @@ export const enum UserPrivileges {
     CREATE_SUPPLIER = 'CREATE_SUPPLIER',
     EDIT_SUPPLIER = 'EDIT_SUPPLIER',
     DELETE_SUPPLIER = 'DELETE_SUPPLIER',
-    VIEW_TRADES = 'VIEW_TRADES',
-    CREATE_TRADE = 'CREATE_TRADE'
+    VIEW_SALES = 'VIEW_SALES',
+    CREATE_SALE = 'CREATE_SALE'
 }
 
 export const USER_PRIVILEGE_LABELS: Record<UserPrivileges, string> = {
@@ -36,8 +36,8 @@ export const USER_PRIVILEGE_LABELS: Record<UserPrivileges, string> = {
     [UserPrivileges.CREATE_SUPPLIER]: 'Création fournisseur',
     [UserPrivileges.EDIT_SUPPLIER]: 'Modification fournisseur',
     [UserPrivileges.DELETE_SUPPLIER]: 'Suppression fournisseur',
-    [UserPrivileges.VIEW_TRADES]: 'Consultation ventes',
-    [UserPrivileges.CREATE_TRADE]: 'Création vente'
+    [UserPrivileges.VIEW_SALES]: 'Consultation ventes',
+    [UserPrivileges.CREATE_SALE]: 'Création vente'
 };
 
 export const enum PrivilegeCategories {
@@ -45,7 +45,8 @@ export const enum PrivilegeCategories {
     USER = 'USER',
     ROLE = 'ROLE',
     PRODUCT = 'PRODUCT',
-    SUPPLIER = 'SUPPLIER'
+    SUPPLIER = 'SUPPLIER',
+    SALE = 'SALE'
 }
 
 export const PRIVILEGE_CATEGORY_LABELS = {
@@ -53,7 +54,8 @@ export const PRIVILEGE_CATEGORY_LABELS = {
     [PrivilegeCategories.USER]: 'Utilisateur',
     [PrivilegeCategories.ROLE]: 'Rôle',
     [PrivilegeCategories.PRODUCT]: 'Produit',
-    [PrivilegeCategories.SUPPLIER]: 'Fournisseur'
+    [PrivilegeCategories.SUPPLIER]: 'Fournisseur',
+    [PrivilegeCategories.SALE]: 'Vente'
 };
 
 export const PRIVILEGE_ROUTE = 'privilege';
