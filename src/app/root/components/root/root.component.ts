@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { getUserPrivileges } from 'src/app/authentication/store/selectors/authentication.selectors';
 import { Privilege } from 'src/app/role/types/privilege.interface';
-import { HEADER_MENU } from '../../constants/header-menu.interface';
+import { HEADER_MENU } from '../../constants/header-menu.constant';
 import { Menu } from '../../types/menu.interface';
 import { filterHeaderMenusDependingOnUserRight } from '../../utils/menu-filter';
 

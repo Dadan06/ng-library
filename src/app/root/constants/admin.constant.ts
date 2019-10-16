@@ -3,9 +3,9 @@ import { Menu } from '../types/menu.interface';
 
 export const ADMIN_MENU: Menu[] = [
     {
-        title: `Gestion vente`,
+        title: `Vente`,
         icon: '',
-        routerLink: '/root/admin/trade',
-        accessRight: UserPrivileges.CREATE_TRADE
+        routerLink: '/root/admin/sale',
+        accessRight: UserPrivileges.CREATE_SALE
     }
 ];

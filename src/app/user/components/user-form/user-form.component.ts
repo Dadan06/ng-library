@@ -24,8 +24,6 @@ export class UserFormComponent {
             this.form = this.initForm(user);
             if (this.isEditing) {
                 this.form.enable();
-                this.form.get('lastname').disable();
-                this.form.get('firstname').disable();
             } else {
                 this.form.disable();
             }
