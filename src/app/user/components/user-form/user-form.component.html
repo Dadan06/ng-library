@@ -3,7 +3,7 @@
     <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
         <div class="control">
             <label for="lastname">Nom</label>
-            <input formControlName="lastname" id="lastname" type="text" />
+            <input #first formControlName="lastname" id="lastname" type="text" />
             <app-validation-error [control]="form.controls['lastname']"></app-validation-error>
         </div>
         <div class="control">
@@ -13,7 +13,7 @@
         </div>
         <div class="control">
             <label for="login">Login *</label>
-            <input #first formControlName="login" id="login" type="text" />
+            <input formControlName="login" id="login" type="text" />
             <app-validation-error [control]="form.controls['login']"></app-validation-error>
         </div>
         <div class="control">
