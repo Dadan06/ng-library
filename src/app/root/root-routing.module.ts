@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccessManagementRootComponent } from './components/access-management-root/access-management-root.component';
+import { AdminRootComponent } from './components/admin-root/admin-root.component';
 import { HomeRootComponent } from './components/home-root/home-root.component';
 import { RootComponent } from './components/root/root.component';
 import { ACCESS_MANAGEMENT_MENU } from './constants/access-management.constant';
@@ -50,13 +51,13 @@ const routes: Routes = [
             },
             {
                 path: 'admin',
-                component: AccessManagementRootComponent,
+                component: AdminRootComponent,
                 data: { menus: ADMIN_MENU },
                 canActivate: [DefaultRedirectionGuard],
                 children: [
                     {
-                        path: 'trade',
-                        loadChildren: '../trade/trade.module#TradeModule'
+                        path: 'sale',
+                        loadChildren: '../sale/sale.module#SaleModule'
                     }
                 ]
             }
