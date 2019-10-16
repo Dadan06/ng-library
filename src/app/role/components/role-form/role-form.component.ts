@@ -7,12 +7,13 @@ import {
     Output,
     ViewChild
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
     PrivilegeCategories,
     PRIVILEGE_CATEGORY_LABELS,
     USER_PRIVILEGE_LABELS
 } from '../../constants/privilege.constants';
+import { RoleService } from '../../services/role.service';
 import { Privilege } from '../../types/privilege.interface';
 import { Role } from '../../types/role.interface';
 
@@ -35,7 +36,7 @@ export class RoleFormComponent implements OnChanges {
 
     @ViewChild('name') name: ElementRef;
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(private formBuilder: FormBuilder, private roleService: RoleService) {}
 
     get categories() {
         return Object.keys(this.getFormGroup('privileges').controls);
@@ -44,6 +45,8 @@ export class RoleFormComponent implements OnChanges {
     ngOnChanges(): void {
         if (this.role && this.privilegeList) {
             this.form = this.initForm(this.role, this.privilegeList);
+            this.form.get('name').setAsyncValidators(this.checkDuplicate.bind(this));
+            this.form.get('name').updateValueAndValidity();
             this.name && this.name.nativeElement.focus();
         }
     }
@@ -108,5 +111,9 @@ export class RoleFormComponent implements OnChanges {
             active: [privilegeIds.includes(privilege._id)],
             category: [privilege.category]
         });
+    }
+
+    private checkDuplicate(control: AbstractControl) {
+        return this.roleService.checkDuplicate({ ...this.form.value, name: control.value });
     }
 }

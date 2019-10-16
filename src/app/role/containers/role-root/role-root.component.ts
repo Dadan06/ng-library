@@ -5,16 +5,11 @@ import * as cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
+import { go } from 'src/app/shared/utils/go.utils';
 import { Page } from '../../../shared/types/page.interface';
 import { subscribeModal } from '../../../shared/utils/modal.utils';
-import { ROLE_DEFAULT_CRITERIA } from '../../constants/role.constant';
-import {
-    AddRole,
-    DeleteRole,
-    EditRole,
-    LoadRoles,
-    SelectRole
-} from '../../store/actions/role.actions';
+import { ROLE_BASE_ROUTE, ROLE_DEFAULT_CRITERIA } from '../../constants/role.constant';
+import { DeleteRole, EditRole, LoadRoles, SelectRole } from '../../store/actions/role.actions';
 import { RoleState } from '../../store/reducers/role.reducer';
 import {
     getRole,
@@ -77,7 +72,7 @@ export class RoleRootComponent implements OnInit {
     }
 
     onCreate() {
-        this.store.dispatch(new AddRole());
+        go(this.store, [`${ROLE_BASE_ROUTE}/new`]);
     }
 
     deleteRole(role: Role) {

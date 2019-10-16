@@ -52,4 +52,11 @@ export class RoleService {
     roleFactory(): Observable<Role> {
         return of(EMPTY_ROLE);
     }
+
+    checkDuplicate(role: Role): Observable<object | null> {
+        return this.http.post(`${environment.apiBaseUrl}/${ROLE_ROUTE}/check-duplicate`, role).pipe(
+            map((response: ApiResponse) => (response.data as unknown) as boolean),
+            map(hasDuplicate => (hasDuplicate ? { duplicateEntry: true } : null))
+        );
+    }
 }

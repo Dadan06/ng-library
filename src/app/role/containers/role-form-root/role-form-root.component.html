@@ -1,19 +1,6 @@
 <app-role-form
     (cancel)="onCancel($event)"
     (save)="onSave($event)"
-    [privilegeList]="privileges | async"
-    [role]="role | async"
+    [privilegeList]="privileges$ | async"
+    [role]="role$ | async"
 ></app-role-form>
-<modal #roleSavingErrorModal class="popup-modal error" [closeOnOutsideClick]="false">
-    <ng-template #modalHeader>
-        Echec
-    </ng-template>
-    <ng-template #modalBody>
-        <p>
-            {{ getError }}
-        </p>
-    </ng-template>
-    <ng-template #modalFooter>
-        <button (click)="onCloseRoleSavingErrorModal()" class="blue">OK</button>
-    </ng-template>
-</modal>

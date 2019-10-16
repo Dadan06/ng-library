@@ -1,11 +1,14 @@
-<div *ngIf="form" class="container">
+<div class="container" *ngIf="form">
     <div class="role-container">
         <form (submit)="onSubmit()" [formGroup]="form">
             <div class="controls" data-simplebar>
                 <div class="control">
                     <label for="name">Nom *</label>
                     <input #name formControlName="name" id="name" type="text" />
-                    <app-validation-error [control]="form.controls['name']"></app-validation-error>
+                    <app-validation-error
+                        [control]="form.controls['name']"
+                        [customErrorLabels]="{ duplicateEntry: 'Ce nom existe déjà' }"
+                    ></app-validation-error>
                 </div>
 
                 <div class="privilege-container" formGroupName="privileges">

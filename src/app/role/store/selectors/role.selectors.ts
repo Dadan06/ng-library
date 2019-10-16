@@ -8,6 +8,7 @@ import { AppRouterState } from 'src/app/core/store/reducers/router.reducers';
 import { getRouterState } from 'src/app/core/store/selectors/router.selectors';
 import { Paginated } from '../../../shared/types/paginated.interface';
 import { UserPrivileges } from '../../constants/privilege.constants';
+import { ROLE_ROUTE } from '../../constants/role.constant';
 import { Privilege } from '../../types/privilege.interface';
 import { Role } from '../../types/role.interface';
 import { RoleState } from '../reducers/role.reducer';
@@ -100,7 +101,9 @@ export const getRoleEditing = createSelector<
     boolean
 >(
     getRouterState,
-    router => router.state.url.includes('user/edit')
+    router =>
+        router.state.url.includes(`${ROLE_ROUTE}/new`) ||
+        router.state.url.includes(`${ROLE_ROUTE}/edit`)
 );
 
 export const getRoleSavingError = createSelector<RoleState, RoleState, HttpErrorResponse>(
