@@ -1,0 +1,27 @@
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prix unitaire (Ar)</th>
+                <th>Prix de vente (Ar)</th>
+                <th>Quantité</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody data-simplebar>
+            <tr
+                *ngFor="let product of products"
+                [class.selected]="product._id === currentProduct?._id"
+            >
+                <td>{{ product.name | titlecase }}</td>
+                <td>{{ product.costPrice | number: '1.0-0' }}</td>
+                <td>{{ product.sellingPrice | number: '1.0-0' }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>
+                    <input type="number" min="0" appDigitOnly />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
