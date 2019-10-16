@@ -27,7 +27,7 @@ export class DefaultRedirectionGuard implements CanActivate {
                     route.data.menus
                 );
                 const urlSegment = route.url[0].path;
-                if (url.endsWith(urlSegment)) {
+                if (url.endsWith(urlSegment) && firstAccessibleRoute) {
                     this.router.navigate([firstAccessibleRoute.routerLink]);
                 }
             }),
