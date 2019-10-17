@@ -7,5 +7,11 @@ export const ADMIN_MENU: Menu[] = [
         icon: '',
         routerLink: '/root/admin/sale',
         accessRight: UserPrivileges.CREATE_SALE
+    },
+    {
+        title: `Suivi`,
+        icon: '',
+        routerLink: '',
+        accessRight: UserPrivileges.SALE_MONITORING
     }
 ];
