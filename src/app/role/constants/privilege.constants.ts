@@ -16,7 +16,8 @@ export const enum UserPrivileges {
     EDIT_SUPPLIER = 'EDIT_SUPPLIER',
     DELETE_SUPPLIER = 'DELETE_SUPPLIER',
     VIEW_SALES = 'VIEW_SALES',
-    CREATE_SALE = 'CREATE_SALE'
+    CREATE_SALE = 'CREATE_SALE',
+    SALE_MONITORING = 'SALE_MONITORING'
 }
 
 export const USER_PRIVILEGE_LABELS: Record<UserPrivileges, string> = {
@@ -37,7 +38,8 @@ export const USER_PRIVILEGE_LABELS: Record<UserPrivileges, string> = {
     [UserPrivileges.EDIT_SUPPLIER]: 'Modification fournisseur',
     [UserPrivileges.DELETE_SUPPLIER]: 'Suppression fournisseur',
     [UserPrivileges.VIEW_SALES]: 'Consultation ventes',
-    [UserPrivileges.CREATE_SALE]: 'Création vente'
+    [UserPrivileges.CREATE_SALE]: 'Création vente',
+    [UserPrivileges.SALE_MONITORING]: 'Suivi vente'
 };
 
 export const enum PrivilegeCategories {
