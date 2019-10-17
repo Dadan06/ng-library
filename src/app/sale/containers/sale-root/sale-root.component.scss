@@ -7,7 +7,6 @@
     display: grid;
     grid-template-columns: 45% 55%;
     grid-template-rows: 67px auto;
-    grid-column-gap: 20px;
     padding: 25px;
 
     header {
@@ -20,6 +19,12 @@
         display: grid;
         grid-template-rows: auto 50px;
 
+        main {
+            display: grid;
+            grid-template-columns: auto;
+            grid-template-rows: 52px auto;
+        }
+
         footer {
             display: flex;
             justify-content: flex-end;
@@ -28,5 +33,9 @@
 
     .selected-product-container {
         grid-area: 2 / 2;
+        margin-left: 30px;
+        border: solid 1px lightgray;
+        border-radius: 8px;
+        padding: 25px;
     }
 }
