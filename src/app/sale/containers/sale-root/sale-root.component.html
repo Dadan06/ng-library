@@ -6,6 +6,7 @@
             <app-loader [isLoading]="productsLoading$ | async">
                 <app-selectable-product-list
                     [products]="products$ | async"
+                    (add)="onAddProduct($event)"
                 ></app-selectable-product-list>
             </app-loader>
         </main>
@@ -17,6 +18,24 @@
         </footer>
     </div>
     <div class="selected-product-container">
-        <app-selected-product-list></app-selected-product-list>
+        <app-selected-product-list
+            [saleItems]="saleItems$ | async"
+            (delete)="currentSaleItem = $event; deletionConfirmModal.open()"
+        ></app-selected-product-list>
     </div>
 </div>
+
+<modal #deletionConfirmModal class="popup-modal warning">
+    <ng-template #modalHeader>
+        Confirmation
+    </ng-template>
+    <ng-template #modalBody>
+        Voulez vous vraiment supprimer cet element?
+    </ng-template>
+    <ng-template #modalFooter>
+        <button class="blue" (click)="deletionConfirmModal.close(); onConfirmDeletion()">
+            OUI
+        </button>
+        <button class="dark-purple" (click)="deletionConfirmModal.close()">NON</button>
+    </ng-template>
+</modal>

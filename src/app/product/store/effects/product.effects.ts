@@ -40,7 +40,7 @@ export class ProductEffects {
 
     @Effect()
     loadProducts$ = this.action$.pipe(
-        ofType(ProductActionTypes.LOAD_PRODUCT_MODELS),
+        ofType(ProductActionTypes.LOAD_PRODUCTS),
         switchMap(
             (action: LoadProducts): Observable<Paginated<Product>> =>
                 this.productService.loadProducts(action.payload)
@@ -51,7 +51,7 @@ export class ProductEffects {
 
     @Effect()
     loadProduct$ = this.action$.pipe(
-        ofType(ProductActionTypes.LOAD_PRODUCT_MODEL),
+        ofType(ProductActionTypes.LOAD_PRODUCT),
         switchMap(
             (action: LoadProduct): Observable<Product> =>
                 this.productService.loadProduct(action.payload)
@@ -62,7 +62,7 @@ export class ProductEffects {
 
     @Effect()
     saveProduct$ = this.action$.pipe(
-        ofType(ProductActionTypes.SAVE_PRODUCT_MODEL),
+        ofType(ProductActionTypes.SAVE_PRODUCT),
         switchMap(
             (action: SaveProduct): Observable<Product> =>
                 this.productService.saveProduct(action.payload)
@@ -73,14 +73,14 @@ export class ProductEffects {
 
     @Effect()
     saveProductSuccess$ = this.action$.pipe(
-        ofType(ProductActionTypes.SAVE_PRODUCT_MODEL_SUCCESS),
+        ofType(ProductActionTypes.SAVE_PRODUCT_SUCCESS),
         withLatestFrom(this.store.pipe(select(getProductCriteria))),
         map(([action, criteria]) => new LoadProducts(criteria))
     );
 
     @Effect()
     deleteProduct$ = this.action$.pipe(
-        ofType(ProductActionTypes.DELETE_PRODUCT_MODEL),
+        ofType(ProductActionTypes.DELETE_PRODUCT),
         switchMap(
             (action: DeleteProduct): Observable<void> =>
                 this.productService.deleteProduct(action.payload)
@@ -96,7 +96,7 @@ export class ProductEffects {
 
     @Effect()
     deleteProductSuccess$ = this.action$.pipe(
-        ofType(ProductActionTypes.DELETE_PRODUCT_MODEL_SUCCESS),
+        ofType(ProductActionTypes.DELETE_PRODUCT_SUCCESS),
         withLatestFrom(this.store.pipe(select(getProductCriteria))),
         map(([action, criteria]) => new LoadProducts(criteria))
     );

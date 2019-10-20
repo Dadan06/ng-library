@@ -9,7 +9,7 @@ import { Product } from 'src/app/product/types/product.interface';
 export class SelectableProductListComponent implements OnInit {
     @Input() products: Product[];
 
-    @Output() addProduct: EventEmitter<Product> = new EventEmitter();
+    @Output() add: EventEmitter<Product> = new EventEmitter();
 
     constructor() {
         /** */

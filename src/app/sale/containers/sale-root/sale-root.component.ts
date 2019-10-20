@@ -1,18 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
+import { ModalComponent } from 'angular-custom-modal';
 import * as cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 import { PRODUCT_DEFAULT_CRITERIA } from 'src/app/product/constants/product.constants';
 import { LoadProducts } from 'src/app/product/store/actions/product.actions';
-import { ProductState } from 'src/app/product/store/reducers/product.reducers';
-import {
-    getProducts,
-    getProductsLoading,
-    getProductsTotalItems
-} from 'src/app/product/store/selectors/product.selectors';
 import { ProductCriteria } from 'src/app/product/types/product-criteria.interface';
 import { Product } from 'src/app/product/types/product.interface';
 import { Page } from 'src/app/shared/types/page.interface';
+import { AddProduct, DeleteSaleItem } from '../../store/actions/sale.actions';
+import { SaleState } from '../../store/reducers/sale.reducers';
+import {
+    getOrderedSaleItems,
+    getProducts,
+    getProductsLoading,
+    getProductsTotalItems
+} from '../../store/selectors/sale.selectors';
+import { SaleItem } from '../../types/sale-item.interface';
 
 @Component({
     selector: 'app-sale-root',
@@ -23,25 +27,39 @@ export class SaleRootComponent implements OnInit {
     products$: Observable<Product[]>;
     productsLoading$: Observable<boolean>;
     totalItems$: Observable<number>;
-    productCriteria: ProductCriteria = cloneDeep(PRODUCT_DEFAULT_CRITERIA);
+    saleItems$: Observable<SaleItem[]>;
 
-    constructor(private productStore: Store<ProductState>) {
+    productCriteria: ProductCriteria = cloneDeep(PRODUCT_DEFAULT_CRITERIA);
+    currentSaleItem: SaleItem;
+
+    @ViewChild('deletionConfirmModal') deletionConfirmModal: ModalComponent;
+
+    constructor(private saleStore: Store<SaleState>) {
         /** */
     }
 
     ngOnInit() {
-        this.products$ = this.productStore.pipe(select(getProducts));
-        this.productsLoading$ = this.productStore.pipe(select(getProductsLoading));
-        this.totalItems$ = this.productStore.pipe(select(getProductsTotalItems));
+        this.products$ = this.saleStore.pipe(select(getProducts));
+        this.productsLoading$ = this.saleStore.pipe(select(getProductsLoading));
+        this.totalItems$ = this.saleStore.pipe(select(getProductsTotalItems));
+        this.saleItems$ = this.saleStore.pipe(select(getOrderedSaleItems));
     }
 
     onSearch(search: string) {
         this.productCriteria.search = search;
-        this.productStore.dispatch(new LoadProducts({ ...this.productCriteria }));
+        this.saleStore.dispatch(new LoadProducts({ ...this.productCriteria }));
     }
 
     onPaginate(page: Page) {
         this.productCriteria.page = page;
-        this.productStore.dispatch(new LoadProducts({ ...this.productCriteria }));
+        this.saleStore.dispatch(new LoadProducts({ ...this.productCriteria }));
+    }
+
+    onAddProduct(product: Product) {
+        this.saleStore.dispatch(new AddProduct(product));
+    }
+
+    onConfirmDeletion() {
+        this.saleStore.dispatch(new DeleteSaleItem(this.currentSaleItem));
     }
 }

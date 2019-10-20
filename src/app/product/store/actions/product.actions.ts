@@ -6,80 +6,80 @@ import { ProductCriteria } from '../../types/product-criteria.interface';
 import { Product } from '../../types/product.interface';
 
 export const enum ProductActionTypes {
-    LOAD_PRODUCT_MODELS = '[Product] Load Products',
-    LOAD_PRODUCT_MODELS_FAIL = '[Product] Load Products Fail',
-    LOAD_PRODUCT_MODELS_SUCCESS = '[Product] Load Products Success',
-    LOAD_PRODUCT_MODEL = '[Product] Load Product',
-    LOAD_PRODUCT_MODEL_FAIL = '[Product] Load Product Fail',
-    LOAD_PRODUCT_MODEL_SUCCESS = '[Product] Load Product Success',
-    DELETE_PRODUCT_MODEL = '[Product] Delete Product',
-    DELETE_PRODUCT_MODEL_FAIL = '[Product] Delete Product Fail',
-    DELETE_PRODUCT_MODEL_SUCCESS = '[Product] Delete Product Success',
-    SAVE_PRODUCT_MODEL = '[Product] Save Product',
-    SAVE_PRODUCT_MODEL_FAIL = '[Product] Save Product Fail',
-    SAVE_PRODUCT_MODEL_SUCCESS = '[Product] Save Product Success',
+    LOAD_PRODUCTS = '[Product] Load Products',
+    LOAD_PRODUCTS_FAIL = '[Product] Load Products Fail',
+    LOAD_PRODUCTS_SUCCESS = '[Product] Load Products Success',
+    LOAD_PRODUCT = '[Product] Load Product',
+    LOAD_PRODUCT_FAIL = '[Product] Load Product Fail',
+    LOAD_PRODUCT_SUCCESS = '[Product] Load Product Success',
+    DELETE_PRODUCT = '[Product] Delete Product',
+    DELETE_PRODUCT_FAIL = '[Product] Delete Product Fail',
+    DELETE_PRODUCT_SUCCESS = '[Product] Delete Product Success',
+    SAVE_PRODUCT = '[Product] Save Product',
+    SAVE_PRODUCT_FAIL = '[Product] Save Product Fail',
+    SAVE_PRODUCT_SUCCESS = '[Product] Save Product Success',
     LOAD_ALL_SUPPLIER = '[Product] Load All Supplier',
     LOAD_ALL_SUPPLIER_FAIL = '[Product] Load All Supplier Fail',
     LOAD_ALL_SUPPLIER_SUCCESS = '[Product] Load All Supplier Success'
 }
 
 export class LoadProducts implements Action {
-    readonly type = ProductActionTypes.LOAD_PRODUCT_MODELS;
+    readonly type = ProductActionTypes.LOAD_PRODUCTS;
     constructor(public payload: ProductCriteria) {}
 }
 
 export class LoadProductsSuccess implements Action {
-    readonly type = ProductActionTypes.LOAD_PRODUCT_MODELS_SUCCESS;
+    readonly type = ProductActionTypes.LOAD_PRODUCTS_SUCCESS;
     constructor(public payload: Paginated<Product>) {}
 }
 
 export class LoadProductsFail implements Action {
-    readonly type = ProductActionTypes.LOAD_PRODUCT_MODELS_FAIL;
+    readonly type = ProductActionTypes.LOAD_PRODUCTS_FAIL;
     constructor(public payload: Error) {}
 }
 
 export class LoadProduct implements Action {
-    readonly type = ProductActionTypes.LOAD_PRODUCT_MODEL;
+    readonly type = ProductActionTypes.LOAD_PRODUCT;
     constructor(public payload: string) {}
 }
 
 export class LoadProductSuccess implements Action {
-    readonly type = ProductActionTypes.LOAD_PRODUCT_MODEL_SUCCESS;
+    readonly type = ProductActionTypes.LOAD_PRODUCT_SUCCESS;
     constructor(public payload: Product) {}
 }
 
 export class LoadProductFail implements Action {
-    readonly type = ProductActionTypes.LOAD_PRODUCT_MODEL_FAIL;
+    readonly type = ProductActionTypes.LOAD_PRODUCT_FAIL;
     constructor(public payload: Error) {}
 }
 
 export class SaveProduct implements Action {
-    readonly type = ProductActionTypes.SAVE_PRODUCT_MODEL;
+    readonly type = ProductActionTypes.SAVE_PRODUCT;
     constructor(public payload: Product) {}
 }
 
 export class SaveProductFail implements Action {
-    readonly type = ProductActionTypes.SAVE_PRODUCT_MODEL_FAIL;
+    readonly type = ProductActionTypes.SAVE_PRODUCT_FAIL;
     constructor(public payload: Error) {}
 }
 
 export class SaveProductSuccess implements Action {
-    readonly type = ProductActionTypes.SAVE_PRODUCT_MODEL_SUCCESS;
+    readonly type = ProductActionTypes.SAVE_PRODUCT_SUCCESS;
     constructor(public payload: Product) {}
 }
 
 export class DeleteProduct implements Action {
-    readonly type = ProductActionTypes.DELETE_PRODUCT_MODEL;
+    readonly type = ProductActionTypes.DELETE_PRODUCT;
     constructor(public payload: Product) {}
 }
 
 export class DeleteProductFail implements Action {
-    readonly type = ProductActionTypes.DELETE_PRODUCT_MODEL_FAIL;
+    readonly type = ProductActionTypes.DELETE_PRODUCT_FAIL;
     constructor(public payload: Error) {}
 }
 
 export class DeleteProductSuccess implements Action {
-    readonly type = ProductActionTypes.DELETE_PRODUCT_MODEL_SUCCESS;
+    readonly type = ProductActionTypes.DELETE_PRODUCT_SUCCESS;
 }
 
 export class LoadAllSupplier implements Action {

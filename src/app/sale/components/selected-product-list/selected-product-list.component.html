@@ -6,27 +6,30 @@
                 <th>Prix unitaire (Ar)</th>
                 <th>Prix de vente (Ar)</th>
                 <th>Quantité</th>
-                <th>Sous-total</th>
+                <th>Sous-total (Ar)</th>
                 <th></th>
             </tr>
         </thead>
         <tbody data-simplebar>
-            <tr
-                *ngFor="let product of products"
-                [class.selected]="product._id === currentProduct?._id"
-            >
-                <td>{{ product.name | titlecase }}</td>
-                <td>{{ product.costPrice | number: '1.0-0' }}</td>
-                <td>{{ product.sellingPrice | number: '1.0-0' }}</td>
-                <td>{{ product.quantity }}</td>
+            <tr *ngFor="let saleItem of saleItems">
+                <td>{{ saleItem.product.name | titlecase }}</td>
+                <td>{{ saleItem.product.costPrice | number: '1.0-0' }}</td>
+                <td>{{ saleItem.product.sellingPrice | number: '1.0-0' }}</td>
+                <td>{{ saleItem.quantity }}</td>
+                <td>{{ saleItem.product.sellingPrice * saleItem.quantity | number: '1.0-0' }}</td>
                 <td>
-                    <input type="number" min="0" appDigitOnly />
+                    <img (click)="delete.emit(saleItem)" [src]="'/assets/images/ico-delete.png'" />
                 </td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <td class="total">TOTAL: {{ billTotal | number: '1.0-0' }} Ar</td>
+            </tr>
+        </tfoot>
     </table>
     <div class="buttons-container">
-        <button class="blue">ENVOYER</button>
+        <button class="blue">VALIDER</button>
         <button class="dark-purple">ANNULER</button>
     </div>
 </div>
