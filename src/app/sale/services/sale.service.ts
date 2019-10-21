@@ -30,4 +30,10 @@ export class SaleService {
             .put(`${environment.apiBaseUrl}/sale-item/${saleItem._id}/delete`, saleItem)
             .pipe(map((response: ApiResponse) => response.data as SaleItem));
     }
+
+    cancelSale(saleId: string): Observable<void> {
+        return this.http
+            .post(`${environment.apiBaseUrl}/sale/${saleId}/cancel`, {})
+            .pipe(map(() => null));
+    }
 }

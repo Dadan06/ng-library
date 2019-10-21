@@ -16,6 +16,10 @@ import {
     AddProduct,
     AddProductFail,
     AddProductSuccess,
+    CancelSale,
+    CancelSaleFail,
+    CancelSaleSuccess,
+    ClearSale,
     DeleteSaleItem,
     DeleteSaleItemFail,
     DeleteSaleItemSuccess,
@@ -94,5 +98,17 @@ export class SaleEffects {
         ofType(SaleActionTypes.DELETE_SALE_ITEM_SUCCESS),
         withLatestFrom(this.saleStore.pipe(select(getProductCriteria))),
         map(([action, criteria]) => new LoadProducts({ ...criteria }))
+    );
+
+    @Effect()
+    cancelSale$ = this.action$.pipe(
+        ofType(SaleActionTypes.CANCEL_SALE),
+        withLatestFrom<CancelSale, Sale>(this.saleStore.pipe(select(getSale))),
+        mergeMap(([action, sale]) =>
+            this.saleService.cancelSale(sale._id).pipe(
+                mergeMap(() => [new CancelSaleSuccess(), new ClearSale()]),
+                catchError(error => of(new CancelSaleFail(error)))
+            )
+        )
     );
 }

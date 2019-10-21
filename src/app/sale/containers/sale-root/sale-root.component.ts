@@ -8,7 +8,7 @@ import { LoadProducts } from 'src/app/product/store/actions/product.actions';
 import { ProductCriteria } from 'src/app/product/types/product-criteria.interface';
 import { Product } from 'src/app/product/types/product.interface';
 import { Page } from 'src/app/shared/types/page.interface';
-import { AddProduct, DeleteSaleItem } from '../../store/actions/sale.actions';
+import { AddProduct, CancelSale, DeleteSaleItem } from '../../store/actions/sale.actions';
 import { SaleState } from '../../store/reducers/sale.reducers';
 import {
     getOrderedSaleItems,
@@ -33,6 +33,7 @@ export class SaleRootComponent implements OnInit {
     currentSaleItem: SaleItem;
 
     @ViewChild('deletionConfirmModal') deletionConfirmModal: ModalComponent;
+    @ViewChild('cancelingConfirmModal') cancelingConfirmModal: ModalComponent;
 
     constructor(private saleStore: Store<SaleState>) {
         /** */
@@ -61,5 +62,9 @@ export class SaleRootComponent implements OnInit {
 
     onConfirmDeletion() {
         this.saleStore.dispatch(new DeleteSaleItem(this.currentSaleItem));
+    }
+
+    onCancelSale() {
+        this.saleStore.dispatch(new CancelSale());
     }
 }

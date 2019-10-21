@@ -10,6 +10,7 @@ export class SelectedProductListComponent implements OnInit {
     @Input() saleItems: SaleItem[];
 
     @Output() delete: EventEmitter<SaleItem> = new EventEmitter();
+    @Output() cancel: EventEmitter<void> = new EventEmitter();
 
     constructor() {
         /** */

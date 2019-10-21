@@ -8,6 +8,9 @@ import {
     AddProduct,
     AddProductFail,
     AddProductSuccess,
+    CancelSale,
+    CancelSaleFail,
+    CancelSaleSuccess,
     DeleteSaleItem,
     DeleteSaleItemFail,
     DeleteSaleItemSuccess,
@@ -32,6 +35,8 @@ export interface SaleState {
     productAdditionError: HttpErrorResponse;
     saleItemDeleting: boolean;
     saleItemDeleted: boolean;
+    saleCanceling: boolean;
+    saleCanceled: boolean;
 }
 
 const initialState = {
@@ -46,7 +51,9 @@ const initialState = {
     productAdded: false,
     productAdditionError: undefined,
     saleItemDeleting: false,
-    saleItemDeleted: false
+    saleItemDeleted: false,
+    saleCanceling: false,
+    saleCanceled: false
 };
 
 const loadProducts = (state: SaleState, action: LoadProducts): SaleState => ({
@@ -114,6 +121,24 @@ const deleteSaleItemFail = (state: SaleState, action: DeleteSaleItemFail): SaleS
     saleItemDeleted: false
 });
 
+const cancelSale = (state: SaleState, action: CancelSale): SaleState => ({
+    ...state,
+    saleCanceling: true,
+    saleCanceled: false
+});
+
+const cancelSaleFail = (state: SaleState, action: CancelSaleFail): SaleState => ({
+    ...state,
+    saleCanceling: false,
+    saleCanceled: false
+});
+
+const cancelSaleSuccess = (state: SaleState, action: CancelSaleSuccess): SaleState => ({
+    ...state,
+    saleCanceling: false,
+    saleCanceled: true
+});
+
 // tslint:disable-next-line: cyclomatic-complexity
 export function saleReducer(state: SaleState = initialState, action: SaleAction): SaleState {
     switch (action.type) {
@@ -137,6 +162,12 @@ export function saleReducer(state: SaleState = initialState, action: SaleAction)
             return deleteSaleItemFail(state, action);
         case SaleActionTypes.DELETE_SALE_ITEM_SUCCESS:
             return deleteSaleItemSuccess(state, action);
+        case SaleActionTypes.CANCEL_SALE:
+            return cancelSale(state, action);
+        case SaleActionTypes.CANCEL_SALE_FAIL:
+            return cancelSaleFail(state, action);
+        case SaleActionTypes.CANCEL_SALE_SUCCESS:
+            return cancelSaleSuccess(state, action);
         default:
             return state;
     }

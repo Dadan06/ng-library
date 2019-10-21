@@ -14,10 +14,13 @@ export const enum SaleActionTypes {
     ADD_PRODUCT = '[Sale] Add Product',
     ADD_PRODUCT_FAIL = '[Sale] Add Product Fail',
     ADD_PRODUCT_SUCCESS = '[Sale] Add Product Success',
-    CLEAR_SALE = '[SALE] Clear Sale',
+    CLEAR_SALE = '[Sale] Clear Sale',
     DELETE_SALE_ITEM = '[Sale] Delete Sale Item',
     DELETE_SALE_ITEM_SUCCESS = '[Sale] Delete Sale Item Success',
-    DELETE_SALE_ITEM_FAIL = '[Sale] Delete Sale Item Fail'
+    DELETE_SALE_ITEM_FAIL = '[Sale] Delete Sale Item Fail',
+    CANCEL_SALE = '[Sale] Cancel Sale',
+    CANCEL_SALE_SUCCESS = '[Sale] Cancel Sale Success',
+    CANCEL_SALE_FAIL = '[Sale] Cancel Sale Fail'
 }
 
 export class LoadProducts implements Action {
@@ -74,6 +77,19 @@ export class DeleteSaleItemFail implements Action {
     constructor(public error: HttpErrorResponse) {}
 }
 
+export class CancelSale implements Action {
+    readonly type = SaleActionTypes.CANCEL_SALE;
+}
+
+export class CancelSaleFail implements Action {
+    readonly type = SaleActionTypes.CANCEL_SALE_FAIL;
+    constructor(public payload: Error) {}
+}
+
+export class CancelSaleSuccess implements Action {
+    readonly type = SaleActionTypes.CANCEL_SALE_SUCCESS;
+}
+
 export type SaleAction =
     | LoadProducts
     | LoadProductsSuccess
@@ -85,4 +101,7 @@ export type SaleAction =
     | ClearSale
     | DeleteSaleItem
     | DeleteSaleItemSuccess
-    | DeleteSaleItemFail;
+    | DeleteSaleItemFail
+    | CancelSale
+    | CancelSaleFail
+    | CancelSaleSuccess;
