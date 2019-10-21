@@ -168,6 +168,12 @@ export function saleReducer(state: SaleState = initialState, action: SaleAction)
             return cancelSaleFail(state, action);
         case SaleActionTypes.CANCEL_SALE_SUCCESS:
             return cancelSaleSuccess(state, action);
+        case SaleActionTypes.CLEAR_SALE:
+            return {
+                ...initialState,
+                products: state.products,
+                productCriteria: state.productCriteria
+            };
         default:
             return state;
     }

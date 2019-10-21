@@ -24,4 +24,8 @@ export class SelectedProductListComponent implements OnInit {
         const validSaleItems = this.saleItems.filter(s => s.status === SaleItemStatus.ORDERED);
         return validSaleItems.reduce((m, s) => m + s.quantity * s.product.sellingPrice, 0);
     }
+
+    get validSaleItemsLength() {
+        return this.saleItems.filter(s => s.status === SaleItemStatus.ORDERED).length;
+    }
 }

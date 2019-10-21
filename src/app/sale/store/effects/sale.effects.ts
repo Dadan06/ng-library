@@ -111,4 +111,11 @@ export class SaleEffects {
             )
         )
     );
+
+    @Effect()
+    cancelSaleSuccess$ = this.action$.pipe(
+        ofType(SaleActionTypes.CANCEL_SALE_SUCCESS),
+        withLatestFrom(this.saleStore.pipe(select(getProductCriteria))),
+        map(([action, criteria]) => new LoadProducts({ ...criteria }))
+    );
 }

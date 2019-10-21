@@ -34,10 +34,10 @@
         Voulez vous vraiment annuler la commande en cours?
     </ng-template>
     <ng-template #modalFooter>
-        <button class="blue" (click)="deletionConfirmModal.close(); onConfirmDeletion()">
+        <button class="blue" (click)="cancelingConfirmModal.close(); onConfirmCanceling()">
             OUI
         </button>
-        <button class="dark-purple" (click)="deletionConfirmModal.close()">NON</button>
+        <button class="dark-purple" (click)="cancelingConfirmModal.close()">NON</button>
     </ng-template>
 </modal>
 

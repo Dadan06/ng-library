@@ -1,6 +1,6 @@
-@import "colors.scss";
-@import "buttons.scss";
-@import "fonts.scss";
+@import 'colors.scss';
+@import 'buttons.scss';
+@import 'fonts.scss';
 
 // COMMON:
 .modal {
@@ -76,10 +76,15 @@ $popup-text-color: black;
     .modal-footer {
         height: $popup-footer-height;
         text-align: center;
-        button { @extend %button; }
-        .blue { @extend %blue-button; }
-        .green { @extend %green-button; }
-        .red { @extend %red-button; }
+        button {
+            @extend %button;
+        }
+        .blue {
+            @extend %blue-button;
+        }
+        .dark-purple {
+            @extend %dark-purple-button;
+        }
     }
 }
 
@@ -88,7 +93,7 @@ $popup-text-color: black;
         background-color: $popup-error-header;
     }
     .modal-header::before {
-        content:  url('/assets/images/dialog-error.png');
+        content: url('/assets/images/dialog-error.png');
     }
 }
 
@@ -97,7 +102,7 @@ $popup-text-color: black;
         background-color: $popup-info-header;
     }
     .modal-header::before {
-        content:  url('/assets/images/dialog-info.png');
+        content: url('/assets/images/dialog-info.png');
     }
 }
 
@@ -106,7 +111,7 @@ $popup-text-color: black;
         background-color: $popup-success-header;
     }
     .modal-header::before {
-        content:  url('/assets/images/dialog-success.png');
+        content: url('/assets/images/dialog-success.png');
     }
 }
 
@@ -115,7 +120,7 @@ $popup-text-color: black;
         background-color: $popup-warning-header;
     }
     .modal-header::before {
-        content:  url('/assets/images/dialog-warning.png');
+        content: url('/assets/images/dialog-warning.png');
     }
 }
 

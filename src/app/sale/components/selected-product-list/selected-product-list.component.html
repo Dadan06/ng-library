@@ -29,7 +29,9 @@
         </tfoot>
     </table>
     <div class="buttons-container">
-        <button class="blue">VALIDER</button>
-        <button class="dark-purple" (click)="cancel.emit()">ANNULER</button>
+        <button class="blue" [disabled]="!validSaleItemsLength">VALIDER</button>
+        <button class="dark-purple" [disabled]="!validSaleItemsLength" (click)="cancel.emit()">
+            ANNULER
+        </button>
     </div>
 </div>

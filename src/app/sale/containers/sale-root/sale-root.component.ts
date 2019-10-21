@@ -65,6 +65,10 @@ export class SaleRootComponent implements OnInit {
     }
 
     onCancelSale() {
+        this.cancelingConfirmModal.open();
+    }
+
+    onConfirmCanceling() {
         this.saleStore.dispatch(new CancelSale());
     }
 }
