@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="form-title">Détails</div>
+    <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
+        <div class="control">
+            <label>
+                Nom *
+            </label>
+            <input #first formControlName="name" type="text" />
+            <app-validation-error [control]="form.controls['name']"></app-validation-error>
+        </div>
+
+        <div class="control">
+            <label>
+                Adresse *
+            </label>
+            <input formControlName="address" type="text" />
+            <app-validation-error [control]="form.controls['address']"></app-validation-error>
+        </div>
+
+        <div class="control">
+            <label>
+                Contact *
+            </label>
+            <input formControlName="contact" type="text" />
+            <app-validation-error [control]="form.controls['contact']"></app-validation-error>
+        </div>
+
+        <div class="control">
+            <label>Type *</label>
+            <div class="custom-select">
+                <ng-select
+                    [items]="clientTypes"
+                    [searchable]="false"
+                    bindLabel="label"
+                    bindValue="value"
+                    formControlName="type"
+                ></ng-select>
+            </div>
+            <app-validation-error [control]="form.controls['type']"></app-validation-error>
+        </div>
+
+        <div class="buttons">
+            <button
+                class="blue"
+                *ngIf="!form.enabled"
+                (click)="edit.emit(form.value)"
+                [disabled]="!editEnabled"
+            >
+                MODIFIER
+            </button>
+            <button class="blue" *ngIf="form.enabled" type="submit">ENREGISTRER</button>
+            <button class="dark-purple" *ngIf="form.enabled" (click)="cancel.emit()">ANNULER</button>
+        </div>
+    </form>
+</div>

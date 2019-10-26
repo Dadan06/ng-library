@@ -30,6 +30,10 @@ const routes: Routes = [
                     {
                         path: 'supplier',
                         loadChildren: '../supplier/supplier.module#SupplierModule'
+                    },
+                    {
+                        path: 'client',
+                        loadChildren: '../client/client.module#ClientModule'
                     }
                 ]
             },

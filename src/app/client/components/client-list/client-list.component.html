@@ -1,0 +1,46 @@
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Contact</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody data-simplebar>
+            <tr
+                *ngFor="let client of clients"
+                [class.selected-row]="client._id === currentClient?._id"
+            >
+                <td>{{ client.name | uppercase }}</td>
+                <td>{{ client.address }}</td>
+                <td>{{ client.contact }}</td>
+                <td>{{ clientTypes[client.type] }}</td>
+                <td class="actions">
+                    <img
+                        (click)="view.emit(client); currentClient = client"
+                        src="/assets/images/ico-details.png"
+                    />
+                    <img
+                        (click)="editEnabled && edit.emit(client); currentClient = client"
+                        [src]="
+                            editEnabled
+                                ? '/assets/images/ico-edit.png'
+                                : '/assets/images/ico-edit-disabled.png'
+                        "
+                    />
+                    <img
+                        (click)="deleteEnabled && delete.emit(client)"
+                        [src]="
+                            deleteEnabled
+                                ? '/assets/images/ico-delete.png'
+                                : '/assets/images/ico-delete-disabled.png'
+                        "
+                    />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
