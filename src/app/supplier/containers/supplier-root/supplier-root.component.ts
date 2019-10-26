@@ -5,7 +5,7 @@ import * as cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { Page } from 'src/app/shared/types/page.interface';
-import { Go } from '../../../core/store/actions/router.actions';
+import { go } from 'src/app/shared/utils/go.utils';
 import { SUPPLIER_BASE_ROUTE, SUPPLIER_DEFAULT_CRITERIA } from '../../constants/supplier.constants';
 import { DeleteSupplier, LoadSuppliers } from '../../store/actions/supplier.actions';
 import { SupplierState } from '../../store/reducers/supplier.reducers';
@@ -64,15 +64,11 @@ export class SupplierRootComponent implements OnInit {
     }
 
     onViewDetail(supplier: Supplier) {
-        this.supplierStore.dispatch(
-            new Go({
-                path: [`${SUPPLIER_BASE_ROUTE}/detail`, supplier._id]
-            })
-        );
+        go(this.supplierStore, [`${SUPPLIER_BASE_ROUTE}/detail`, supplier._id]);
     }
 
     onEdit(supplier: Supplier) {
-        this.go([`${SUPPLIER_BASE_ROUTE}/edit`, supplier._id]);
+        go(this.supplierStore, [`${SUPPLIER_BASE_ROUTE}/edit`, supplier._id]);
     }
 
     onDelete(supplier: Supplier) {
@@ -86,14 +82,10 @@ export class SupplierRootComponent implements OnInit {
     }
 
     onCreate() {
-        this.go([`${SUPPLIER_BASE_ROUTE}/new`]);
+        go(this.supplierStore, [`${SUPPLIER_BASE_ROUTE}/new`]);
     }
 
     onConfirmDeletion() {
         this.supplierStore.dispatch(new DeleteSupplier(this.toBeDeletedSupplier));
-    }
-
-    private go(path: string[]) {
-        this.supplierStore.dispatch(new Go({ path }));
     }
 }

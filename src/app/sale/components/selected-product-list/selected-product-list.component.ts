@@ -28,4 +28,8 @@ export class SelectedProductListComponent implements OnInit {
     get validSaleItemsLength() {
         return this.saleItems.filter(s => s.status === SaleItemStatus.ORDERED).length;
     }
+
+    get saleItemsLength() {
+        return this.saleItems.length;
+    }
 }

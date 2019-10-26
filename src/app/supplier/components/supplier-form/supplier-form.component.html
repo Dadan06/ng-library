@@ -3,7 +3,7 @@
     <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
         <div class="control">
             <label>
-                Nom
+                Nom *
             </label>
             <input #first formControlName="name" type="text" />
             <app-validation-error [control]="form.controls['name']"></app-validation-error>
@@ -11,7 +11,7 @@
 
         <div class="control">
             <label>
-                Adresse
+                Adresse *
             </label>
             <input formControlName="address" type="text" />
             <app-validation-error [control]="form.controls['address']"></app-validation-error>
@@ -19,7 +19,7 @@
 
         <div class="control">
             <label>
-                Contact
+                Contact *
             </label>
             <input formControlName="contact" type="text" />
             <app-validation-error [control]="form.controls['contact']"></app-validation-error>
@@ -35,7 +35,7 @@
                 MODIFIER
             </button>
             <button class="blue" *ngIf="form.enabled" type="submit">ENREGISTRER</button>
-            <button class="green" *ngIf="form.enabled" (click)="cancel.emit()">ANNULER</button>
+            <button class="dark-purple" *ngIf="form.enabled" (click)="cancel.emit()">ANNULER</button>
         </div>
     </form>
 </div>

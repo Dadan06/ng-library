@@ -12,7 +12,7 @@
         </thead>
         <tbody data-simplebar>
             <tr *ngFor="let saleItem of saleItems">
-                <td>{{ saleItem.product.name | titlecase }}</td>
+                <td [class.strikethrough]="saleItem.status !== 'ORDERED'">{{ saleItem.product.name | titlecase }}</td>
                 <td>{{ saleItem.product.costPrice | number: '1.0-0' }}</td>
                 <td>{{ saleItem.product.sellingPrice | number: '1.0-0' }}</td>
                 <td>{{ saleItem.quantity }}</td>
@@ -30,7 +30,7 @@
     </table>
     <div class="buttons-container">
         <button class="blue" [disabled]="!validSaleItemsLength">VALIDER</button>
-        <button class="dark-purple" [disabled]="!validSaleItemsLength" (click)="cancel.emit()">
+        <button class="dark-purple" [disabled]="!saleItemsLength" (click)="cancel.emit()">
             ANNULER
         </button>
     </div>

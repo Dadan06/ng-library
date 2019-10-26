@@ -13,5 +13,11 @@ export const HOME_MENU: Menu[] = [
         icon: '',
         routerLink: '/root/home/supplier',
         accessRight: UserPrivileges.VIEW_SUPPLIER
+    },
+    {
+        title: `Clients`,
+        icon: '',
+        routerLink: '/root/home/client',
+        accessRight: UserPrivileges.VIEW_CLIENT
     }
 ];

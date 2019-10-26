@@ -10,16 +10,3 @@
         (cancel)="onCancelEdit(user)"
     ></app-user-form>
 </div>
-<modal #userSavingErrorModal class="popup-modal error" [closeOnOutsideClick]="false">
-    <ng-template #modalHeader>
-        Echec
-    </ng-template>
-    <ng-template #modalBody>
-        <p>
-            {{ getError }}
-        </p>
-    </ng-template>
-    <ng-template #modalFooter>
-        <button (click)="onCloseUserSavingErrorModal()" class="blue">OK</button>
-    </ng-template>
-</modal>

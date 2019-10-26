@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Product } from 'src/app/product/types/product.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
-import { SaleItem, SaleItemStatus } from '../../types/sale-item.interface';
+import { SaleItem } from '../../types/sale-item.interface';
 import { Sale, SaleStatus } from '../../types/sale.interface';
 import { SaleState } from '../reducers/sale.reducers';
 
@@ -46,5 +46,5 @@ export const getSale = createSelector<SaleState, SaleState, Sale>(
 
 export const getOrderedSaleItems = createSelector<SaleState, SaleState, SaleItem[]>(
     getSaleState,
-    (state: SaleState) => state.saleItems.filter(s => s.status === SaleItemStatus.ORDERED)
+    (state: SaleState) => state.saleItems
 );
