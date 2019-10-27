@@ -70,8 +70,14 @@ export class SupplierEffects {
     @Effect()
     saveSupplierSuccess$ = this.action$.pipe(
         ofType(SupplierActionTypes.SAVE_SUPPLIER_MODEL_SUCCESS),
+        map((action: SaveSupplierSuccess) => action.payload),
         withLatestFrom(this.store.pipe(select(getSupplierCriteria))),
-        map(([action, criteria]) => new LoadSuppliers(criteria))
+        mergeMap(([supplier, criteria]) => [
+            new LoadSuppliers(criteria),
+            new Go({
+                path: [`${SUPPLIER_BASE_ROUTE}/detail/${supplier._id}`]
+            })
+        ])
     );
 
     @Effect()
