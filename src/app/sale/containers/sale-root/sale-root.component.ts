@@ -2,16 +2,22 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { ModalComponent } from 'angular-custom-modal';
 import * as cloneDeep from 'lodash/cloneDeep';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { PRODUCT_DEFAULT_CRITERIA } from 'src/app/product/constants/product.constants';
 import { LoadProducts } from 'src/app/product/store/actions/product.actions';
 import { ProductCriteria } from 'src/app/product/types/product-criteria.interface';
 import { Product } from 'src/app/product/types/product.interface';
 import { Page } from 'src/app/shared/types/page.interface';
-import { AddProduct, CancelSale, DeleteSaleItem } from '../../store/actions/sale.actions';
+import {
+    AddProduct,
+    CancelSale,
+    ClearProductAdditionError,
+    DeleteSaleItem
+} from '../../store/actions/sale.actions';
 import { SaleState } from '../../store/reducers/sale.reducers';
 import {
     getOrderedSaleItems,
+    getProductAdditionError,
     getProducts,
     getProductsLoading,
     getProductsTotalItems
@@ -31,12 +37,24 @@ export class SaleRootComponent implements OnInit {
 
     productCriteria: ProductCriteria = cloneDeep(PRODUCT_DEFAULT_CRITERIA);
     currentSaleItem: SaleItem;
+    errorSubscription$: Subscription;
 
     @ViewChild('deletionConfirmModal') deletionConfirmModal: ModalComponent;
     @ViewChild('cancelingConfirmModal') cancelingConfirmModal: ModalComponent;
+    @ViewChild('productAdditionErrorModal') productAdditionErrorModal: ModalComponent;
 
     constructor(private saleStore: Store<SaleState>) {
         /** */
+    }
+
+    get getError() {
+        let err = '';
+        this.saleStore.pipe(select(getProductAdditionError)).subscribe(error => {
+            if (error !== undefined) {
+                err = error.error.message;
+            }
+        });
+        return err;
     }
 
     ngOnInit() {
@@ -44,6 +62,13 @@ export class SaleRootComponent implements OnInit {
         this.productsLoading$ = this.saleStore.pipe(select(getProductsLoading));
         this.totalItems$ = this.saleStore.pipe(select(getProductsTotalItems));
         this.saleItems$ = this.saleStore.pipe(select(getOrderedSaleItems));
+        this.errorSubscription$ = this.saleStore
+            .pipe(select(getProductAdditionError))
+            .subscribe(error => {
+                if (error !== undefined) {
+                    this.productAdditionErrorModal.open();
+                }
+            });
     }
 
     onSearch(search: string) {
@@ -70,5 +95,10 @@ export class SaleRootComponent implements OnInit {
 
     onConfirmCanceling() {
         this.saleStore.dispatch(new CancelSale());
+    }
+
+    onCloseProductAdditionErrorModal() {
+        this.saleStore.dispatch(new ClearProductAdditionError());
+        this.productAdditionErrorModal.close();
     }
 }

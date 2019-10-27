@@ -20,7 +20,8 @@ export const enum SaleActionTypes {
     DELETE_SALE_ITEM_FAIL = '[Sale] Delete Sale Item Fail',
     CANCEL_SALE = '[Sale] Cancel Sale',
     CANCEL_SALE_SUCCESS = '[Sale] Cancel Sale Success',
-    CANCEL_SALE_FAIL = '[Sale] Cancel Sale Fail'
+    CANCEL_SALE_FAIL = '[Sale] Cancel Sale Fail',
+    CLEAR_PRODUCT_ADDITION_ERROR = '[Sale] Clear Product Addition Error'
 }
 
 export class LoadProducts implements Action {
@@ -90,6 +91,10 @@ export class CancelSaleSuccess implements Action {
     readonly type = SaleActionTypes.CANCEL_SALE_SUCCESS;
 }
 
+export class ClearProductAdditionError implements Action {
+    readonly type = SaleActionTypes.CLEAR_PRODUCT_ADDITION_ERROR;
+}
+
 export type SaleAction =
     | LoadProducts
     | LoadProductsSuccess
@@ -104,4 +109,5 @@ export type SaleAction =
     | DeleteSaleItemFail
     | CancelSale
     | CancelSaleFail
-    | CancelSaleSuccess;
+    | CancelSaleSuccess
+    | ClearProductAdditionError;

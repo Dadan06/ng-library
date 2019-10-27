@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Product } from 'src/app/product/types/product.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
@@ -30,6 +31,11 @@ export const getProductCriteria = createSelector(
 export const getProductsLoading = createSelector<SaleState, SaleState, boolean>(
     getSaleState,
     (state: SaleState) => state.productsLoading
+);
+
+export const getProductAdditionError = createSelector<SaleState, SaleState, HttpErrorResponse>(
+    getSaleState,
+    (state: SaleState) => state.productAdditionError
 );
 
 export const getSale = createSelector<SaleState, SaleState, Sale>(

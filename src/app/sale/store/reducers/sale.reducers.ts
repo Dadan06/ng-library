@@ -11,6 +11,7 @@ import {
     CancelSale,
     CancelSaleFail,
     CancelSaleSuccess,
+    ClearProductAdditionError,
     DeleteSaleItem,
     DeleteSaleItemFail,
     DeleteSaleItemSuccess,
@@ -139,7 +140,15 @@ const cancelSaleSuccess = (state: SaleState, action: CancelSaleSuccess): SaleSta
     saleCanceled: true
 });
 
-// tslint:disable-next-line: cyclomatic-complexity
+const clearProductAddionError = (
+    state: SaleState,
+    action: ClearProductAdditionError
+): SaleState => ({
+    ...state,
+    productAdditionError: undefined
+});
+
+// tslint:disable-next-line: cyclomatic-complexity no-big-function
 export function saleReducer(state: SaleState = initialState, action: SaleAction): SaleState {
     switch (action.type) {
         case SaleActionTypes.LOAD_PRODUCTS:
@@ -168,6 +177,8 @@ export function saleReducer(state: SaleState = initialState, action: SaleAction)
             return cancelSaleFail(state, action);
         case SaleActionTypes.CANCEL_SALE_SUCCESS:
             return cancelSaleSuccess(state, action);
+        case SaleActionTypes.CLEAR_PRODUCT_ADDITION_ERROR:
+            return clearProductAddionError(state, action);
         case SaleActionTypes.CLEAR_SALE:
             return {
                 ...initialState,

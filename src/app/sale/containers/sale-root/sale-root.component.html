@@ -55,3 +55,17 @@
         <button class="dark-purple" (click)="deletionConfirmModal.close()">NON</button>
     </ng-template>
 </modal>
+
+<modal #productAdditionErrorModal class="popup-modal error" [closeOnOutsideClick]="false">
+    <ng-template #modalHeader>
+        Echec
+    </ng-template>
+    <ng-template #modalBody>
+        <p>
+            {{ getError }}
+        </p>
+    </ng-template>
+    <ng-template #modalFooter>
+        <button (click)="onCloseProductAdditionErrorModal()" class="blue">OK</button>
+    </ng-template>
+</modal>
