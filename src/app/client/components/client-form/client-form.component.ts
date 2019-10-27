@@ -26,7 +26,7 @@ export class ClientFormComponent {
     @ViewChild('first') firstInput: ElementRef;
 
     form: FormGroup;
-    clientsTypes = [
+    clientTypes = [
         { value: ClientType.PARTICULAR, label: 'PARTICULIER' },
         { value: ClientType.GROUP, label: 'GROUPE' }
     ];

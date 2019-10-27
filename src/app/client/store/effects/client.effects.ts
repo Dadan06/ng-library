@@ -70,8 +70,14 @@ export class ClientEffects {
     @Effect()
     saveClientSuccess$ = this.action$.pipe(
         ofType(ClientActionTypes.SAVE_CLIENT_MODEL_SUCCESS),
+        map((action: SaveClientSuccess) => action.payload),
         withLatestFrom(this.store.pipe(select(getClientCriteria))),
-        map(([action, criteria]) => new LoadClients(criteria))
+        mergeMap(([client, criteria]) => [
+            new LoadClients(criteria),
+            new Go({
+                path: [`${CLIENT_BASE_ROUTE}/detail/${client._id}`]
+            })
+        ])
     );
 
     @Effect()
