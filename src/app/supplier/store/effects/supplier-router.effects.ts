@@ -9,7 +9,7 @@ import { SupplierService } from '../../services/supplier.service';
 import { Supplier } from '../../types/supplier.interface';
 import { LoadSupplier, LoadSuppliers, LoadSupplierSuccess } from '../actions/supplier.actions';
 import { SupplierState } from '../reducers/supplier.reducers';
-import { getSupplierCriteria, getSuppliers } from '../selectors/supplier.selectors';
+import { getSupplierCriteria } from '../selectors/supplier.selectors';
 
 @Injectable()
 export class SupplierRouterEffects {
@@ -26,12 +26,8 @@ export class SupplierRouterEffects {
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
         filter(state => state.url.includes(`${SUPPLIER_API_ROUTE}`)),
-        withLatestFrom(
-            this.store.pipe(select(getSuppliers)),
-            this.store.pipe(select(getSupplierCriteria))
-        ),
-        filter(([routerState, suppliers]) => suppliers.length === 0),
-        map(([routerState, suppliers, supplierCriteria]) => new LoadSuppliers(supplierCriteria))
+        withLatestFrom(this.store.pipe(select(getSupplierCriteria))),
+        map(([routerState, supplierCriteria]) => new LoadSuppliers(supplierCriteria))
     );
 
     @Effect()

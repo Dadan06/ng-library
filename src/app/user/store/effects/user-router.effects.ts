@@ -9,7 +9,7 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../types/user.interface';
 import { LoadAllRole, LoadUser, LoadUsers, LoadUserSuccess } from '../actions/user.actions';
 import { UserState } from '../reducers/user.reducers';
-import { getUserCriteria, getUsers } from '../selectors/user.selectors';
+import { getUserCriteria } from '../selectors/user.selectors';
 
 @Injectable()
 export class UserRouterEffects {
@@ -26,9 +26,8 @@ export class UserRouterEffects {
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
         filter(state => state.url.includes(`${USER_ROUTE}`)),
-        withLatestFrom(this.store.pipe(select(getUsers)), this.store.pipe(select(getUserCriteria))),
-        filter(([routerState, users]) => users.length === 0),
-        map(([routerState, users, userCriteria]) => new LoadUsers(userCriteria))
+        withLatestFrom(this.store.pipe(select(getUserCriteria))),
+        map(([routerState, userCriteria]) => new LoadUsers(userCriteria))
     );
 
     @Effect()

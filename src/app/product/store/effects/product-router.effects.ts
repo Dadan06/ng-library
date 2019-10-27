@@ -14,7 +14,7 @@ import {
     LoadProductSuccess
 } from '../actions/product.actions';
 import { ProductState } from '../reducers/product.reducers';
-import { getProductCriteria, getProducts } from '../selectors/product.selectors';
+import { getProductCriteria } from '../selectors/product.selectors';
 
 @Injectable()
 export class ProductRouterEffects {
@@ -31,12 +31,8 @@ export class ProductRouterEffects {
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
         filter(state => state.url.includes(`${PRODUCT_API_ROUTE}`)),
-        withLatestFrom(
-            this.store.pipe(select(getProducts)),
-            this.store.pipe(select(getProductCriteria))
-        ),
-        filter(([routerState, products]) => products.length === 0),
-        map(([routerState, products, productCriteria]) => new LoadProducts(productCriteria))
+        withLatestFrom(this.store.pipe(select(getProductCriteria))),
+        map(([routerState, productCriteria]) => new LoadProducts(productCriteria))
     );
 
     @Effect()

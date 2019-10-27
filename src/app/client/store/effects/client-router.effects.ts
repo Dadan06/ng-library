@@ -9,7 +9,7 @@ import { ClientService } from '../../services/client.service';
 import { Client } from '../../types/client.interface';
 import { LoadClient, LoadClients, LoadClientSuccess } from '../actions/client.actions';
 import { ClientState } from '../reducers/client.reducers';
-import { getClientCriteria, getClients } from '../selectors/client.selectors';
+import { getClientCriteria } from '../selectors/client.selectors';
 
 @Injectable()
 export class ClientRouterEffects {
@@ -26,12 +26,8 @@ export class ClientRouterEffects {
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
         filter(state => state.url.includes(`${CLIENT_API_ROUTE}`)),
-        withLatestFrom(
-            this.store.pipe(select(getClients)),
-            this.store.pipe(select(getClientCriteria))
-        ),
-        filter(([routerState, clients]) => clients.length === 0),
-        map(([routerState, clients, clientCriteria]) => new LoadClients(clientCriteria))
+        withLatestFrom(this.store.pipe(select(getClientCriteria))),
+        map(([routerState, clientCriteria]) => new LoadClients(clientCriteria))
     );
 
     @Effect()
