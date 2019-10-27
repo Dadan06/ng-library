@@ -17,7 +17,7 @@
                 <td>{{ product.name | titlecase }}</td>
                 <td>{{ product.costPrice | number: '1.0-0' }}</td>
                 <td>{{ product.sellingPrice | number: '1.0-0' }}</td>
-                <td>{{ product.quantity }}</td>
+                <td [class.empty]="!product.quantity">{{ product.quantity || 'epuisé' }}</td>
                 <td class="actions">
                     <img src="/assets/images/ico-add.png" (click)="add.emit(product)" />
                 </td>
