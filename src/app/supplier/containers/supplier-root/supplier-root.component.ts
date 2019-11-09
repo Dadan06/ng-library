@@ -6,18 +6,11 @@ import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { Page } from 'src/app/shared/types/page.interface';
 import { go } from 'src/app/shared/utils/go.utils';
+import { subscribeModal } from 'src/app/shared/utils/modal.utils';
 import { SUPPLIER_BASE_ROUTE, SUPPLIER_DEFAULT_CRITERIA } from '../../constants/supplier.constants';
 import { DeleteSupplier, LoadSuppliers } from '../../store/actions/supplier.actions';
 import { SupplierState } from '../../store/reducers/supplier.reducers';
-import {
-    getSupplier,
-    getSupplierCreateEnabled,
-    getSupplierDeleteEnabled,
-    getSupplierEditEnabled,
-    getSuppliers,
-    getSuppliersLoading,
-    getSuppliersTotalItems
-} from '../../store/selectors/supplier.selectors';
+import { getSupplier, getSupplierCreateEnabled, getSupplierDeleteEnabled, getSupplierEditEnabled, getSuppliers, getSupplierSaved, getSuppliersLoading, getSuppliersTotalItems } from '../../store/selectors/supplier.selectors';
 import { SupplierCriteria } from '../../types/supplier-criteria.interface';
 import { Supplier } from '../../types/supplier.interface';
 
@@ -38,11 +31,12 @@ export class SupplierRootComponent implements OnInit {
     toBeDeletedSupplier: Supplier;
 
     @ViewChild('deletionConfirmModal') deletionConfirmModal: ModalComponent;
+    @ViewChild('successfullSavingModal') successfullSavingModal: ModalComponent;
 
     constructor(
         private supplierStore: Store<SupplierState>,
         private authenticationStore: Store<AuthenticationState>
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.suppliers$ = this.supplierStore.pipe(select(getSuppliers));
@@ -56,6 +50,7 @@ export class SupplierRootComponent implements OnInit {
             select(getSupplierCreateEnabled)
         );
         this.currentSupplier$ = this.supplierStore.pipe(select(getSupplier));
+        this.subscribeModals();
     }
 
     onSearch(search: string) {
@@ -87,5 +82,9 @@ export class SupplierRootComponent implements OnInit {
 
     onConfirmDeletion() {
         this.supplierStore.dispatch(new DeleteSupplier(this.toBeDeletedSupplier));
+    }
+
+    private subscribeModals() {
+        subscribeModal(this.supplierStore, getSupplierSaved, true, this.successfullSavingModal);
     }
 }
