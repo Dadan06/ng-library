@@ -14,4 +14,6 @@ export class ProductListComponent {
     @Output() view: EventEmitter<Product> = new EventEmitter<Product>();
     @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
     @Output() delete: EventEmitter<Product> = new EventEmitter<Product>();
+
+    ecart = 1;
 }
