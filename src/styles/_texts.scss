@@ -1,9 +1,6 @@
 @import "colors.scss";
 @import "fonts.scss";
 
-$feature-title-color: #0367ef;
-$list-detail-title-color: #00dc94;
-
 %feature-title {
     font-family: $worksans-regular;
     color: $feature-title-color;

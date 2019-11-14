@@ -1,30 +1,33 @@
 <div class="container">
-    <div class="form-title">Détails</div>
-    <form *ngIf="form" [formGroup]="form" (submit)="onSubmit(form)">
-        <div class="control">
-            <label>
-                Nom *
-            </label>
-            <input #first formControlName="name" type="text" />
-            <app-validation-error [control]="form.controls['name']"></app-validation-error>
-        </div>
-
-        <div class="control">
-            <label>
-                Adresse *
-            </label>
-            <input formControlName="address" type="text" />
-            <app-validation-error [control]="form.controls['address']"></app-validation-error>
-        </div>
-
-        <div class="control">
-            <label>
-                Contact *
-            </label>
-            <input formControlName="contact" type="text" />
-            <app-validation-error [control]="form.controls['contact']"></app-validation-error>
-        </div>
-
+    <header>
+        <div class="form-title">Détails</div>
+    </header>
+    <main data-simplebar>
+        <form *ngIf="form" [formGroup]="form">
+            <div class="control">
+                <label>
+                    Nom *
+                </label>
+                <input #first formControlName="name" type="text" />
+                <app-validation-error [control]="form.controls['name']"></app-validation-error>
+            </div>
+            <div class="control">
+                <label>
+                    Adresse *
+                </label>
+                <input formControlName="address" type="text" />
+                <app-validation-error [control]="form.controls['address']"></app-validation-error>
+            </div>
+            <div class="control">
+                <label>
+                    Contact *
+                </label>
+                <input formControlName="contact" type="text" />
+                <app-validation-error [control]="form.controls['contact']"></app-validation-error>
+            </div>
+        </form>
+    </main>
+    <footer>
         <div class="buttons">
             <button
                 class="blue"
@@ -34,8 +37,8 @@
             >
                 MODIFIER
             </button>
-            <button class="blue" *ngIf="form.enabled" type="submit">ENREGISTRER</button>
+            <button class="blue" *ngIf="form.enabled" (click)="onSubmit(form)">ENREGISTRER</button>
             <button class="dark-purple" *ngIf="form.enabled" (click)="cancel.emit()">ANNULER</button>
         </div>
-    </form>
+    </footer>
 </div>
