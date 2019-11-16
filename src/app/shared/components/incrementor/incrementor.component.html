@@ -1,5 +1,5 @@
 <div class="container">
-    <button (click)="decrement.emit()">-</button>
+    <button [disabled]="disabled" (click)="decrement.emit()">-</button>
     <span>{{ value }}</span>
-    <button (click)="increment.emit()">+</button>
+    <button [disabled]="disabled" (click)="increment.emit()">+</button>
 </div>

@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class IncrementorComponent {
     @Input() value = 0;
+    @Input() disabled = false;
 
     @Output() increment: EventEmitter<void> = new EventEmitter();
     @Output() decrement: EventEmitter<void> = new EventEmitter();

@@ -11,4 +11,8 @@ button {
 
     width: 20px;
     height: 20px;
+
+    &:disabled {
+        opacity: 0.5;
+    }
 }
