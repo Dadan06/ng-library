@@ -182,7 +182,9 @@ const changeQtySuccess = (state: SaleState, action: ChangeQtySuccess): SaleState
     ...state,
     saleItemQtyChanging: false,
     saleItemQtyChanged: true,
-    saleItems: state.saleItems.map(s => (s._id === action.payload._id ? action.payload : s))
+    saleItems: state.saleItems
+        .map(s => (s._id === action.payload._id ? action.payload : s))
+        .filter(s => s.quantity)
 });
 
 const clearChangingQtyError = (state: SaleState, action: ClearChangingQtyError): SaleState => ({
