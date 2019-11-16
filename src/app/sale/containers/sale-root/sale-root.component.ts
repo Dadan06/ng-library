@@ -13,6 +13,7 @@ import { subscribeModalFromError } from 'src/app/shared/utils/modal.utils';
 import {
     AddProduct,
     CancelSale,
+    ClearChangingQtyError,
     ClearProductAdditionError,
     DecrementQty,
     DeleteSaleItem,
@@ -110,5 +111,10 @@ export class SaleRootComponent implements OnInit {
 
     onDecrementQty(saleItem: SaleItem) {
         this.saleStore.dispatch(new DecrementQty(saleItem));
+    }
+
+    onCloseChangingQtyErrorModal() {
+        this.saleStore.dispatch(new ClearChangingQtyError());
+        this.changingQtyErrorModal.close();
     }
 }

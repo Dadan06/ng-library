@@ -144,4 +144,11 @@ export class SaleEffects {
             )
         )
     );
+
+    @Effect()
+    changeQtySuccess$ = this.action$.pipe(
+        ofType(SaleActionTypes.CHANGE_QTY_SUCCESS),
+        withLatestFrom(this.saleStore.pipe(select(getProductCriteria))),
+        map(([action, criteria]) => new LoadProducts({ ...criteria }))
+    );
 }

@@ -16,7 +16,7 @@
                 <td>{{ saleItem.product.costPrice | number: '1.0-0' }}</td>
                 <td>{{ saleItem.product.sellingPrice | number: '1.0-0' }}</td>
                 <td>
-                    <app-incrementor [value]="saleItem.quantity" (increment)="increment.emit(saleItem)" (decrement)="decrement.emit(saleItem)"></app-incrementor>
+                    <app-incrementor [disabled]="saleItem.status !== 'ORDERED'" [value]="saleItem.quantity" (increment)="increment.emit(saleItem)" (decrement)="decrement.emit(saleItem)"></app-incrementor>
                 </td>
                 <td>{{ saleItem.product.sellingPrice * saleItem.quantity | number: '1.0-0' }}</td>
                 <td>

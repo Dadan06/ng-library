@@ -25,7 +25,8 @@ export const enum SaleActionTypes {
     INCREMENT_QTY = '[Sale] Increment Quantity',
     DECREMENT_QTY = '[Sale] Decrement Quantity',
     CHANGE_QTY_FAIL = '[Sale] Increment Quantity Fail',
-    CHANGE_QTY_SUCCESS = '[Sale] Increment Quantity Success'
+    CHANGE_QTY_SUCCESS = '[Sale] Increment Quantity Success',
+    CLEAR_CHANGING_QTY_ERROR = '[Sale] Clear Changing Qty Error'
 }
 
 export class LoadProducts implements Action {
@@ -119,6 +120,10 @@ export class ChangeQtySuccess implements Action {
     constructor(public payload: SaleItem) {}
 }
 
+export class ClearChangingQtyError implements Action {
+    readonly type = SaleActionTypes.CLEAR_CHANGING_QTY_ERROR;
+}
+
 export type SaleAction =
     | LoadProducts
     | LoadProductsSuccess
@@ -138,4 +143,5 @@ export type SaleAction =
     | IncrementQty
     | DecrementQty
     | ChangeQtyFail
-    | ChangeQtySuccess;
+    | ChangeQtySuccess
+    | ClearChangingQtyError;

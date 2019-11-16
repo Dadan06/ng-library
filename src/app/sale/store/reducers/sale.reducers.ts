@@ -13,6 +13,7 @@ import {
     CancelSaleSuccess,
     ChangeQtyFail,
     ChangeQtySuccess,
+    ClearChangingQtyError,
     ClearProductAdditionError,
     DecrementQty,
     DeleteSaleItem,
@@ -173,7 +174,8 @@ const decrementQty = (state: SaleState, action: DecrementQty): SaleState => ({
 const changeQtyFail = (state: SaleState, action: ChangeQtyFail): SaleState => ({
     ...state,
     saleItemQtyChanging: false,
-    saleItemQtyChanged: false
+    saleItemQtyChanged: false,
+    saleItemQtyChangeError: action.payload
 });
 
 const changeQtySuccess = (state: SaleState, action: ChangeQtySuccess): SaleState => ({
@@ -181,6 +183,11 @@ const changeQtySuccess = (state: SaleState, action: ChangeQtySuccess): SaleState
     saleItemQtyChanging: false,
     saleItemQtyChanged: true,
     saleItems: state.saleItems.map(s => (s._id === action.payload._id ? action.payload : s))
+});
+
+const clearChangingQtyError = (state: SaleState, action: ClearChangingQtyError): SaleState => ({
+    ...state,
+    saleItemQtyChangeError: undefined
 });
 
 // tslint:disable-next-line: cyclomatic-complexity no-big-function
@@ -228,6 +235,8 @@ export function saleReducer(state: SaleState = initialState, action: SaleAction)
             return changeQtyFail(state, action);
         case SaleActionTypes.CHANGE_QTY_SUCCESS:
             return changeQtySuccess(state, action);
+        case SaleActionTypes.CLEAR_CHANGING_QTY_ERROR:
+            return clearChangingQtyError(state, action);
         default:
             return state;
     }
