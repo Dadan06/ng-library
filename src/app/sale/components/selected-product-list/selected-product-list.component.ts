@@ -11,6 +11,8 @@ export class SelectedProductListComponent implements OnInit {
 
     @Output() delete: EventEmitter<SaleItem> = new EventEmitter();
     @Output() cancel: EventEmitter<void> = new EventEmitter();
+    @Output() increment: EventEmitter<SaleItem> = new EventEmitter();
+    @Output() decrement: EventEmitter<SaleItem> = new EventEmitter();
 
     constructor() {
         /** */
@@ -22,7 +24,10 @@ export class SelectedProductListComponent implements OnInit {
 
     get billTotal() {
         const validSaleItems = this.saleItems.filter(s => s.status === SaleItemStatus.ORDERED);
-        return validSaleItems.reduce((m, s) => m + s.quantity * s.product.sellingPrice, 0);
+        return validSaleItems.reduce(
+            (m: number, s: SaleItem) => m + s.quantity * s.product.sellingPrice,
+            0
+        );
     }
 
     get validSaleItemsLength() {
