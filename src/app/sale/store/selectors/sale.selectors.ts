@@ -54,3 +54,8 @@ export const getOrderedSaleItems = createSelector<SaleState, SaleState, SaleItem
     getSaleState,
     (state: SaleState) => state.saleItems
 );
+
+export const getChangingQtyError = createSelector<SaleState, SaleState, HttpErrorResponse>(
+    getSaleState,
+    (state: SaleState) => state.saleItemQtyChangeError
+);
