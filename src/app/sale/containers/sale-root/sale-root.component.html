@@ -22,6 +22,8 @@
             [saleItems]="saleItems$ | async"
             (delete)="currentSaleItem = $event; deletionConfirmModal.open()"
             (cancel)="onCancelSale()"
+            (increment)="onIncrementQty($event)"
+            (decrement)="onDecrementQty($event)"
         ></app-selected-product-list>
     </div>
 </div>
@@ -62,10 +64,24 @@
     </ng-template>
     <ng-template #modalBody>
         <p>
-            {{ getError }}
+            {{ getAddingProductError }}
         </p>
     </ng-template>
     <ng-template #modalFooter>
         <button (click)="onCloseProductAdditionErrorModal()" class="blue">OK</button>
+    </ng-template>
+</modal>
+
+<modal #changingQtyErrorModal class="popup-modal error" [closeOnOutsideClick]="false">
+    <ng-template #modalHeader>
+        Echec
+    </ng-template>
+    <ng-template #modalBody>
+        <p>
+            {{ getChangingQtyError }}
+        </p>
+    </ng-template>
+    <ng-template #modalFooter>
+        <button (click)="onCloseChangingQtyErrorModal()" class="blue">OK</button>
     </ng-template>
 </modal>
