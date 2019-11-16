@@ -11,10 +11,14 @@ import {
     CancelSale,
     CancelSaleFail,
     CancelSaleSuccess,
+    ChangeQtyFail,
+    ChangeQtySuccess,
     ClearProductAdditionError,
+    DecrementQty,
     DeleteSaleItem,
     DeleteSaleItemFail,
     DeleteSaleItemSuccess,
+    IncrementQty,
     LoadProducts,
     LoadProductsFail,
     LoadProductsSuccess,
@@ -38,6 +42,9 @@ export interface SaleState {
     saleItemDeleted: boolean;
     saleCanceling: boolean;
     saleCanceled: boolean;
+    saleItemQtyChanging: boolean;
+    saleItemQtyChanged: boolean;
+    saleItemQtyChangeError: HttpErrorResponse;
 }
 
 const initialState = {
@@ -54,7 +61,10 @@ const initialState = {
     saleItemDeleting: false,
     saleItemDeleted: false,
     saleCanceling: false,
-    saleCanceled: false
+    saleCanceled: false,
+    saleItemQtyChanging: false,
+    saleItemQtyChanged: false,
+    saleItemQtyChangeError: undefined
 };
 
 const loadProducts = (state: SaleState, action: LoadProducts): SaleState => ({
@@ -148,6 +158,31 @@ const clearProductAddionError = (
     productAdditionError: undefined
 });
 
+const incrementQty = (state: SaleState, action: IncrementQty): SaleState => ({
+    ...state,
+    saleItemQtyChanging: true,
+    saleItemQtyChanged: false
+});
+
+const decrementQty = (state: SaleState, action: DecrementQty): SaleState => ({
+    ...state,
+    saleItemQtyChanging: true,
+    saleItemQtyChanged: false
+});
+
+const changeQtyFail = (state: SaleState, action: ChangeQtyFail): SaleState => ({
+    ...state,
+    saleItemQtyChanging: false,
+    saleItemQtyChanged: false
+});
+
+const changeQtySuccess = (state: SaleState, action: ChangeQtySuccess): SaleState => ({
+    ...state,
+    saleItemQtyChanging: false,
+    saleItemQtyChanged: true,
+    saleItems: state.saleItems.map(s => (s._id === action.payload._id ? action.payload : s))
+});
+
 // tslint:disable-next-line: cyclomatic-complexity no-big-function
 export function saleReducer(state: SaleState = initialState, action: SaleAction): SaleState {
     switch (action.type) {
@@ -185,6 +220,14 @@ export function saleReducer(state: SaleState = initialState, action: SaleAction)
                 products: state.products,
                 productCriteria: state.productCriteria
             };
+        case SaleActionTypes.INCREMENT_QTY:
+            return incrementQty(state, action);
+        case SaleActionTypes.DECREMENT_QTY:
+            return decrementQty(state, action);
+        case SaleActionTypes.CHANGE_QTY_FAIL:
+            return changeQtyFail(state, action);
+        case SaleActionTypes.CHANGE_QTY_SUCCESS:
+            return changeQtySuccess(state, action);
         default:
             return state;
     }

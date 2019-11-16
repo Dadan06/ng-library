@@ -19,10 +19,14 @@ import {
     CancelSale,
     CancelSaleFail,
     CancelSaleSuccess,
+    ChangeQtyFail,
+    ChangeQtySuccess,
     ClearSale,
+    DecrementQty,
     DeleteSaleItem,
     DeleteSaleItemFail,
     DeleteSaleItemSuccess,
+    IncrementQty,
     LoadProducts,
     LoadProductsFail,
     LoadProductsSuccess,
@@ -117,5 +121,27 @@ export class SaleEffects {
         ofType(SaleActionTypes.CANCEL_SALE_SUCCESS),
         withLatestFrom(this.saleStore.pipe(select(getProductCriteria))),
         map(([action, criteria]) => new LoadProducts({ ...criteria }))
+    );
+
+    @Effect()
+    incrementQty$ = this.action$.pipe(
+        ofType(SaleActionTypes.INCREMENT_QTY),
+        mergeMap((action: IncrementQty) =>
+            this.saleService.incrementQty(action.payload).pipe(
+                map((response: SaleItem) => new ChangeQtySuccess(response)),
+                catchError(error => of(new ChangeQtyFail(error)))
+            )
+        )
+    );
+
+    @Effect()
+    decrementQty$ = this.action$.pipe(
+        ofType(SaleActionTypes.DECREMENT_QTY),
+        mergeMap((action: DecrementQty) =>
+            this.saleService.decrementQty(action.payload).pipe(
+                map((response: SaleItem) => new ChangeQtySuccess(response)),
+                catchError(error => of(new ChangeQtyFail(error)))
+            )
+        )
     );
 }
