@@ -36,4 +36,16 @@ export class SaleService {
             .post(`${environment.apiBaseUrl}/sale/${saleId}/cancel`, {})
             .pipe(map(() => null));
     }
+
+    incrementQty(saleItem: SaleItem): Observable<SaleItem> {
+        return this.http
+            .post(`${environment.apiBaseUrl}/sale-item/increment-qty`, saleItem)
+            .pipe(map((response: ApiResponse) => response.data as SaleItem));
+    }
+
+    decrementQty(saleItem: SaleItem): Observable<SaleItem> {
+        return this.http
+            .post(`${environment.apiBaseUrl}/sale-item/decrement-qty`, saleItem)
+            .pipe(map((response: ApiResponse) => response.data as SaleItem));
+    }
 }
