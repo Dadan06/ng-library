@@ -15,7 +15,9 @@
                 <td [class.strikethrough]="saleItem.status !== 'ORDERED'">{{ saleItem.product.name | titlecase }}</td>
                 <td>{{ saleItem.product.costPrice | number: '1.0-0' }}</td>
                 <td>{{ saleItem.product.sellingPrice | number: '1.0-0' }}</td>
-                <td>{{ saleItem.quantity }}</td>
+                <td>
+                    <app-incrementor [value]="saleItem.quantity" (increment)="increment.emit(saleItem)" (decrement)="decrement.emit(saleItem)"></app-incrementor>
+                </td>
                 <td>{{ saleItem.product.sellingPrice * saleItem.quantity | number: '1.0-0' }}</td>
                 <td>
                     <img (click)="delete.emit(saleItem)" [src]="'/assets/images/ico-delete.png'" />
