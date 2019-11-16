@@ -3,8 +3,9 @@
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Prix unitaire (Ar)</th>
-                <th>Prix de vente (Ar)</th>
+                <th>PU (Ar)</th>
+                <th>PV (Ar)</th>
+                <th>Ecart (Ar)</th>
                 <th>Quantité</th>
                 <th>Fournisseur</th>
                 <th></th>
@@ -18,6 +19,7 @@
                 <td>{{ product.name | titlecase }}</td>
                 <td>{{ product.costPrice | number: '1.0-0' }}</td>
                 <td>{{ product.sellingPrice | number: '1.0-0' }}</td>
+                <td>{{ product.sellingPrice - product.costPrice }}</td>
                 <td [class.empty]="!product.quantity">{{ product.quantity || 'epuisé' }}</td>
                 <td>{{ product.supplier.name | uppercase }}</td>
                 <td class="actions">
