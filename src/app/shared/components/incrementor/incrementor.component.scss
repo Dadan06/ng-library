@@ -1,0 +1,14 @@
+@import 'buttons.scss';
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+button {
+    @extend %button;
+    @extend %grey-button;
+
+    width: 20px;
+    height: 20px;
+}
