@@ -19,7 +19,7 @@
                 <td>{{ product.sellingPrice | number: '1.0-0' }}</td>
                 <td [class.empty]="!product.quantity">{{ product.quantity || 'epuisé' }}</td>
                 <td class="actions">
-                    <img src="/assets/images/ico-add.png" (click)="add.emit(product)" />
+                    <img src="/assets/images/add-btn.png" (click)="add.emit(product)" />
                 </td>
             </tr>
         </tbody>
