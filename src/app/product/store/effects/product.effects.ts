@@ -74,8 +74,14 @@ export class ProductEffects {
     @Effect()
     saveProductSuccess$ = this.action$.pipe(
         ofType(ProductActionTypes.SAVE_PRODUCT_SUCCESS),
+        map((action: SaveProductSuccess) => action.payload),
         withLatestFrom(this.store.pipe(select(getProductCriteria))),
-        map(([action, criteria]) => new LoadProducts(criteria))
+        mergeMap(([product, criteria]) => [
+            new LoadProducts(criteria),
+            new Go({
+                path: [`${PRODUCT_BASE_ROUTE}/detail/${product._id}`]
+            })
+        ])
     );
 
     @Effect()
