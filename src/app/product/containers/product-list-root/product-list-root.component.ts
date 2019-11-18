@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { Page } from 'src/app/shared/types/page.interface';
 import { go } from 'src/app/shared/utils/go.utils';
+import { subscribeModal } from 'src/app/shared/utils/modal.utils';
 import { PRODUCT_BASE_ROUTE, PRODUCT_DEFAULT_CRITERIA } from '../../constants/product.constants';
 import { DeleteProduct, LoadProducts } from '../../store/actions/product.actions';
 import { ProductState } from '../../store/reducers/product.reducers';
@@ -15,6 +16,7 @@ import {
     getProductDeleteEnabled,
     getProductEditEnabled,
     getProducts,
+    getProductSaved,
     getProductsLoading,
     getProductsTotalItems
 } from '../../store/selectors/product.selectors';
@@ -38,6 +40,7 @@ export class ProductListRootComponent implements OnInit {
     toBeDeletedProduct: Product;
 
     @ViewChild('deletionConfirmModal') deletionConfirmModal: ModalComponent;
+    @ViewChild('successfullSavingModal') successfullSavingModal: ModalComponent;
 
     constructor(
         private productStore: Store<ProductState>,
@@ -83,5 +86,9 @@ export class ProductListRootComponent implements OnInit {
 
     onConfirmDeletion() {
         this.productStore.dispatch(new DeleteProduct(this.toBeDeletedProduct));
+    }
+
+    private subscribeModals() {
+        subscribeModal(this.productStore, getProductSaved, true, this.successfullSavingModal);
     }
 }
