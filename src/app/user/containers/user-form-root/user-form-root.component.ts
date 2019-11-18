@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { Role } from 'src/app/role/types/role.interface';
 import { go } from 'src/app/shared/utils/go.utils';
@@ -11,8 +11,7 @@ import {
     getCurrentUser,
     getRoles,
     getUserEditEnabled,
-    getUserEditing,
-    getUserSavingError
+    getUserEditing
 } from '../../store/selectors/user.selectors';
 import { User } from '../../types/user.interface';
 
@@ -27,7 +26,6 @@ export class UserFormRootComponent implements OnInit {
     roles$: Observable<Role[]>;
     isEditing$: Observable<boolean>;
     userEditEnabled$: Observable<boolean>;
-    userSavingError$: Subscription;
 
     constructor(
         private userStore: Store<UserState>,
@@ -39,16 +37,6 @@ export class UserFormRootComponent implements OnInit {
         this.roles$ = this.userStore.pipe(select(getRoles));
         this.isEditing$ = this.userStore.pipe(select(getUserEditing));
         this.userEditEnabled$ = this.authenticationStore.pipe(select(getUserEditEnabled));
-    }
-
-    get getError() {
-        let err = '';
-        this.userStore.pipe(select(getUserSavingError)).subscribe(error => {
-            if (error !== undefined) {
-                err = error.error.message;
-            }
-        });
-        return err;
     }
 
     onEdit(user: User) {
