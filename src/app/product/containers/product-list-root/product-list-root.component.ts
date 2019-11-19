@@ -55,6 +55,7 @@ export class ProductListRootComponent implements OnInit {
         this.productDeleteEnabled$ = this.authenticationStore.pipe(select(getProductDeleteEnabled));
         this.productCreateEnabled$ = this.authenticationStore.pipe(select(getProductCreateEnabled));
         this.currentProduct$ = this.productStore.pipe(select(getProduct));
+        this.subscribeModals();
     }
 
     onSearch(search: string) {
