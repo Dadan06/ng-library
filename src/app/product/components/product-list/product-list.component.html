@@ -19,7 +19,7 @@
                 <td>{{ product.name | titlecase }}</td>
                 <td>{{ product.costPrice | number: '1.0-0' }}</td>
                 <td>{{ product.sellingPrice | number: '1.0-0' }}</td>
-                <td>{{ product.sellingPrice - product.costPrice }}</td>
+                <td>{{ product.sellingPrice - product.costPrice | number: '1.0-0' }}</td>
                 <td [class.empty]="!product.quantity">{{ product.quantity || 'epuisé' }}</td>
                 <td>{{ product.supplier.name | uppercase }}</td>
                 <td class="actions">
