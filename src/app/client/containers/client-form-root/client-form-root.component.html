@@ -9,17 +9,3 @@
         (cancel)="onCancelEdit(client)"
     ></app-client-form>
 </div>
-
-<modal #successfullSavingModal class="popup-modal success">
-    <ng-template #modalHeader>
-        Succès
-    </ng-template>
-    <ng-template #modalBody>
-        Element enregistré avec success
-    </ng-template>
-    <ng-template #modalFooter>
-        <button class="blue" (click)="successfullSavingModal.close()">
-            OK
-        </button>
-    </ng-template>
-</modal>

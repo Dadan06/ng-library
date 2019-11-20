@@ -44,7 +44,10 @@ export class ClientService {
                   .put(`${environment.apiBaseUrl}/${CLIENT_API_ROUTE}/${client._id}`, client)
                   .pipe(map((response: ApiResponse) => response.data as Client))
             : this.http
-                  .post(`${environment.apiBaseUrl}/${CLIENT_API_ROUTE}`, client)
+                  .post(`${environment.apiBaseUrl}/${CLIENT_API_ROUTE}`, {
+                      ...client,
+                      _id: undefined
+                  })
                   .pipe(map((response: ApiResponse) => response.data as Client));
     }
 }

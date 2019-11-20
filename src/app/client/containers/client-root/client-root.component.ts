@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { Page } from 'src/app/shared/types/page.interface';
 import { go } from 'src/app/shared/utils/go.utils';
+import { subscribeModal } from 'src/app/shared/utils/modal.utils';
 import { CLIENT_BASE_ROUTE, CLIENT_DEFAULT_CRITERIA } from '../../constants/client.constants';
 import { DeleteClient, LoadClients } from '../../store/actions/client.actions';
 import { ClientState } from '../../store/reducers/client.reducers';
@@ -15,6 +16,7 @@ import {
     getClientDeleteEnabled,
     getClientEditEnabled,
     getClients,
+    getClientSaved,
     getClientsLoading,
     getClientsTotalItems
 } from '../../store/selectors/client.selectors';
@@ -38,6 +40,7 @@ export class ClientRootComponent implements OnInit {
     toBeDeletedClient: Client;
 
     @ViewChild('deletionConfirmModal') deletionConfirmModal: ModalComponent;
+    @ViewChild('successfullSavingModal') successfullSavingModal: ModalComponent;
 
     constructor(
         private clientStore: Store<ClientState>,
@@ -52,6 +55,7 @@ export class ClientRootComponent implements OnInit {
         this.clientDeleteEnabled$ = this.authenticationStore.pipe(select(getClientDeleteEnabled));
         this.clientCreateEnabled$ = this.authenticationStore.pipe(select(getClientCreateEnabled));
         this.currentClient$ = this.clientStore.pipe(select(getClient));
+        this.subscribeModals();
     }
 
     onSearch(search: string) {
@@ -83,5 +87,9 @@ export class ClientRootComponent implements OnInit {
 
     onConfirmDeletion() {
         this.clientStore.dispatch(new DeleteClient(this.toBeDeletedClient));
+    }
+
+    private subscribeModals() {
+        subscribeModal(this.clientStore, getClientSaved, true, this.successfullSavingModal);
     }
 }
