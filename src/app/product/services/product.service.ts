@@ -46,7 +46,10 @@ export class ProductService {
                   .put(`${environment.apiBaseUrl}/${PRODUCT_API_ROUTE}/${product._id}`, product)
                   .pipe(map((response: ApiResponse) => response.data as Product))
             : this.http
-                  .post(`${environment.apiBaseUrl}/${PRODUCT_API_ROUTE}`, product)
+                  .post(`${environment.apiBaseUrl}/${PRODUCT_API_ROUTE}`, {
+                      ...product,
+                      _id: undefined
+                  })
                   .pipe(map((response: ApiResponse) => response.data as Product));
     }
 
