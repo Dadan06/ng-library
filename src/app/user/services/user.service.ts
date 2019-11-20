@@ -44,7 +44,7 @@ export class UserService {
                   .put(`${environment.apiBaseUrl}/${USER_ROUTE}/${user._id}`, user)
                   .pipe(map((response: ApiResponse) => response.data as User))
             : this.http
-                  .post(`${environment.apiBaseUrl}/${USER_ROUTE}`, user)
+                  .post(`${environment.apiBaseUrl}/${USER_ROUTE}`, { ...user, _id: undefined })
                   .pipe(map((response: ApiResponse) => response.data as User));
     }
 
