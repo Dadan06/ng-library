@@ -31,10 +31,13 @@ import {
     LoadProductsFail,
     LoadProductsSuccess,
     NewSale,
-    SaleActionTypes
+    SaleActionTypes,
+    SaveSale,
+    SaveSaleFail,
+    SaveSaleSuccess
 } from '../actions/sale.actions';
 import { SaleState } from '../reducers/sale.reducers';
-import { getProductCriteria, getSale } from '../selectors/sale.selectors';
+import { getOrderedSaleItems, getProductCriteria, getSale } from '../selectors/sale.selectors';
 
 @Injectable()
 export class SaleEffects {
@@ -150,5 +153,20 @@ export class SaleEffects {
         ofType(SaleActionTypes.CHANGE_QTY_SUCCESS),
         withLatestFrom(this.saleStore.pipe(select(getProductCriteria))),
         map(([action, criteria]) => new LoadProducts({ ...criteria }))
+    );
+
+    @Effect()
+    saveSale$ = this.action$.pipe(
+        ofType(SaleActionTypes.SAVE_SALE),
+        withLatestFrom<SaveSale, Sale, SaleItem[]>(
+            this.saleStore.pipe(select(getSale)),
+            this.saleStore.pipe(select(getOrderedSaleItems))
+        ),
+        mergeMap(([action, sale, saleItems]) =>
+            this.saleService.saveSale({ ...sale, saleItems }).pipe(
+                mergeMap(() => [new SaveSaleSuccess(), new ClearSale()]),
+                catchError(error => of(new SaveSaleFail(error)))
+            )
+        )
     );
 }

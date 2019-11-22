@@ -17,7 +17,8 @@ import {
     ClearProductAdditionError,
     DecrementQty,
     DeleteSaleItem,
-    IncrementQty
+    IncrementQty,
+    SaveSale
 } from '../../store/actions/sale.actions';
 import { SaleState } from '../../store/reducers/sale.reducers';
 import {
@@ -94,6 +95,10 @@ export class SaleRootComponent implements OnInit {
 
     onCancelSale() {
         this.cancelingConfirmModal.open();
+    }
+
+    onSaveSale() {
+        this.saleStore.dispatch(new SaveSale());
     }
 
     onConfirmCanceling() {

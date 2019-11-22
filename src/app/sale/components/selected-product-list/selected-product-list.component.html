@@ -31,7 +31,7 @@
         </tfoot>
     </table>
     <div class="buttons-container">
-        <button class="blue" [disabled]="!validSaleItemsLength">VALIDER</button>
+        <button class="blue" [disabled]="!validSaleItemsLength" (click)="save.emit()">VALIDER</button>
         <button class="dark-purple" [disabled]="!saleItemsLength" (click)="cancel.emit()">
             ANNULER
         </button>

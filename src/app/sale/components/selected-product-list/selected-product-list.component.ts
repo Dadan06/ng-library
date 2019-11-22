@@ -11,6 +11,7 @@ export class SelectedProductListComponent implements OnInit {
 
     @Output() delete: EventEmitter<SaleItem> = new EventEmitter();
     @Output() cancel: EventEmitter<void> = new EventEmitter();
+    @Output() save: EventEmitter<void> = new EventEmitter();
     @Output() increment: EventEmitter<SaleItem> = new EventEmitter();
     @Output() decrement: EventEmitter<SaleItem> = new EventEmitter();
 

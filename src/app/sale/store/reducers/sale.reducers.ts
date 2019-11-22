@@ -25,7 +25,10 @@ import {
     LoadProductsSuccess,
     NewSale,
     SaleAction,
-    SaleActionTypes
+    SaleActionTypes,
+    SaveSale,
+    SaveSaleFail,
+    SaveSaleSuccess
 } from '../actions/sale.actions';
 
 export interface SaleState {
@@ -46,6 +49,8 @@ export interface SaleState {
     saleItemQtyChanging: boolean;
     saleItemQtyChanged: boolean;
     saleItemQtyChangeError: HttpErrorResponse;
+    saleSaving: boolean;
+    saleSaved: boolean;
 }
 
 const initialState = {
@@ -65,7 +70,9 @@ const initialState = {
     saleCanceled: false,
     saleItemQtyChanging: false,
     saleItemQtyChanged: false,
-    saleItemQtyChangeError: undefined
+    saleItemQtyChangeError: undefined,
+    saleSaving: false,
+    saleSaved: false
 };
 
 const loadProducts = (state: SaleState, action: LoadProducts): SaleState => ({
@@ -192,6 +199,24 @@ const clearChangingQtyError = (state: SaleState, action: ClearChangingQtyError):
     saleItemQtyChangeError: undefined
 });
 
+const saveSale = (state: SaleState, action: SaveSale): SaleState => ({
+    ...state,
+    saleSaving: true,
+    saleSaved: false
+});
+
+const saveSaleFail = (state: SaleState, action: SaveSaleFail): SaleState => ({
+    ...state,
+    saleSaving: false,
+    saleSaved: false
+});
+
+const saveSaleSuccess = (state: SaleState, action: SaveSaleSuccess): SaleState => ({
+    ...state,
+    saleSaving: false,
+    saleSaved: true
+});
+
 // tslint:disable-next-line: cyclomatic-complexity no-big-function
 export function saleReducer(state: SaleState = initialState, action: SaleAction): SaleState {
     switch (action.type) {
@@ -239,6 +264,12 @@ export function saleReducer(state: SaleState = initialState, action: SaleAction)
             return changeQtySuccess(state, action);
         case SaleActionTypes.CLEAR_CHANGING_QTY_ERROR:
             return clearChangingQtyError(state, action);
+        case SaleActionTypes.SAVE_SALE:
+            return saveSale(state, action);
+        case SaleActionTypes.SAVE_SALE_SUCCESS:
+            return saveSaleSuccess(state, action);
+        case SaleActionTypes.SAVE_SALE_FAIL:
+            return saveSaleFail(state, action);
         default:
             return state;
     }

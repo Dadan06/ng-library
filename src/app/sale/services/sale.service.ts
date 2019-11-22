@@ -48,4 +48,8 @@ export class SaleService {
             .post(`${environment.apiBaseUrl}/sale-item/decrement-qty`, saleItem)
             .pipe(map((response: ApiResponse) => response.data as SaleItem));
     }
+
+    saveSale(sale: Sale): Observable<void> {
+        return this.http.post(`${environment.apiBaseUrl}/payment`, sale).pipe(map(() => null));
+    }
 }

@@ -22,6 +22,7 @@
             [saleItems]="saleItems$ | async"
             (delete)="currentSaleItem = $event; deletionConfirmModal.open()"
             (cancel)="onCancelSale()"
+            (save)="onSaveSale()"
             (increment)="onIncrementQty($event)"
             (decrement)="onDecrementQty($event)"
         ></app-selected-product-list>
