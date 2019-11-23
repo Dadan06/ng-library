@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-incrementor',
@@ -9,9 +9,6 @@ export class IncrementorComponent {
     @Input() value = 1;
     @Input() disabled = false;
 
-    @Output() increment: EventEmitter<void> = new EventEmitter();
-    @Output() decrement: EventEmitter<void> = new EventEmitter();
-
     currentValues = [this.value];
     private digits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
@@ -21,7 +18,6 @@ export class IncrementorComponent {
         }
         if (this.digits.indexOf(event.key) > -1) {
             this.currentValues.push(+event.key);
-            this.changeValue.emit(+this.currentValues.join(''));
         }
     }
 }
