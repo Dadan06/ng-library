@@ -1,5 +1,5 @@
 <div class="container">
     <button [disabled]="disabled" (click)="decrement.emit()">-</button>
-    <span>{{ value }}</span>
+    <input type="text" [value]="value" [disabled]="disabled" appDigitOnly (keyup)="onKeyUp($event)">
     <button [disabled]="disabled" (click)="increment.emit()">+</button>
 </div>
