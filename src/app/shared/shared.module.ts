@@ -5,7 +5,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ModalModule } from 'angular-custom-modal';
 import { ChipsComponent } from './components/chips/chips.component';
 import { CollapsibleChipsComponent } from './components/collapsible-chips/collapsible-chips.component';
-import { IncrementorComponent } from './components/incrementor/incrementor.component';
 import { InputNumberComponent } from './components/input-number/input-number.component';
 import { ListBoxFilterComponent } from './components/list-box-filter/list-box-filter.component';
 import { ListBoxComponent } from './components/list-box/list-box.component';
@@ -27,8 +26,7 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
         ListBoxFilterComponent,
         SearchBarComponent,
         InputNumberComponent,
-        DigitOnlyDirective,
-        IncrementorComponent
+        DigitOnlyDirective
     ],
     exports: [
         CommonModule,
@@ -43,7 +41,6 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
         ListBoxFilterComponent,
         SearchBarComponent,
         InputNumberComponent,
-        IncrementorComponent,
         DigitOnlyDirective
     ]
 })
