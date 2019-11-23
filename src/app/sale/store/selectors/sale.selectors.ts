@@ -59,3 +59,8 @@ export const getChangingQtyError = createSelector<SaleState, SaleState, HttpErro
     getSaleState,
     (state: SaleState) => state.saleItemQtyChangeError
 );
+
+export const getSaleSaved = createSelector<SaleState, SaleState, boolean>(
+    getSaleState,
+    (state: SaleState) => state.saleSaved
+);
