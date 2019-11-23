@@ -45,7 +45,10 @@ export class SupplierFormComponent {
             _id: [supplier._id],
             name: [supplier.name, Validators.required],
             address: [supplier.address, Validators.required],
-            contact: [supplier.contact, Validators.required]
+            contact: [supplier.contact, Validators.required],
+            nif: [supplier.nif],
+            stat: [supplier.stat],
+            cin: [supplier.cin]
         });
     }
 }

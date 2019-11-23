@@ -1,11 +1,15 @@
 @import 'tables.scss';
 
-$c1Width: 40%;
-$c2Width: 20%;
-$c3Width: 20%;
-$c4Width: 20%;
+$c1Width: 15%;
+$c2Width: 10%;
+$c3Width: 10%;
+$c4Width: 15%;
+$c5Width: 15%;
+$c6Width: 15%;
+$c7Width: 10%;
+$c8Width: 10%;
 
-$tableWidth: $c1Width + $c2Width + $c3Width + $c4Width;
+$tableWidth: $c1Width + $c2Width + $c3Width + $c4Width + $c5Width + $c6Width + $c7Width + $c8Width;
 
 @mixin thTdWidth($width) {
     width: $width;
@@ -33,6 +37,22 @@ $tableWidth: $c1Width + $c2Width + $c3Width + $c4Width;
         tbody td:nth-child(4),
         thead th:nth-child(4) {
             @include thTdWidth($c4Width);
+        }
+        tbody td:nth-child(5),
+        thead th:nth-child(5) {
+            @include thTdWidth($c5Width);
+        }
+        tbody td:nth-child(6),
+        thead th:nth-child(6) {
+            @include thTdWidth($c6Width);
+        }
+        tbody td:nth-child(7),
+        thead th:nth-child(7) {
+            @include thTdWidth($c7Width);
+        }
+        tbody td:nth-child(8),
+        thead th:nth-child(8) {
+            @include thTdWidth($c8Width);
         }
     }
 }

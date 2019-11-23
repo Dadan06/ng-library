@@ -3,4 +3,7 @@ export interface Supplier {
     name: string;
     address: string;
     contact: string;
+    nif?: string;
+    stat?: string;
+    cin?: string;
 }
