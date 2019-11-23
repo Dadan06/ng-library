@@ -9,7 +9,7 @@ import { ProductCriteria } from 'src/app/product/types/product-criteria.interfac
 import { Product } from 'src/app/product/types/product.interface';
 import { Page } from 'src/app/shared/types/page.interface';
 import { getErrorFrom } from 'src/app/shared/utils/error.utils';
-import { subscribeModalFromError } from 'src/app/shared/utils/modal.utils';
+import { subscribeModal, subscribeModalFromError } from 'src/app/shared/utils/modal.utils';
 import {
     AddProduct,
     CancelSale,
@@ -27,7 +27,8 @@ import {
     getProductAdditionError,
     getProducts,
     getProductsLoading,
-    getProductsTotalItems
+    getProductsTotalItems,
+    getSaleSaved
 } from '../../store/selectors/sale.selectors';
 import { SaleItem } from '../../types/sale-item.interface';
 
@@ -49,6 +50,7 @@ export class SaleRootComponent implements OnInit {
     @ViewChild('cancelingConfirmModal') cancelingConfirmModal: ModalComponent;
     @ViewChild('productAdditionErrorModal') productAdditionErrorModal: ModalComponent;
     @ViewChild('changingQtyErrorModal') changingQtyErrorModal: ModalComponent;
+    @ViewChild('saleSaved') saleSaved: ModalComponent;
 
     constructor(private saleStore: Store<SaleState>) {
         /** */
@@ -67,12 +69,7 @@ export class SaleRootComponent implements OnInit {
         this.productsLoading$ = this.saleStore.pipe(select(getProductsLoading));
         this.totalItems$ = this.saleStore.pipe(select(getProductsTotalItems));
         this.saleItems$ = this.saleStore.pipe(select(getOrderedSaleItems));
-        subscribeModalFromError(
-            this.saleStore,
-            getProductAdditionError,
-            this.productAdditionErrorModal
-        );
-        subscribeModalFromError(this.saleStore, getChangingQtyError, this.changingQtyErrorModal);
+        this.subscribeModals();
     }
 
     onSearch(search: string) {
@@ -121,5 +118,15 @@ export class SaleRootComponent implements OnInit {
     onCloseChangingQtyErrorModal() {
         this.saleStore.dispatch(new ClearChangingQtyError());
         this.changingQtyErrorModal.close();
+    }
+
+    private subscribeModals() {
+        subscribeModalFromError(
+            this.saleStore,
+            getProductAdditionError,
+            this.productAdditionErrorModal
+        );
+        subscribeModalFromError(this.saleStore, getChangingQtyError, this.changingQtyErrorModal);
+        subscribeModal(this.saleStore, getSaleSaved, true, this.saleSaved);
     }
 }
