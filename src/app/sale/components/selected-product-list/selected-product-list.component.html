@@ -16,11 +16,7 @@
                 <td>{{ saleItem.product.costPrice | number: '1.0-0' }}</td>
                 <td>{{ saleItem.product.sellingPrice | number: '1.0-0' }}</td>
                 <td>
-                    <app-incrementor
-                        [disabled]="saleItem.status !== 'ORDERED'"
-                        [value]="saleItem.quantity"
-                        (changeValue)="onChangeValue(saleItem, $event)">
-                    </app-incrementor>
+                    <input type="text" [value]="editedQuantity" [(ngModel)]="editedQuantity" (keyup)="onEditQty()" appDigitOnly>
                 </td>
                 <td>{{ saleItem.product.sellingPrice * saleItem.quantity | number: '1.0-0' }}</td>
                 <td>

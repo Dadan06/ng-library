@@ -12,7 +12,9 @@ export class SelectedProductListComponent implements OnInit {
     @Output() delete: EventEmitter<SaleItem> = new EventEmitter();
     @Output() cancel: EventEmitter<void> = new EventEmitter();
     @Output() save: EventEmitter<void> = new EventEmitter();
-    @Output() changeValue: EventEmitter<SaleItem> = new EventEmitter();
+    @Output() changeQty: EventEmitter<number> = new EventEmitter();
+
+    editedQuantity = 1;
 
     constructor() {
         /** */
@@ -38,7 +40,8 @@ export class SelectedProductListComponent implements OnInit {
         return this.saleItems.length;
     }
 
-    onChangeValue(saleItem: SaleItem, value: number) {
-        this.changeValue.emit({ ...saleItem, quantity: value });
+    onEditQty() {
+        this.editedQuantity = this.editedQuantity || 1;
+        this.changeQty.emit(this.editedQuantity);
     }
 }
