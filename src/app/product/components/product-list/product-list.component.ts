@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TYPE_LABELS } from '../../constants/product.constants';
 import { Product } from '../../types/product.interface';
 
 @Component({
@@ -15,5 +16,5 @@ export class ProductListComponent {
     @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
     @Output() delete: EventEmitter<Product> = new EventEmitter<Product>();
 
-    ecart = 1;
+    typeLabels = TYPE_LABELS;
 }

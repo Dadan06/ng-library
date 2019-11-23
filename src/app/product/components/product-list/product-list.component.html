@@ -8,6 +8,7 @@
                 <th>Ecart (Ar)</th>
                 <th>Quantité</th>
                 <th>Fournisseur</th>
+                <th>Type</th>
                 <th></th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                 <td>{{ product.sellingPrice - product.costPrice | number: '1.0-0' }}</td>
                 <td [class.empty]="!product.quantity">{{ product.quantity || 'epuisé' }}</td>
                 <td>{{ product.supplier.name | uppercase }}</td>
+                <td>{{ typeLabels[product.type] }}</td>
                 <td class="actions">
                     <img
                         (click)="view.emit(product); currentProduct = product"

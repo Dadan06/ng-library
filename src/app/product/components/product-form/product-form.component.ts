@@ -2,8 +2,9 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { markFormAsTouchedAndDirty } from 'src/app/shared/utils/form.utils';
 import { Supplier } from 'src/app/supplier/types/supplier.interface';
+import { TYPE_LABELS } from '../../constants/product.constants';
 import { ProductService } from '../../services/product.service';
-import { Product } from '../../types/product.interface';
+import { Product, Type } from '../../types/product.interface';
 
 @Component({
     selector: 'app-product-form',
@@ -28,8 +29,13 @@ export class ProductFormComponent {
     @Output() save: EventEmitter<Product> = new EventEmitter<Product>();
     @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 
-    form: FormGroup;
     @ViewChild('first') firstInput: ElementRef;
+
+    form: FormGroup;
+    types = [
+        { name: TYPE_LABELS[Type.DATED], value: Type.DATED },
+        { name: TYPE_LABELS[Type.UNDATED], value: Type.UNDATED }
+    ];
 
     constructor(private formBuilder: FormBuilder, private productService: ProductService) {}
 
@@ -52,6 +58,7 @@ export class ProductFormComponent {
             costPrice: [product.costPrice, Validators.required],
             sellingPrice: [product.sellingPrice, Validators.required],
             quantity: [product.quantity, Validators.required],
+            type: [product.type, Validators.required],
             supplier: [product.supplier, Validators.required]
         });
     }
