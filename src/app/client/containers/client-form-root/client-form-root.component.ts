@@ -45,7 +45,7 @@ export class ClientFormRootComponent implements OnInit {
     onCancelEdit(client: Client) {
         go(
             this.clientStore,
-            client._id ? [`${CLIENT_BASE_ROUTE}/edit`, client._id] : [`${CLIENT_BASE_ROUTE}`]
+            client._id ? [`${CLIENT_BASE_ROUTE}/detail`, client._id] : [`${CLIENT_BASE_ROUTE}`]
         );
     }
 }

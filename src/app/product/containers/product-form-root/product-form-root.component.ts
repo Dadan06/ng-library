@@ -55,7 +55,7 @@ export class ProductFormRootComponent implements OnInit {
     onCancelEdit(product: Product) {
         go(
             this.productStore,
-            product._id ? [`${PRODUCT_BASE_ROUTE}/edit`, product._id] : [`${PRODUCT_BASE_ROUTE}`]
+            product._id ? [`${PRODUCT_BASE_ROUTE}/detail`, product._id] : [`${PRODUCT_BASE_ROUTE}`]
         );
     }
 

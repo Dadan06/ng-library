@@ -6,7 +6,11 @@ import { go } from 'src/app/shared/utils/go.utils';
 import { SUPPLIER_BASE_ROUTE } from '../../constants/supplier.constants';
 import { SaveSupplier } from '../../store/actions/supplier.actions';
 import { SupplierState } from '../../store/reducers/supplier.reducers';
-import { getSupplier, getSupplierEditEnabled, getSupplierEditing } from '../../store/selectors/supplier.selectors';
+import {
+    getSupplier,
+    getSupplierEditEnabled,
+    getSupplierEditing
+} from '../../store/selectors/supplier.selectors';
 import { Supplier } from '../../types/supplier.interface';
 
 @Component({
@@ -22,7 +26,7 @@ export class SupplierFormRootComponent implements OnInit {
     constructor(
         private supplierStore: Store<SupplierState>,
         private authenticationStore: Store<AuthenticationState>
-    ) { }
+    ) {}
 
     ngOnInit() {
         this.supplier$ = this.supplierStore.pipe(select(getSupplier));
@@ -42,7 +46,7 @@ export class SupplierFormRootComponent implements OnInit {
         go(
             this.supplierStore,
             supplier._id
-                ? [`${SUPPLIER_BASE_ROUTE}/edit`, supplier._id]
+                ? [`${SUPPLIER_BASE_ROUTE}/detail`, supplier._id]
                 : [`${SUPPLIER_BASE_ROUTE}`]
         );
     }
