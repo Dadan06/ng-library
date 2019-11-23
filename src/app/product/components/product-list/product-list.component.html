@@ -21,7 +21,7 @@
                 <td>{{ product.costPrice | number: '1.0-0' }}</td>
                 <td>{{ product.sellingPrice | number: '1.0-0' }}</td>
                 <td>{{ product.sellingPrice - product.costPrice | number: '1.0-0' }}</td>
-                <td [class.empty]="!product.quantity">{{ product.quantity || 'epuisé' }}</td>
+                <td [class.empty]="!product.quantity" [class.alert]="product.quantity && product.quantity <= 10" >{{ product.quantity || 'epuisé' }}</td>
                 <td>{{ product.supplier.name | uppercase }}</td>
                 <td>{{ typeLabels[product.type] }}</td>
                 <td class="actions">
