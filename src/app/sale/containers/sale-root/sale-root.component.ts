@@ -15,9 +15,7 @@ import {
     CancelSale,
     ClearChangingQtyError,
     ClearProductAdditionError,
-    DecrementQty,
     DeleteSaleItem,
-    IncrementQty,
     SaveSale
 } from '../../store/actions/sale.actions';
 import { SaleState } from '../../store/reducers/sale.reducers';
@@ -107,12 +105,8 @@ export class SaleRootComponent implements OnInit {
         this.productAdditionErrorModal.close();
     }
 
-    onIncrementQty(saleItem: SaleItem) {
-        this.saleStore.dispatch(new IncrementQty(saleItem));
-    }
-
-    onDecrementQty(saleItem: SaleItem) {
-        this.saleStore.dispatch(new DecrementQty(saleItem));
+    onChangeValue(saleItem: SaleItem) {
+        /** */
     }
 
     onCloseChangingQtyErrorModal() {

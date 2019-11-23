@@ -22,8 +22,7 @@ export const enum SaleActionTypes {
     CANCEL_SALE_SUCCESS = '[Sale] Cancel Sale Success',
     CANCEL_SALE_FAIL = '[Sale] Cancel Sale Fail',
     CLEAR_PRODUCT_ADDITION_ERROR = '[Sale] Clear Product Addition Error',
-    INCREMENT_QTY = '[Sale] Increment Quantity',
-    DECREMENT_QTY = '[Sale] Decrement Quantity',
+    CHANGE_QTY = '[Sale] Change Quantity',
     CHANGE_QTY_FAIL = '[Sale] Increment Quantity Fail',
     CHANGE_QTY_SUCCESS = '[Sale] Increment Quantity Success',
     CLEAR_CHANGING_QTY_ERROR = '[Sale] Clear Changing Qty Error',
@@ -103,13 +102,8 @@ export class ClearProductAdditionError implements Action {
     readonly type = SaleActionTypes.CLEAR_PRODUCT_ADDITION_ERROR;
 }
 
-export class IncrementQty implements Action {
-    readonly type = SaleActionTypes.INCREMENT_QTY;
-    constructor(public payload: SaleItem) {}
-}
-
-export class DecrementQty implements Action {
-    readonly type = SaleActionTypes.DECREMENT_QTY;
+export class ChangeQty implements Action {
+    readonly type = SaleActionTypes.CHANGE_QTY;
     constructor(public payload: SaleItem) {}
 }
 
@@ -156,8 +150,7 @@ export type SaleAction =
     | CancelSaleFail
     | CancelSaleSuccess
     | ClearProductAdditionError
-    | IncrementQty
-    | DecrementQty
+    | ChangeQty
     | ChangeQtyFail
     | ChangeQtySuccess
     | ClearChangingQtyError

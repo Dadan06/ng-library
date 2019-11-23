@@ -19,14 +19,13 @@ import {
     CancelSale,
     CancelSaleFail,
     CancelSaleSuccess,
+    ChangeQty,
     ChangeQtyFail,
     ChangeQtySuccess,
     ClearSale,
-    DecrementQty,
     DeleteSaleItem,
     DeleteSaleItemFail,
     DeleteSaleItemSuccess,
-    IncrementQty,
     LoadProducts,
     LoadProductsFail,
     LoadProductsSuccess,
@@ -127,21 +126,10 @@ export class SaleEffects {
     );
 
     @Effect()
-    incrementQty$ = this.action$.pipe(
-        ofType(SaleActionTypes.INCREMENT_QTY),
-        mergeMap((action: IncrementQty) =>
-            this.saleService.incrementQty(action.payload).pipe(
-                map((response: SaleItem) => new ChangeQtySuccess(response)),
-                catchError(error => of(new ChangeQtyFail(error)))
-            )
-        )
-    );
-
-    @Effect()
-    decrementQty$ = this.action$.pipe(
-        ofType(SaleActionTypes.DECREMENT_QTY),
-        mergeMap((action: DecrementQty) =>
-            this.saleService.decrementQty(action.payload).pipe(
+    changeQty$ = this.action$.pipe(
+        ofType(SaleActionTypes.CHANGE_QTY),
+        mergeMap((action: ChangeQty) =>
+            this.saleService.changeQty(action.payload).pipe(
                 map((response: SaleItem) => new ChangeQtySuccess(response)),
                 catchError(error => of(new ChangeQtyFail(error)))
             )

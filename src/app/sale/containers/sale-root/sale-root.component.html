@@ -23,8 +23,7 @@
             (delete)="currentSaleItem = $event; deletionConfirmModal.open()"
             (cancel)="onCancelSale()"
             (save)="onSaveSale()"
-            (increment)="onIncrementQty($event)"
-            (decrement)="onDecrementQty($event)"
+            (changeValue)="onChangeValue($event)"
         ></app-selected-product-list>
     </div>
 </div>

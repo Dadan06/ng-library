@@ -11,15 +11,14 @@ import {
     CancelSale,
     CancelSaleFail,
     CancelSaleSuccess,
+    ChangeQty,
     ChangeQtyFail,
     ChangeQtySuccess,
     ClearChangingQtyError,
     ClearProductAdditionError,
-    DecrementQty,
     DeleteSaleItem,
     DeleteSaleItemFail,
     DeleteSaleItemSuccess,
-    IncrementQty,
     LoadProducts,
     LoadProductsFail,
     LoadProductsSuccess,
@@ -166,13 +165,7 @@ const clearProductAddionError = (
     productAdditionError: undefined
 });
 
-const incrementQty = (state: SaleState, action: IncrementQty): SaleState => ({
-    ...state,
-    saleItemQtyChanging: true,
-    saleItemQtyChanged: false
-});
-
-const decrementQty = (state: SaleState, action: DecrementQty): SaleState => ({
+const changeQty = (state: SaleState, action: ChangeQty): SaleState => ({
     ...state,
     saleItemQtyChanging: true,
     saleItemQtyChanged: false
@@ -254,10 +247,8 @@ export function saleReducer(state: SaleState = initialState, action: SaleAction)
                 products: state.products,
                 productCriteria: state.productCriteria
             };
-        case SaleActionTypes.INCREMENT_QTY:
-            return incrementQty(state, action);
-        case SaleActionTypes.DECREMENT_QTY:
-            return decrementQty(state, action);
+        case SaleActionTypes.CHANGE_QTY:
+            return changeQty(state, action);
         case SaleActionTypes.CHANGE_QTY_FAIL:
             return changeQtyFail(state, action);
         case SaleActionTypes.CHANGE_QTY_SUCCESS:

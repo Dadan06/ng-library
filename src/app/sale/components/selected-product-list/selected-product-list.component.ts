@@ -12,8 +12,7 @@ export class SelectedProductListComponent implements OnInit {
     @Output() delete: EventEmitter<SaleItem> = new EventEmitter();
     @Output() cancel: EventEmitter<void> = new EventEmitter();
     @Output() save: EventEmitter<void> = new EventEmitter();
-    @Output() increment: EventEmitter<SaleItem> = new EventEmitter();
-    @Output() decrement: EventEmitter<SaleItem> = new EventEmitter();
+    @Output() changeValue: EventEmitter<SaleItem> = new EventEmitter();
 
     constructor() {
         /** */
@@ -37,5 +36,9 @@ export class SelectedProductListComponent implements OnInit {
 
     get saleItemsLength() {
         return this.saleItems.length;
+    }
+
+    onChangeValue(saleItem: SaleItem, value: number) {
+        this.changeValue.emit({ ...saleItem, quantity: value });
     }
 }
