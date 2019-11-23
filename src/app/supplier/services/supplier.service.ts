@@ -44,7 +44,10 @@ export class SupplierService {
                   .put(`${environment.apiBaseUrl}/${SUPPLIER_API_ROUTE}/${supplier._id}`, supplier)
                   .pipe(map((response: ApiResponse) => response.data as Supplier))
             : this.http
-                  .post(`${environment.apiBaseUrl}/${SUPPLIER_API_ROUTE}`, supplier)
+                  .post(`${environment.apiBaseUrl}/${SUPPLIER_API_ROUTE}`, {
+                      ...supplier,
+                      _id: undefined
+                  })
                   .pipe(map((response: ApiResponse) => response.data as Supplier));
     }
 }
