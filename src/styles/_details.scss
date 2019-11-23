@@ -24,6 +24,17 @@
         .form-title {
             @extend %list-detail-title;
         }
+
+        svg {
+            cursor: pointer;
+            fill: #a1a1a1;
+            width: 14px;
+            height: 14px;
+        }
+
+        svg:hover {
+            fill: unset;
+        }
     }
 
     main {
