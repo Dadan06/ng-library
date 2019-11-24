@@ -1,3 +1,4 @@
+import { Client } from 'src/app/client/types/client.interface';
 import { User } from 'src/app/user/types/user.interface';
 import { SaleItem } from './sale-item.interface';
 
@@ -23,4 +24,5 @@ export interface Sale {
     discount: number;
     saleStatus: SaleStatus;
     seller: User;
+    client: Client;
 }
