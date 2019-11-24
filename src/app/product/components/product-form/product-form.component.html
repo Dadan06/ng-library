@@ -40,20 +40,25 @@
                 <input formControlName="quantity" type="number" min="0" appDigitOnly />
                 <app-validation-error [control]="form.controls['quantity']"></app-validation-error>
             </div>
-            <div class="control">
-                <label for="supplier">Type *</label>
-                <div class="custom-select">
-                    <ng-select
-                        [items]="types"
-                        formControlName="type"
-                        bindLabel="name"
-                        bindValue="value"
-                    ></ng-select>
+            <div class="custom-control">
+                <label>Type *</label>
+                <div class="radio-container">
+                    <div class="radio-control">
+                        <label>
+                            <input type="radio" name="type" formControlName="type" [value]="'DATED'"/>
+                            Daté
+                        </label>
+                    </div>
+                    <div class="radio-control">
+                        <label>
+                            <input type="radio" name="type" formControlName="type" [value]="'UNDATED'"/>
+                            Non daté
+                        </label>
+                    </div>
                 </div>
-                <app-validation-error [control]="form.controls['type']"></app-validation-error>
             </div>
             <div class="control">
-                <label for="supplier">Fournisseur *</label>
+                <label>Fournisseur *</label>
                 <div class="custom-select">
                     <ng-select
                         [items]="suppliers"
