@@ -3,10 +3,13 @@ import { select, Store } from '@ngrx/store';
 import { ModalComponent } from 'angular-custom-modal';
 import * as cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
+import { Client } from 'src/app/client/types/client.interface';
 import { PRODUCT_DEFAULT_CRITERIA } from 'src/app/product/constants/product.constants';
 import { LoadProducts } from 'src/app/product/store/actions/product.actions';
 import { ProductCriteria } from 'src/app/product/types/product-criteria.interface';
 import { Product } from 'src/app/product/types/product.interface';
+import { SharedState } from 'src/app/shared/store/reducers/shared.reducers';
+import { getClients } from 'src/app/shared/store/selectors/shared.selectors';
 import { Page } from 'src/app/shared/types/page.interface';
 import { getErrorFrom } from 'src/app/shared/utils/error.utils';
 import { subscribeModal, subscribeModalFromError } from 'src/app/shared/utils/modal.utils';
@@ -43,6 +46,7 @@ export class SaleRootComponent implements OnInit {
     productsLoading$: Observable<boolean>;
     totalItems$: Observable<number>;
     saleItems$: Observable<SaleItem[]>;
+    clients$: Observable<Client[]>;
 
     productCriteria: ProductCriteria = cloneDeep(PRODUCT_DEFAULT_CRITERIA);
     currentSaleItem: SaleItem;
@@ -54,7 +58,7 @@ export class SaleRootComponent implements OnInit {
     @ViewChild('saleSaved') saleSaved: ModalComponent;
     @ViewChild('saleCanceled') saleCanceled: ModalComponent;
 
-    constructor(private saleStore: Store<SaleState>) {
+    constructor(private saleStore: Store<SaleState>, private sharedStore: Store<SharedState>) {
         /** */
     }
 
@@ -71,6 +75,7 @@ export class SaleRootComponent implements OnInit {
         this.productsLoading$ = this.saleStore.pipe(select(getProductsLoading));
         this.totalItems$ = this.saleStore.pipe(select(getProductsTotalItems));
         this.saleItems$ = this.saleStore.pipe(select(getOrderedSaleItems));
+        this.clients$ = this.sharedStore.pipe(select(getClients));
         this.subscribeModals();
     }
 

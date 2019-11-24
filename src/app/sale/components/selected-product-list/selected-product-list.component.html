@@ -20,7 +20,8 @@
         <label for="supplier">Client</label>
         <div class="custom-select">
             <ng-select
-                [items]="[]"
+                [items]="clients"
+                bindLabel="name"
                 [(ngModel)]="client"
             ></ng-select>
         </div>

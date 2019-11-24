@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Client } from 'src/app/client/types/client.interface';
 import { QuantityChangingData, SaleItem, SaleItemStatus } from '../../types/sale-item.interface';
 import { Sale, SaleType } from '../../types/sale.interface';
 
@@ -8,6 +9,7 @@ import { Sale, SaleType } from '../../types/sale.interface';
     styleUrls: ['./selected-product-list.component.scss']
 })
 export class SelectedProductListComponent implements OnInit {
+    @Input() clients: Client[];
     @Input() saleItems: SaleItem[];
 
     @Output() delete: EventEmitter<SaleItem> = new EventEmitter();

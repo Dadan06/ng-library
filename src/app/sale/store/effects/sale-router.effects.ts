@@ -4,6 +4,7 @@ import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 import { select, Store } from '@ngrx/store';
 import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { AppRouterState } from 'src/app/core/store/reducers/router.reducers';
+import { LoadClients } from 'src/app/shared/store/actions/shared.actions';
 import { SALE_BASE_ROUTE } from '../../constants/sale.constant';
 import { ClearSale, LoadProducts } from '../actions/sale.actions';
 import { SaleState } from '../reducers/sale.reducers';
@@ -22,6 +23,7 @@ export class SaleRouterEffects {
         filter(state => state.url.includes(`${SALE_BASE_ROUTE}`)),
         withLatestFrom(this.store.pipe(select(getProductCriteria))),
         mergeMap(([routerState, productCriteria]) => [
+            new LoadClients(),
             new LoadProducts(productCriteria),
             new ClearSale()
         ])
