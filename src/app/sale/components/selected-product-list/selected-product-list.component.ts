@@ -19,9 +19,9 @@ export class SelectedProductListComponent implements OnInit {
 
     currentValues = [1];
 
-    saleType = SaleType.DIRECT_SALE;
-    client = null;
-    discount = 0;
+    saleType: SaleType;
+    client: Client;
+    discount: number;
 
     private digits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
     private notDigits = ['Delete', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
@@ -31,7 +31,7 @@ export class SelectedProductListComponent implements OnInit {
     }
 
     ngOnInit() {
-        /** */
+        this.init();
     }
 
     get billTotal() {
@@ -81,5 +81,11 @@ export class SelectedProductListComponent implements OnInit {
 
     private normalizeValue(): number {
         return this.currentValues.length ? +this.currentValues.join('') : 1;
+    }
+
+    private init() {
+        this.saleType = SaleType.DIRECT_SALE;
+        this.client = null;
+        this.discount = 0;
     }
 }

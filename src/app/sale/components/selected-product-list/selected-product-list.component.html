@@ -65,7 +65,7 @@
     </table>
     <div class="buttons-container">
         <button class="blue" [disabled]="billTotal === 0" (click)="onSave()">VALIDER</button>
-        <button class="dark-purple" [disabled]="!saleItemsLength" (click)="cancel.emit()">
+        <button class="dark-purple" [disabled]="!saleItemsLength" (click)="init(); cancel.emit()">
             ANNULER
         </button>
     </div>
