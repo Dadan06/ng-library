@@ -6,7 +6,7 @@ import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { AppRouterState } from 'src/app/core/store/reducers/router.reducers';
 import { LoadClients } from 'src/app/shared/store/actions/shared.actions';
 import { SALE_BASE_ROUTE } from '../../constants/sale.constant';
-import { ClearSale, LoadProducts } from '../actions/sale.actions';
+import { LoadProducts } from '../actions/sale.actions';
 import { SaleState } from '../reducers/sale.reducers';
 import { getProductCriteria } from '../selectors/sale.selectors';
 
@@ -24,8 +24,7 @@ export class SaleRouterEffects {
         withLatestFrom(this.store.pipe(select(getProductCriteria))),
         mergeMap(([routerState, productCriteria]) => [
             new LoadClients(),
-            new LoadProducts(productCriteria),
-            new ClearSale()
+            new LoadProducts(productCriteria)
         ])
     );
 }

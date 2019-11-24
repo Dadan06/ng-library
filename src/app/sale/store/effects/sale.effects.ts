@@ -24,6 +24,7 @@ import {
     ChangeQty,
     ChangeQtyFail,
     ChangeQtySuccess,
+    ClearSale,
     DeleteSaleItem,
     DeleteSaleItemFail,
     DeleteSaleItemSuccess,
@@ -120,6 +121,13 @@ export class SaleEffects {
     );
 
     @Effect()
+    cancelSaleSuccess$ = this.action$.pipe(
+        ofType(SaleActionTypes.CANCEL_SALE_SUCCESS),
+        withLatestFrom(this.saleStore.pipe(select(getProductCriteria))),
+        mergeMap(([action, criteria]) => [new LoadProducts({ ...criteria }), new ClearSale()])
+    );
+
+    @Effect()
     changeQty$ = this.action$.pipe(
         ofType(SaleActionTypes.CHANGE_QTY),
         mergeMap((action: ChangeQty) =>
@@ -150,5 +158,12 @@ export class SaleEffects {
                 catchError(error => of(new SaveSaleFail(error)))
             )
         )
+    );
+
+    @Effect()
+    saveSaleSuccess$ = this.action$.pipe(
+        ofType(SaleActionTypes.SAVE_SALE_SUCCESS),
+        withLatestFrom(this.saleStore.pipe(select(getProductCriteria))),
+        mergeMap(([action, criteria]) => [new LoadProducts({ ...criteria }), new ClearSale()])
     );
 }
