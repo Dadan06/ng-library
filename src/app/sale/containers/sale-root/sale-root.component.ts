@@ -13,6 +13,7 @@ import { subscribeModal, subscribeModalFromError } from 'src/app/shared/utils/mo
 import {
     AddProduct,
     CancelSale,
+    ChangeQty,
     ClearChangingQtyError,
     ClearProductAdditionError,
     DeleteSaleItem,
@@ -28,7 +29,7 @@ import {
     getProductsTotalItems,
     getSaleSaved
 } from '../../store/selectors/sale.selectors';
-import { SaleItem } from '../../types/sale-item.interface';
+import { QuantityChangingData, SaleItem } from '../../types/sale-item.interface';
 
 @Component({
     selector: 'app-sale-root',
@@ -105,8 +106,8 @@ export class SaleRootComponent implements OnInit {
         this.productAdditionErrorModal.close();
     }
 
-    onChangeValue(saleItem: SaleItem) {
-        /** */
+    onChangeQty(quantityChangingData: QuantityChangingData) {
+        this.saleStore.dispatch(new ChangeQty(quantityChangingData));
     }
 
     onCloseChangingQtyErrorModal() {

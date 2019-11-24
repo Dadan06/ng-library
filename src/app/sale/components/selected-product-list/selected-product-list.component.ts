@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SaleItem, SaleItemStatus } from '../../types/sale-item.interface';
+import { QuantityChangingData, SaleItem, SaleItemStatus } from '../../types/sale-item.interface';
 
 @Component({
     selector: 'app-selected-product-list',
@@ -12,9 +12,12 @@ export class SelectedProductListComponent implements OnInit {
     @Output() delete: EventEmitter<SaleItem> = new EventEmitter();
     @Output() cancel: EventEmitter<void> = new EventEmitter();
     @Output() save: EventEmitter<void> = new EventEmitter();
-    @Output() changeQty: EventEmitter<number> = new EventEmitter();
+    @Output() changeQty: EventEmitter<QuantityChangingData> = new EventEmitter();
 
-    editedQuantity = 1;
+    currentValues = [1];
+
+    private digits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+    private notDigits = ['Delete', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 
     constructor() {
         /** */
@@ -40,8 +43,28 @@ export class SelectedProductListComponent implements OnInit {
         return this.saleItems.length;
     }
 
-    onEditQty() {
-        this.editedQuantity = this.editedQuantity || 1;
-        this.changeQty.emit(this.editedQuantity);
+    get editedQuantity() {
+        return this.normalizeValue();
+    }
+
+    onEditQty(saleItem: SaleItem, event: KeyboardEvent) {
+        let previousValue = 0;
+        if (this.digits.indexOf(event.key) > -1) {
+            this.currentValues.push(+event.key);
+        }
+        if (event.key === 'Backspace') {
+            previousValue = this.normalizeValue();
+            this.currentValues.pop();
+        }
+        if (this.notDigits.indexOf(event.key) === -1) {
+            this.changeQty.emit({
+                saleItem: { ...saleItem, quantity: this.normalizeValue() },
+                previousValue
+            });
+        }
+    }
+
+    private normalizeValue(): number {
+        return this.currentValues.length ? +this.currentValues.join('') : 1;
     }
 }

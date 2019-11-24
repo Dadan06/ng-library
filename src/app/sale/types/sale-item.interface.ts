@@ -5,6 +5,11 @@ export enum SaleItemStatus {
     DELETED = 'DELETED'
 }
 
+export interface QuantityChangingData {
+    previousValue: number;
+    saleItem: SaleItem;
+}
+
 export interface SaleItem {
     _id: string;
     product: Product;

@@ -7,7 +7,7 @@ import { ApiResponse } from 'src/app/shared/types/api-response.interface';
 import { User } from 'src/app/user/types/user.interface';
 import { environment } from 'src/environments/environment';
 import { SALE_API_ROUTE, SALE_ITEM_API_ROUTE } from '../constants/sale.constant';
-import { SaleItem } from '../types/sale-item.interface';
+import { QuantityChangingData, SaleItem } from '../types/sale-item.interface';
 import { Sale } from '../types/sale.interface';
 
 @Injectable()
@@ -41,9 +41,12 @@ export class SaleService {
             .pipe(map(() => null));
     }
 
-    changeQty(saleItem: SaleItem): Observable<SaleItem> {
+    changeQty(quantityChangingData: QuantityChangingData): Observable<SaleItem> {
         return this.http
-            .post(`${environment.apiBaseUrl}/${SALE_ITEM_API_ROUTE}/change-qty`, saleItem)
+            .post(
+                `${environment.apiBaseUrl}/${SALE_ITEM_API_ROUTE}/change-qty`,
+                quantityChangingData
+            )
             .pipe(map((response: ApiResponse) => response.data as SaleItem));
     }
 
