@@ -9,7 +9,7 @@ export enum SaleStatus {
 }
 
 export enum SaleType {
-    DIRECT_SALE = 'DIRECT SALE',
+    DIRECT_SALE = 'DIRECT_SALE',
     CONSIGNATION = 'CONSIGNATION'
 }
 
@@ -20,6 +20,7 @@ export interface Sale {
     saleDate: Date;
     saleItems: SaleItem[];
     amount: number;
+    discount: number;
     saleStatus: SaleStatus;
     seller: User;
 }
