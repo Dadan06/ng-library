@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { ProductService } from '../product/services/product.service';
@@ -16,6 +17,7 @@ import { saleReducer } from './store/reducers/sale.reducers';
     declarations: [SelectableProductListComponent, SelectedProductListComponent, SaleRootComponent],
     imports: [
         CommonModule,
+        NgSelectModule,
         SharedModule,
         SaleRoutingModule,
         StoreModule.forFeature('sale', saleReducer),
