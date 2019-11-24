@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { ModalModule } from 'angular-custom-modal';
+import { ClientService } from '../client/services/client.service';
 import { ChipsComponent } from './components/chips/chips.component';
 import { CollapsibleChipsComponent } from './components/collapsible-chips/collapsible-chips.component';
 import { InputNumberComponent } from './components/input-number/input-number.component';
@@ -13,9 +16,19 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
+import { SharedEffects } from './store/effects/shared.effects';
+import { sharedReducer } from './store/reducers/shared.reducers';
 
 @NgModule({
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalModule, NgSelectModule],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ModalModule,
+        NgSelectModule,
+        StoreModule.forFeature('shared', sharedReducer),
+        EffectsModule.forFeature([SharedEffects])
+    ],
     declarations: [
         LoaderComponent,
         PaginationComponent,
@@ -42,6 +55,7 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
         SearchBarComponent,
         InputNumberComponent,
         DigitOnlyDirective
-    ]
+    ],
+    providers: [ClientService]
 })
 export class SharedModule {}

@@ -22,6 +22,12 @@ export class ClientService {
             .pipe(map((response: ApiResponse) => response.data as Paginated<Client>));
     }
 
+    loadAllClient(): Observable<Client[]> {
+        return this.http
+            .get(`${environment.apiBaseUrl}/${CLIENT_API_ROUTE}/all`)
+            .pipe(map((response: ApiResponse) => response.data as Client[]));
+    }
+
     loadClient(clientId: string): Observable<Client> {
         return this.http
             .get(`${environment.apiBaseUrl}/${CLIENT_API_ROUTE}/${clientId}`)
