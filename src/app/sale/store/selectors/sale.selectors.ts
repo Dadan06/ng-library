@@ -45,7 +45,7 @@ export const getSale = createSelector<SaleState, SaleState, Sale>(
             _id: state.saleId,
             no: state.no,
             saleItems: state.saleItems.map(({ _id, ...rest }) => rest),
-            orderDate: new Date(),
+            saleDate: new Date(),
             status: SaleStatus.ORDERED
         } as unknown) as Sale)
 );
@@ -63,4 +63,9 @@ export const getChangingQtyError = createSelector<SaleState, SaleState, HttpErro
 export const getSaleSaved = createSelector<SaleState, SaleState, boolean>(
     getSaleState,
     (state: SaleState) => state.saleSaved
+);
+
+export const getSaleCanceled = createSelector<SaleState, SaleState, boolean>(
+    getSaleState,
+    (state: SaleState) => state.saleCanceled
 );
