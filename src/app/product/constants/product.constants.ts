@@ -12,7 +12,7 @@ export const EMPTY_PRODUCT_MODEL: Product = {
     costPrice: 0,
     sellingPrice: 0,
     quantity: 0,
-    type: null,
+    type: Type.DATED,
     supplier: null
 };
 
