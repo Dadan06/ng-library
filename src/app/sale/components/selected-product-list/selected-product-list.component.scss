@@ -1,6 +1,7 @@
 @import 'tables.scss';
 @import 'buttons.scss';
 @import 'forms.scss';
+@import 'sizes.scss';
 
 $c1Width: 20%;
 $c2Width: 20%;
@@ -15,44 +16,49 @@ $tableWidth: $c1Width + $c2Width + $c3Width + $c4Width + $c5Width + $c6Width;
     max-width: 0;
 }
 
-.table-container {
+.container {
     width: 100%;
     height: 100%;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: auto 52px;
+    grid-template-rows: repeat(3, 80px) auto 40px;
+}
 
-    table {
-        @extend %table;
-        width: $tableWidth;
-        tbody td:nth-child(1),
-        thead th:nth-child(1) {
-            @include thTdWidth($c1Width);
-        }
-        tbody td:nth-child(2),
-        thead th:nth-child(2) {
-            @include thTdWidth($c2Width);
-        }
-        tbody td:nth-child(3),
-        thead th:nth-child(3) {
-            @include thTdWidth($c3Width);
-        }
-        tbody td:nth-child(4),
-        thead th:nth-child(4) {
-            @include thTdWidth($c4Width);
-        }
-        tbody td:nth-child(5),
-        thead th:nth-child(5) {
-            @include thTdWidth($c5Width);
-        }
-        tbody td:nth-child(6),
-        thead th:nth-child(56) {
-            @include thTdWidth($c6Width);
-        }
-        tbody td:nth-child(4) {
-            padding: 0;
-        }
+table {
+    @extend %table;
+    width: $tableWidth;
+    tbody td:nth-child(1),
+    thead th:nth-child(1) {
+        @include thTdWidth($c1Width);
     }
+    tbody td:nth-child(2),
+    thead th:nth-child(2) {
+        @include thTdWidth($c2Width);
+    }
+    tbody td:nth-child(3),
+    thead th:nth-child(3) {
+        @include thTdWidth($c3Width);
+    }
+    tbody td:nth-child(4),
+    thead th:nth-child(4) {
+        @include thTdWidth($c4Width);
+    }
+    tbody td:nth-child(5),
+    thead th:nth-child(5) {
+        @include thTdWidth($c5Width);
+    }
+    tbody td:nth-child(6),
+    thead th:nth-child(56) {
+        @include thTdWidth($c6Width);
+    }
+    tbody td:nth-child(4) {
+        padding: 0;
+    }
+}
+
+.control {
+    @extend %generic-control;
+    max-width: 45%;
 }
 
 .buttons-container {
@@ -92,4 +98,29 @@ input {
     text-decoration: line-through;
     text-decoration-color: red;
     text-decoration-style: wavy;
+}
+
+.custom-control {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto $generic-form-height;
+    padding-bottom: 25px;
+    @extend %default-form-text;
+}
+
+.radio-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.radio-control {
+    label {
+        @extend %generic-radio-container;
+    }
+}
+
+input[type="radio"] {
+    @extend %generic-radio-input;
 }

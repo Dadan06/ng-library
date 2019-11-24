@@ -1,4 +1,5 @@
 @import 'forms.scss';
+@import 'sizes.scss';
 @import 'buttons.scss';
 @import 'texts.scss';
 @import 'details.scss';
@@ -33,9 +34,10 @@ button {
 
 .custom-control {
     display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: auto 30px;
+    grid-template-columns: auto;
+    grid-template-rows: auto $generic-form-height;
     padding-bottom: 25px;
+    @extend %default-form-text;
 }
 
 .radio-container {

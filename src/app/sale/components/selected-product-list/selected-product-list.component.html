@@ -1,4 +1,35 @@
-<div class="table-container">
+<div class="container">
+    <div class="custom-control">
+        <label>Type *</label>
+        <div class="radio-container">
+            <div class="radio-control">
+                <label>
+                    <input type="radio" name="type" [value]="'DIRECT_SALE'"/>
+                    Direct
+                </label>
+            </div>
+            <div class="radio-control">
+                <label>
+                    <input type="radio" name="type" [value]="'CONSIGNATION'"/>
+                    Consignation
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="control">
+        <label for="supplier">Client</label>
+        <div class="custom-select">
+            <ng-select
+                [items]="[]"
+            ></ng-select>
+        </div>
+    </div>
+    <div class="control">
+        <label>
+            Remise
+        </label>
+        <input type="number" min="0" appDigitOnly />
+    </div>
     <table>
         <thead>
             <tr>
