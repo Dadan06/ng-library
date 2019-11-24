@@ -27,9 +27,11 @@ import {
     getProducts,
     getProductsLoading,
     getProductsTotalItems,
+    getSaleCanceled,
     getSaleSaved
 } from '../../store/selectors/sale.selectors';
 import { QuantityChangingData, SaleItem } from '../../types/sale-item.interface';
+import { Sale } from '../../types/sale.interface';
 
 @Component({
     selector: 'app-sale-root',
@@ -50,6 +52,7 @@ export class SaleRootComponent implements OnInit {
     @ViewChild('productAdditionErrorModal') productAdditionErrorModal: ModalComponent;
     @ViewChild('changingQtyErrorModal') changingQtyErrorModal: ModalComponent;
     @ViewChild('saleSaved') saleSaved: ModalComponent;
+    @ViewChild('saleCanceled') saleCanceled: ModalComponent;
 
     constructor(private saleStore: Store<SaleState>) {
         /** */
@@ -93,8 +96,8 @@ export class SaleRootComponent implements OnInit {
         this.cancelingConfirmModal.open();
     }
 
-    onSaveSale() {
-        this.saleStore.dispatch(new SaveSale());
+    onSaveSale(sale: Partial<Sale>) {
+        this.saleStore.dispatch(new SaveSale(sale));
     }
 
     onConfirmCanceling() {
@@ -123,5 +126,6 @@ export class SaleRootComponent implements OnInit {
         );
         subscribeModalFromError(this.saleStore, getChangingQtyError, this.changingQtyErrorModal);
         subscribeModal(this.saleStore, getSaleSaved, true, this.saleSaved);
+        subscribeModal(this.saleStore, getSaleCanceled, true, this.saleCanceled);
     }
 }

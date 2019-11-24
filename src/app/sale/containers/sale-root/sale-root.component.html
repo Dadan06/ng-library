@@ -86,16 +86,30 @@
     </ng-template>
 </modal>
 
-<modal #saleSaved class="popup-modal error" [closeOnOutsideClick]="false">
+<modal #saleSaved class="popup-modal success" [closeOnOutsideClick]="false">
     <ng-template #modalHeader>
         Succès
     </ng-template>
     <ng-template #modalBody>
         <p>
-            Vente enregistré
+            Vente enregistrée
         </p>
     </ng-template>
     <ng-template #modalFooter>
         <button (click)="onCloseChangingQtyErrorModal()" class="blue">OK</button>
+    </ng-template>
+</modal>
+
+<modal #saleCanceled class="popup-modal success" [closeOnOutsideClick]="false">
+    <ng-template #modalHeader>
+        Succès
+    </ng-template>
+    <ng-template #modalBody>
+        <p>
+            Vente annulée
+        </p>
+    </ng-template>
+    <ng-template #modalFooter>
+        <button (click)="saleCanceled.close()" class="blue">OK</button>
     </ng-template>
 </modal>

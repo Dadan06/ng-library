@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 import { select, Store } from '@ngrx/store';
-import { filter, map, withLatestFrom } from 'rxjs/operators';
+import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { AppRouterState } from 'src/app/core/store/reducers/router.reducers';
-import { SALE_API_ROUTE } from '../../constants/sale.constant';
-import { LoadProducts } from '../actions/sale.actions';
+import { SALE_BASE_ROUTE } from '../../constants/sale.constant';
+import { ClearSale, LoadProducts } from '../actions/sale.actions';
 import { SaleState } from '../reducers/sale.reducers';
 import { getProductCriteria } from '../selectors/sale.selectors';
 
@@ -19,8 +19,11 @@ export class SaleRouterEffects {
     productRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes(`${SALE_API_ROUTE}`)),
+        filter(state => state.url.includes(`${SALE_BASE_ROUTE}`)),
         withLatestFrom(this.store.pipe(select(getProductCriteria))),
-        map(([routerState, productCriteria]) => new LoadProducts(productCriteria))
+        mergeMap(([routerState, productCriteria]) => [
+            new LoadProducts(productCriteria),
+            new ClearSale()
+        ])
     );
 }

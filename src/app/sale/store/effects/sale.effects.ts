@@ -5,10 +5,12 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { getLoggedUser } from 'src/app/authentication/store/selectors/authentication.selectors';
+import { Go } from 'src/app/core/store/actions/router.actions';
 import { ProductService } from 'src/app/product/services/product.service';
 import { Product } from 'src/app/product/types/product.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
 import { User } from 'src/app/user/types/user.interface';
+import { SALE_BASE_ROUTE } from '../../constants/sale.constant';
 import { SaleService } from '../../services/sale.service';
 import { SaleItem } from '../../types/sale-item.interface';
 import { Sale } from '../../types/sale.interface';
@@ -22,7 +24,6 @@ import {
     ChangeQty,
     ChangeQtyFail,
     ChangeQtySuccess,
-    ClearSale,
     DeleteSaleItem,
     DeleteSaleItemFail,
     DeleteSaleItemSuccess,
@@ -112,17 +113,10 @@ export class SaleEffects {
         withLatestFrom<CancelSale, Sale>(this.saleStore.pipe(select(getSale))),
         mergeMap(([action, sale]) =>
             this.saleService.cancelSale(sale._id).pipe(
-                mergeMap(() => [new CancelSaleSuccess(), new ClearSale()]),
+                mergeMap(() => [new CancelSaleSuccess(), new Go({ path: [`${SALE_BASE_ROUTE}`] })]),
                 catchError(error => of(new CancelSaleFail(error)))
             )
         )
-    );
-
-    @Effect()
-    cancelSaleSuccess$ = this.action$.pipe(
-        ofType(SaleActionTypes.CANCEL_SALE_SUCCESS),
-        withLatestFrom(this.saleStore.pipe(select(getProductCriteria))),
-        map(([action, criteria]) => new LoadProducts({ ...criteria }))
     );
 
     @Effect()
@@ -151,8 +145,8 @@ export class SaleEffects {
             this.saleStore.pipe(select(getOrderedSaleItems))
         ),
         mergeMap(([action, sale, saleItems]) =>
-            this.saleService.saveSale({ ...sale, saleItems }).pipe(
-                mergeMap(() => [new SaveSaleSuccess(), new ClearSale()]),
+            this.saleService.saveSale({ ...sale, ...action.payload, saleItems }).pipe(
+                mergeMap(() => [new SaveSaleSuccess(), new Go({ path: [`${SALE_BASE_ROUTE}`] })]),
                 catchError(error => of(new SaveSaleFail(error)))
             )
         )

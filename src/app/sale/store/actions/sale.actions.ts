@@ -123,6 +123,7 @@ export class ClearChangingQtyError implements Action {
 
 export class SaveSale implements Action {
     readonly type = SaleActionTypes.SAVE_SALE;
+    constructor(public payload: Partial<Sale>) {}
 }
 
 export class SaveSaleFail implements Action {

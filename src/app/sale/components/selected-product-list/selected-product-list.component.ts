@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { QuantityChangingData, SaleItem, SaleItemStatus } from '../../types/sale-item.interface';
+import { Sale, SaleType } from '../../types/sale.interface';
 
 @Component({
     selector: 'app-selected-product-list',
@@ -11,10 +12,14 @@ export class SelectedProductListComponent implements OnInit {
 
     @Output() delete: EventEmitter<SaleItem> = new EventEmitter();
     @Output() cancel: EventEmitter<void> = new EventEmitter();
-    @Output() save: EventEmitter<void> = new EventEmitter();
+    @Output() save: EventEmitter<Partial<Sale>> = new EventEmitter();
     @Output() changeQty: EventEmitter<QuantityChangingData> = new EventEmitter();
 
     currentValues = [1];
+
+    saleType = SaleType.DIRECT_SALE;
+    client = null;
+    discount = 0;
 
     private digits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
     private notDigits = ['Delete', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
@@ -35,8 +40,8 @@ export class SelectedProductListComponent implements OnInit {
         );
     }
 
-    get validSaleItemsLength() {
-        return this.saleItems.filter(s => s.status === SaleItemStatus.ORDERED).length;
+    get computedDiscount() {
+        return (this.billTotal * this.discount || 0) / 100;
     }
 
     get saleItemsLength() {
@@ -62,6 +67,14 @@ export class SelectedProductListComponent implements OnInit {
                 previousValue
             });
         }
+    }
+
+    onSave() {
+        this.save.emit({
+            saleType: this.saleType,
+            discount: this.computedDiscount,
+            client: this.client
+        });
     }
 
     private normalizeValue(): number {

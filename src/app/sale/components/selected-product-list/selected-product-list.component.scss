@@ -54,6 +54,10 @@ table {
     tbody td:nth-child(4) {
         padding: 0;
     }
+
+    td input {
+        text-align: center;
+    }
 }
 
 .control {
@@ -76,9 +80,8 @@ button {
 
 input {
     @extend %generic-input;
-    padding: 0;
-    text-align: center;
     width: 100%;
+    padding: 0;
 }
 
 .blue {

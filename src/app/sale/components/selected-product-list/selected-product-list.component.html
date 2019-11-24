@@ -1,16 +1,16 @@
 <div class="container">
     <div class="custom-control">
-        <label>Type *</label>
+        <label>Type de vente</label>
         <div class="radio-container">
             <div class="radio-control">
                 <label>
-                    <input type="radio" name="type" [value]="'DIRECT_SALE'"/>
+                    <input type="radio" name="type" [(ngModel)]="saleType" [value]="'DIRECT_SALE'"/>
                     Direct
                 </label>
             </div>
             <div class="radio-control">
                 <label>
-                    <input type="radio" name="type" [value]="'CONSIGNATION'"/>
+                    <input type="radio" name="type" [(ngModel)]="saleType" [value]="'CONSIGNATION'"/>
                     Consignation
                 </label>
             </div>
@@ -21,14 +21,15 @@
         <div class="custom-select">
             <ng-select
                 [items]="[]"
+                [(ngModel)]="client"
             ></ng-select>
         </div>
     </div>
     <div class="control">
         <label>
-            Remise
+            Remise (en %)
         </label>
-        <input type="number" min="0" appDigitOnly />
+        <input type="text" min="0" [(ngModel)]="discount" appDigitOnly />
     </div>
     <table>
         <thead>
@@ -57,12 +58,12 @@
         </tbody>
         <tfoot>
             <tr>
-                <td class="total">TOTAL: {{ billTotal | number: '1.0-0' }} Ar</td>
+                <td class="total">TOTAL: {{ billTotal - computedDiscount | number: '1.0-0' }} Ar</td>
             </tr>
         </tfoot>
     </table>
     <div class="buttons-container">
-        <button class="blue" [disabled]="!validSaleItemsLength" (click)="save.emit()">VALIDER</button>
+        <button class="blue" [disabled]="billTotal === 0" (click)="onSave()">VALIDER</button>
         <button class="dark-purple" [disabled]="!saleItemsLength" (click)="cancel.emit()">
             ANNULER
         </button>
