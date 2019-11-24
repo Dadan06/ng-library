@@ -16,7 +16,7 @@
                 <td>{{ saleItem.product.costPrice | number: '1.0-0' }}</td>
                 <td>{{ saleItem.product.sellingPrice | number: '1.0-0' }}</td>
                 <td>
-                    <input type="text" [value]="editedQuantity" [value]="editedQuantity" (keyup)="onEditQty(saleItem, $event)" appDigitOnly>
+                    <input type="text" [disabled]="saleItem.status !== 'ORDERED'" [value]="editedQuantity" [value]="editedQuantity" (keyup)="onEditQty(saleItem, $event)" appDigitOnly>
                 </td>
                 <td>{{ saleItem.product.sellingPrice * saleItem.quantity | number: '1.0-0' }}</td>
                 <td>
