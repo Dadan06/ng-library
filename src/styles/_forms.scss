@@ -292,6 +292,34 @@ $date-padding: 5px;
     @extend %generic-control-element;
 }
 
+%generic-radio-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 30px;
+    padding-right: 15px;
+}
+
+%generic-radio-input {
+    & {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 15px;
+        height: 15px;
+        border: 1px solid $radio-default-border;
+        border-radius: 2px;
+        outline: 0;
+        margin: 0 5px 0 0;
+        cursor: pointer;
+    }
+
+    &:checked {
+        background-color: $radio-checked-background;
+        border: 1px solid $radio-checked-background;
+    }
+}
+
 %generic-form {
     max-width: 100%;
 
