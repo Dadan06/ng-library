@@ -8,23 +8,28 @@
 
 %list-detail-header {
     display: flex;
-    align-items: flex-end;
-    padding-bottom: 20px;
+    align-items: center;
 }
 
 %filtered-master-detail {
     background-color: #ffffff;
     height: 100%;
+    width: 100%;
     display: grid;
-    grid-template-columns: 325px 25px auto 25px 400px 25px;
-    grid-template-rows: 50px 52px 52px minmax(0, 1fr) 50px;
-    padding: 25px 25px 25px 25px;
+    grid-template-columns: 1% 20% 1% 51% 1% 24% 1% 1%;
+    grid-template-rows: 2% 7% 7% 7% minmax(0, 1fr) 7% 2%;
     grid-template-areas:
-        'header     header  header      header  header          header'
-        'filter     .       list-header .       detail-header   .'
-        'filter     .       search-bar  .       detail          .'
-        'filter     .       list        .       detail          .'
-        'filter     .       footer      .       detail          .';
+        '.  .          .       .           .       .               .        .'
+        '.  header     header  header      header  header          header   .'
+        '.  filter     .       list-header .       detail-header   .        .'
+        '.  filter     .       search-bar  .       detail          .        .'
+        '.  filter     .       list        .       detail          .        .'
+        '.  filter     .       footer      .       detail          .        .'
+        '.  .          .       .           .       .               .        .';
+    transition: all 0.2s;   // Animation works only with firefox
+    &.detail-hidden {
+        grid-template-columns: 1% 20% 1% 76% 0% 0% 1% 1%;
+    }
 
     header {
         grid-area: header;
@@ -33,15 +38,11 @@
 
     .filter {
         grid-area: filter;
-        .filter-wrapper {
-            height: 100%;
-            margin-right: 7px;
-        }
     }
 
     .bordered-wrapper {
-        grid-column: 2 / 7;
-        grid-row: 2 / 6;
+        grid-column: 3 / 8;
+        grid-row: 3 / 7;
         border: solid 1px $light-gray;
         border-radius: 8px;
     }
@@ -65,6 +66,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        width: 100%;
+        button {
+            @extend %button;
+        }
+        .btn-new {
+            @extend %add-button;
+        }
     }
 
     .detail-header {
@@ -78,9 +86,8 @@
         margin-bottom: 25px;
         border: solid 1px $light-gray;
         border-radius: 8px;
-    }
-
-    .btn-new {
-        @extend %add-button;
+        &.no-border {
+            border: 0px !important;
+        }
     }
 }
