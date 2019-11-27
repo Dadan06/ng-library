@@ -28,6 +28,7 @@ export class ProductFormComponent {
     @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
     @Output() save: EventEmitter<Product> = new EventEmitter<Product>();
     @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
+    @Output() close: EventEmitter<void> = new EventEmitter<void>();
 
     @ViewChild('first') firstInput: ElementRef;
 

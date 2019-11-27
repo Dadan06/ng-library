@@ -12,7 +12,7 @@
         <tbody data-simplebar>
             <tr
                 *ngFor="let client of clients"
-                [class.selected-row]="client._id === currentClient?._id"
+                [class.selected]="client._id === currentClient?._id"
             >
                 <td>{{ client.name | uppercase }}</td>
                 <td>{{ client.address }}</td>

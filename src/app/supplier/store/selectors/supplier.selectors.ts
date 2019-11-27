@@ -81,3 +81,15 @@ export const getSupplierEditing = createSelector<
     router =>
         router.state.url.includes('supplier/edit') || router.state.url.includes('supplier/new')
 );
+
+export const getIsEditingOrDetail = createSelector<
+    SupplierState,
+    RouterReducerState<AppRouterState>,
+    boolean
+>(
+    getRouterState,
+    router =>
+        router.state.url.includes('supplier/detail') ||
+        router.state.url.includes('supplier/edit') ||
+        router.state.url.includes('supplier/new')
+);

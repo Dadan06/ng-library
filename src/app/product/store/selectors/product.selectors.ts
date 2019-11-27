@@ -38,10 +38,7 @@ export const getProductsLoading = createSelector<ProductState, ProductState, boo
     (state: ProductState) => state.productsLoading
 );
 
-export const getProduct = createSelector(
-    getProductState,
-    (state: ProductState) => state.product
-);
+export const getProduct = createSelector(getProductState, (state: ProductState) => state.product);
 
 export const getProductLoading = createSelector<ProductState, ProductState, boolean>(
     getProductState,
@@ -85,4 +82,16 @@ export const getProductEditing = createSelector<
 >(
     getRouterState,
     router => router.state.url.includes('product/edit') || router.state.url.includes('product/new')
+);
+
+export const getIsEditingOrDetail = createSelector<
+    ProductState,
+    RouterReducerState<AppRouterState>,
+    boolean
+>(
+    getRouterState,
+    router =>
+        router.state.url.includes('product/detail') ||
+        router.state.url.includes('product/edit') ||
+        router.state.url.includes('product/new')
 );

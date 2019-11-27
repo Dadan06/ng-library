@@ -10,7 +10,17 @@ import { subscribeModal } from 'src/app/shared/utils/modal.utils';
 import { SUPPLIER_BASE_ROUTE, SUPPLIER_DEFAULT_CRITERIA } from '../../constants/supplier.constants';
 import { DeleteSupplier, LoadSuppliers } from '../../store/actions/supplier.actions';
 import { SupplierState } from '../../store/reducers/supplier.reducers';
-import { getSupplier, getSupplierCreateEnabled, getSupplierDeleteEnabled, getSupplierEditEnabled, getSuppliers, getSupplierSaved, getSuppliersLoading, getSuppliersTotalItems } from '../../store/selectors/supplier.selectors';
+import {
+    getIsEditingOrDetail,
+    getSupplier,
+    getSupplierCreateEnabled,
+    getSupplierDeleteEnabled,
+    getSupplierEditEnabled,
+    getSuppliers,
+    getSupplierSaved,
+    getSuppliersLoading,
+    getSuppliersTotalItems
+} from '../../store/selectors/supplier.selectors';
 import { SupplierCriteria } from '../../types/supplier-criteria.interface';
 import { Supplier } from '../../types/supplier.interface';
 
@@ -25,6 +35,7 @@ export class SupplierRootComponent implements OnInit {
     supplierEditEnabled$: Observable<boolean>;
     supplierDeleteEnabled$: Observable<boolean>;
     supplierCreateEnabled$: Observable<boolean>;
+    isEditingOrDetail$: Observable<boolean>;
     totalItems$: Observable<number>;
     currentSupplier$: Observable<Supplier>;
     supplierCriteria: SupplierCriteria = cloneDeep(SUPPLIER_DEFAULT_CRITERIA);
@@ -36,12 +47,13 @@ export class SupplierRootComponent implements OnInit {
     constructor(
         private supplierStore: Store<SupplierState>,
         private authenticationStore: Store<AuthenticationState>
-    ) { }
+    ) {}
 
     ngOnInit() {
         this.suppliers$ = this.supplierStore.pipe(select(getSuppliers));
         this.suppliersLoading$ = this.supplierStore.pipe(select(getSuppliersLoading));
         this.totalItems$ = this.supplierStore.pipe(select(getSuppliersTotalItems));
+        this.isEditingOrDetail$ = this.supplierStore.pipe(select(getIsEditingOrDetail));
         this.supplierEditEnabled$ = this.authenticationStore.pipe(select(getSupplierEditEnabled));
         this.supplierDeleteEnabled$ = this.authenticationStore.pipe(
             select(getSupplierDeleteEnabled)

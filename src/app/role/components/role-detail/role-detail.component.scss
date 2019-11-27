@@ -16,7 +16,7 @@ button {
 
     .role-list {
         // 100vh - header height - main container padding (top & bottom) - list padding (top & bottom) - list header area height - action bar area height - button area size
-        max-height: calc(100vh - 170px - 20px * 2 - 30px * 2 - 67px - 90px - 40px);
+        max-height: calc(100vh - 150px - 10px * 2 - 25px * 2 - 67px - 90px - 40px);
         grid-area: detail;
 
         .accordion {
@@ -51,11 +51,8 @@ ul {
     grid-area: actions;
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
     margin: 0;
-
-    .fill {
-        flex: 1 1 auto;
-    }
 
     button {
         @extend %button;

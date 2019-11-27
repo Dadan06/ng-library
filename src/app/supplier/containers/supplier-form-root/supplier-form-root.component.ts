@@ -50,4 +50,8 @@ export class SupplierFormRootComponent implements OnInit {
                 : [`${SUPPLIER_BASE_ROUTE}`]
         );
     }
+
+    onClose() {
+        go(this.supplierStore, [`${SUPPLIER_BASE_ROUTE}`]);
+    }
 }

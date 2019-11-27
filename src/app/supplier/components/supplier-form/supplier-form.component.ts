@@ -22,6 +22,7 @@ export class SupplierFormComponent {
     @Output() edit: EventEmitter<Supplier> = new EventEmitter<Supplier>();
     @Output() save: EventEmitter<Supplier> = new EventEmitter<Supplier>();
     @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
+    @Output() close: EventEmitter<void> = new EventEmitter<void>();
 
     form: FormGroup;
     @ViewChild('first') firstInput: ElementRef;

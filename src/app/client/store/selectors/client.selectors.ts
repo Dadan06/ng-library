@@ -37,10 +37,7 @@ export const getClientsLoading = createSelector<ClientState, ClientState, boolea
     (state: ClientState) => state.clientsLoading
 );
 
-export const getClient = createSelector(
-    getClientState,
-    (state: ClientState) => state.client
-);
+export const getClient = createSelector(getClientState, (state: ClientState) => state.client);
 
 export const getClientLoading = createSelector<ClientState, ClientState, boolean>(
     getClientState,
@@ -79,4 +76,16 @@ export const getClientEditing = createSelector<
 >(
     getRouterState,
     router => router.state.url.includes('client/edit') || router.state.url.includes('client/new')
+);
+
+export const getIsEditingOrDetail = createSelector<
+    ClientState,
+    RouterReducerState<AppRouterState>,
+    boolean
+>(
+    getRouterState,
+    router =>
+        router.state.url.includes('client/detail') ||
+        router.state.url.includes('client/edit') ||
+        router.state.url.includes('client/new')
 );

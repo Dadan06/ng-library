@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody data-simplebar>
-            <tr *ngFor="let user of users" [class.selected-row]="user._id === currentUser?._id">
+            <tr *ngFor="let user of users" [class.selected]="user._id === currentUser?._id">
                 <td>{{ user.lastname | uppercase }}</td>
                 <td>{{ user.firstname | titlecase }}</td>
                 <td>{{ user.login }}</td>

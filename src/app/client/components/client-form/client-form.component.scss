@@ -1,27 +1,13 @@
 @import 'forms.scss';
 @import 'buttons.scss';
-@import 'texts.scss';
 @import 'details.scss';
 
 .container {
     @extend %detail-layout;
 }
 
-.form-title {
-    @extend %form-title;
-    height: 40px;
-}
-
 form {
     @extend %generic-form;
-}
-
-.buttons {
-    display: flex;
-}
-
-button {
-    @extend %button;
 }
 
 .blue {

@@ -5,7 +5,7 @@
 $thFontFamily: $worksans-regular;
 $tdFontFamily: $worksans-medium;
 $header-height: 37px;
-$td-height: 40px;
+$tr-height: 40px;
 
 %table {
     font-size: 12px;
@@ -28,10 +28,12 @@ $td-height: 40px;
 
     tbody {
         display: block;
+        width: 100%;
         height: calc(100% - 37px);
         position: absolute;
         border-top: 1px solid rgb(166, 166, 166);
         border-bottom: none;
+
         tr:nth-child(even) {
             background: $table-row-even-background;
         }
@@ -42,7 +44,11 @@ $td-height: 40px;
             font-size: 12px;
             img {
                 cursor: pointer;
+                margin-right: 5%;
             }
+        }
+        .actions {
+            overflow: unset;
         }
     }
 
@@ -54,10 +60,11 @@ $td-height: 40px;
     tr {
         display: table;
         width: 100%;
+        height: $tr-height;
     }
 
     td {
-        height: $td-height;
+        height: 100%;
         vertical-align: middle;
     }
 
@@ -70,8 +77,8 @@ $td-height: 40px;
         padding: 0 0 0 15px;
     }
 
-    tr .selected {
-        border-left: 5px solid $table-selected-row-mark-color;
-        padding-left: 10px;
+    .selected td:first-child {
+        border-left: solid $table-selected-row-mark-color 4px;
+        padding-left: 11px;
     }
 }

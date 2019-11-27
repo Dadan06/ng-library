@@ -59,6 +59,10 @@ export class ProductFormRootComponent implements OnInit {
         );
     }
 
+    onClose() {
+        go(this.productStore, [`${PRODUCT_BASE_ROUTE}`]);
+    }
+
     private subscribeModals() {
         subscribeModal(this.productStore, getProductSaved, true, this.successfullSavingModal);
     }

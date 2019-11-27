@@ -18,7 +18,8 @@ import {
     getClients,
     getClientSaved,
     getClientsLoading,
-    getClientsTotalItems
+    getClientsTotalItems,
+    getIsEditingOrDetail
 } from '../../store/selectors/client.selectors';
 import { ClientCriteria } from '../../types/client-criteria.interface';
 import { Client } from '../../types/client.interface';
@@ -34,6 +35,7 @@ export class ClientRootComponent implements OnInit {
     clientEditEnabled$: Observable<boolean>;
     clientDeleteEnabled$: Observable<boolean>;
     clientCreateEnabled$: Observable<boolean>;
+    isEditingOrDetail$: Observable<boolean>;
     totalItems$: Observable<number>;
     currentClient$: Observable<Client>;
     clientCriteria: ClientCriteria = cloneDeep(CLIENT_DEFAULT_CRITERIA);
@@ -51,6 +53,7 @@ export class ClientRootComponent implements OnInit {
         this.clients$ = this.clientStore.pipe(select(getClients));
         this.clientsLoading$ = this.clientStore.pipe(select(getClientsLoading));
         this.totalItems$ = this.clientStore.pipe(select(getClientsTotalItems));
+        this.isEditingOrDetail$ = this.clientStore.pipe(select(getIsEditingOrDetail));
         this.clientEditEnabled$ = this.authenticationStore.pipe(select(getClientEditEnabled));
         this.clientDeleteEnabled$ = this.authenticationStore.pipe(select(getClientDeleteEnabled));
         this.clientCreateEnabled$ = this.authenticationStore.pipe(select(getClientCreateEnabled));

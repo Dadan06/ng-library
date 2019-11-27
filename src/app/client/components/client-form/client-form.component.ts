@@ -22,6 +22,7 @@ export class ClientFormComponent {
     @Output() edit: EventEmitter<Client> = new EventEmitter<Client>();
     @Output() save: EventEmitter<Client> = new EventEmitter<Client>();
     @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
+    @Output() close: EventEmitter<void> = new EventEmitter<void>();
 
     @ViewChild('first') firstInput: ElementRef;
 

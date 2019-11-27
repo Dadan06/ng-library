@@ -19,9 +19,9 @@
                 <td>{{ supplier.name }}</td>
                 <td>{{ supplier.address }}</td>
                 <td>{{ supplier.contact }}</td>
-                <td>{{ supplier.nif }}</td>
-                <td>{{ supplier.stat }}</td>
-                <td>{{ supplier.cin }}</td>
+                <td>{{ supplier.nif || '-' }}</td>
+                <td>{{ supplier.stat || '-' }}</td>
+                <td>{{ supplier.cin || '-' }}</td>
                 <td class="actions">
                     <img
                         (click)="view.emit(supplier); currentSupplier = supplier"

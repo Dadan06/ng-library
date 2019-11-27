@@ -48,4 +48,8 @@ export class ClientFormRootComponent implements OnInit {
             client._id ? [`${CLIENT_BASE_ROUTE}/detail`, client._id] : [`${CLIENT_BASE_ROUTE}`]
         );
     }
+
+    onClose() {
+        go(this.clientStore, [`${CLIENT_BASE_ROUTE}`]);
+    }
 }

@@ -8,20 +8,8 @@
     @extend %detail-layout;
 }
 
-.form-title {
-    @extend %form-title;
-}
-
 form {
     @extend %generic-form;
-}
-
-.buttons {
-    display: flex;
-}
-
-button {
-    @extend %button;
 }
 
 .blue {

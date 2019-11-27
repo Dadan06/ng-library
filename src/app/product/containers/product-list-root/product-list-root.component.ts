@@ -11,6 +11,7 @@ import { PRODUCT_BASE_ROUTE, PRODUCT_DEFAULT_CRITERIA } from '../../constants/pr
 import { DeleteProduct, LoadProducts } from '../../store/actions/product.actions';
 import { ProductState } from '../../store/reducers/product.reducers';
 import {
+    getIsEditingOrDetail,
     getProduct,
     getProductCreateEnabled,
     getProductDeleteEnabled,
@@ -34,6 +35,7 @@ export class ProductListRootComponent implements OnInit {
     productEditEnabled$: Observable<boolean>;
     productDeleteEnabled$: Observable<boolean>;
     productCreateEnabled$: Observable<boolean>;
+    isEditingOrDetail$: Observable<boolean>;
     totalItems$: Observable<number>;
     currentProduct$: Observable<Product>;
     productCriteria: ProductCriteria = cloneDeep(PRODUCT_DEFAULT_CRITERIA);
@@ -52,6 +54,7 @@ export class ProductListRootComponent implements OnInit {
         this.productsLoading$ = this.productStore.pipe(select(getProductsLoading));
         this.totalItems$ = this.productStore.pipe(select(getProductsTotalItems));
         this.productEditEnabled$ = this.authenticationStore.pipe(select(getProductEditEnabled));
+        this.isEditingOrDetail$ = this.productStore.pipe(select(getIsEditingOrDetail));
         this.productDeleteEnabled$ = this.authenticationStore.pipe(select(getProductDeleteEnabled));
         this.productCreateEnabled$ = this.authenticationStore.pipe(select(getProductCreateEnabled));
         this.currentProduct$ = this.productStore.pipe(select(getProduct));
