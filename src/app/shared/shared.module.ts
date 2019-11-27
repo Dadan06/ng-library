@@ -13,6 +13,7 @@ import { ListBoxFilterComponent } from './components/list-box-filter/list-box-fi
 import { ListBoxComponent } from './components/list-box/list-box.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { PeriodFilterComponent } from './components/period-filter/period-filter.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
@@ -39,6 +40,7 @@ import { sharedReducer } from './store/reducers/shared.reducers';
         ListBoxFilterComponent,
         SearchBarComponent,
         InputNumberComponent,
+        PeriodFilterComponent,
         DigitOnlyDirective
     ],
     exports: [
@@ -54,6 +56,7 @@ import { sharedReducer } from './store/reducers/shared.reducers';
         ListBoxFilterComponent,
         SearchBarComponent,
         InputNumberComponent,
+        PeriodFilterComponent,
         DigitOnlyDirective
     ],
     providers: [ClientService]

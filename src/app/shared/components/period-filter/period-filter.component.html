@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="header">
+        <img src="assets/images/ico-periode.png">
+        <h4>PERIODE</h4>
+    </div>
+    <div class="content">
+        <form [formGroup]="form">
+            <div class="period-container">
+                <label>Début</label>
+                <div class="control">
+                    <input type="date" formControlName="beginDate">
+                    <input type="time" formControlName="beginTime">
+                </div>
+            </div>
+            <div class="period-container">
+                <label>Fin</label>
+                <div class="control">
+                    <input type="date" formControlName="endDate">
+                    <input type="time" formControlName="endTime">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
