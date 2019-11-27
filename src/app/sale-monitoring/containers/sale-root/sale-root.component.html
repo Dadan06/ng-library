@@ -1,3 +1,31 @@
-<p>
-  sale-root works!
-</p>
+<div class="container">
+    <header>Suivi des ventes</header>
+    <div class="search-bar">
+        <app-search-bar
+            (search)="onSearch($event)"
+        ></app-search-bar>
+    </div>
+
+    <div class="filter">
+        <app-list-box-filter
+            [filterCategoryLabels]="saleFilterCategoryLabels"
+            [filterItemLabels]="saleFilterItemLabels"
+            [defaultFilters]="saleDefaultFilters"
+        ></app-list-box-filter>
+    </div>
+
+    <div class="list-header">Ventes</div>
+
+    <div class="list">
+
+    </div>
+
+    <div class="detail">
+        <router-outlet></router-outlet>
+    </div>
+
+    <footer>
+        <div>&nbsp;</div>
+        <app-pagination></app-pagination>
+    </footer>
+</div>

@@ -1,0 +1,6 @@
+@import 'filtered-master-detail.scss';
+
+.container {
+    @extend %filtered-master-detail;
+    grid-template-columns: 1% 20% 1% 50% 1% 25% 1% 1%;
+}

@@ -62,6 +62,11 @@ const routes: Routes = [
                     {
                         path: 'sale',
                         loadChildren: '../sale/sale.module#SaleModule'
+                    },
+                    {
+                        path: 'sale-monitoring',
+                        loadChildren:
+                            '../sale-monitoring/sale-monitoring.module#SaleMonitoringModule'
                     }
                 ]
             }
