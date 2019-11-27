@@ -3,7 +3,7 @@
 @import "fonts.scss";
 
 .container {
-    width: 300px;
+    width: 100%;
 }
 
 .title {
@@ -34,7 +34,7 @@ label {
     @extend %custom-select;
     margin-top: 8px;
     margin-bottom: 20px;
-    width: 300px;
+    width: 100%;
 
     &::ng-deep {
         * {
