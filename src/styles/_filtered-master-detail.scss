@@ -38,6 +38,8 @@
 
     .filter {
         grid-area: filter;
+        display: flex;
+        flex-direction: column;
     }
 
     .bordered-wrapper {
