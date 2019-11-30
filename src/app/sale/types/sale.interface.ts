@@ -1,4 +1,6 @@
 import { Client } from 'src/app/client/types/client.interface';
+import { FilterUpdates } from 'src/app/shared/types/filter-updates.interface';
+import { Paginated } from 'src/app/shared/types/paginated.interface';
 import { User } from 'src/app/user/types/user.interface';
 import { SaleItem } from './sale-item.interface';
 
@@ -25,4 +27,8 @@ export interface Sale {
     saleStatus: SaleStatus;
     seller: User;
     client: Client;
+}
+
+export interface PaginatedSale extends Paginated<Sale> {
+    filter: FilterUpdates | null;
 }
