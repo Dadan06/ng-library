@@ -1,3 +1,29 @@
-<p>
-  sale-list works!
-</p>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Vendeur</th>
+                <th>Client</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody data-simplebar>
+            <tr *ngFor="let sale of sales">
+                <td>{{ sale.saleDate | date: 'dd/MM/y - HH:mm' }}</td>
+                <td>{{ saleTypeLabels[sale.saleType] }}</td>
+                <td>{{ sale.seller.login | uppercase }}</td>
+                <td>{{ sale.client.name | uppercase }}</td>
+                <td>{{ sale.amount }}</td>
+                <td class="actions">
+                    <img
+                        (click)="view.emit(product); currentProduct = product"
+                        src="/assets/images/ico-details.png"
+                    />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
