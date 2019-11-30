@@ -21,7 +21,11 @@ export class ListBoxFilterComponent implements OnChanges {
     private filterValue: ListBoxFilter;
 
     ngOnChanges(changes: SimpleChanges) {
-        if (!changes.filterUpdates.previousValue && changes.filterUpdates.currentValue) {
+        if (
+            changes.filterUpdates &&
+            !changes.filterUpdates.previousValue &&
+            changes.filterUpdates.currentValue
+        ) {
             this.innactiveFilters = Object.keys(this.filterUpdates);
             this.initialFilterValue && this.setInitialFilterValue();
             this.filterValue = Object.assign(

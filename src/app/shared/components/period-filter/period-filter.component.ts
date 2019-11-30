@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PeriodFilter } from '../../types/period-filter.interface';
 import { getDateAsString, getTimeAsString } from '../../utils/date.utils';
-import { savePeriodFilter } from '../../utils/period-filter.utils';
 
 @Component({
     selector: 'app-period-filter',
@@ -10,12 +9,13 @@ import { savePeriodFilter } from '../../utils/period-filter.utils';
     styleUrls: ['./period-filter.component.scss']
 })
 export class PeriodFilterComponent implements OnInit {
-    form: FormGroup;
-
     @Output() filter: EventEmitter<PeriodFilter> = new EventEmitter<PeriodFilter>();
+
     @Input() set periodFilter(periodFilter: PeriodFilter) {
         periodFilter && (this.form = this.initForm(periodFilter));
     }
+
+    form: FormGroup;
 
     constructor(private formBuilder: FormBuilder) {}
 
@@ -32,7 +32,6 @@ export class PeriodFilterComponent implements OnInit {
                 return;
             }
             const periodFilter: PeriodFilter = { from, to };
-            savePeriodFilter(periodFilter);
             this.filter.emit(periodFilter);
         });
     }

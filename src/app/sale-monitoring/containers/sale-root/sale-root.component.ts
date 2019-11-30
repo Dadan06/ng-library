@@ -1,19 +1,77 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Sale } from 'src/app/sale/types/sale.interface';
+import { FilterUpdates } from 'src/app/shared/types/filter-updates.interface';
+import { Page } from 'src/app/shared/types/page.interface';
+import { PeriodFilter } from 'src/app/shared/types/period-filter.interface';
 import {
     SALE_DEFAULT_FILTERS,
     SALE_FILTER_CATEGORY_LABELS,
     SALE_FILTER_ITEM_LABELS
 } from '../../constants/sale-monitoring.constant';
+import { LoadSales } from '../../store/actions/sale-monitoring.actions';
+import { SaleMonitoringState } from '../../store/reducers/sale-monitoring.reducers';
+import {
+    getSaleCriteria,
+    getSaleFilterUpdates,
+    getSales,
+    getSalesLoading,
+    getSalesTotalItem
+} from '../../store/selectors/sale-monitoring.selectors';
 import { SaleCriteria } from '../../types/sale-criteria.interface';
+import { SaleListBoxFilter } from '../../types/sale-list-box-filter.interface';
 
 @Component({
     selector: 'app-sale-root',
     templateUrl: './sale-root.component.html',
     styleUrls: ['./sale-root.component.scss']
 })
-export class SaleRootComponent {
+export class SaleRootComponent implements OnInit {
+    sales$: Observable<Sale[]>;
+    salesLoading$: Observable<boolean>;
+    totalItems$: Observable<number>;
+    saleFilterUpdates$: Observable<FilterUpdates>;
+
     saleFilterCategoryLabels = SALE_FILTER_CATEGORY_LABELS;
     saleFilterItemLabels = SALE_FILTER_ITEM_LABELS;
     saleDefaultFilters = SALE_DEFAULT_FILTERS;
     saleCriteria: SaleCriteria;
+    periodFilter: PeriodFilter;
+
+    constructor(private store: Store<SaleMonitoringState>) {}
+
+    ngOnInit(): void {
+        this.sales$ = this.store.pipe(select(getSales));
+        this.salesLoading$ = this.store.pipe(select(getSalesLoading));
+        this.totalItems$ = this.store.pipe(select(getSalesTotalItem));
+        this.saleFilterUpdates$ = this.store.pipe(select(getSaleFilterUpdates));
+        this.store
+            .pipe(select(getSaleCriteria))
+            .subscribe(criteria => (this.saleCriteria = criteria));
+        const { from, to } = this.saleCriteria.filter;
+        this.periodFilter = { from, to };
+    }
+
+    onFilter(filter: SaleListBoxFilter | PeriodFilter) {
+        this.saleCriteria = {
+            ...this.saleCriteria,
+            filter: { ...this.saleCriteria.filter, ...filter }
+        };
+        this.reload();
+    }
+
+    onPaginate(page: Page) {
+        this.saleCriteria.page = page;
+        this.reload();
+    }
+
+    onSearch(search: string) {
+        this.saleCriteria.search = search;
+        this.reload();
+    }
+
+    private reload() {
+        this.store.dispatch(new LoadSales({ ...this.saleCriteria }));
+    }
 }

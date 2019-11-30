@@ -7,17 +7,25 @@
     </div>
 
     <div class="filter">
+        <app-period-filter
+            [periodFilter]="periodFilter"
+            (filter)="onFilter($event)"
+        ></app-period-filter>
         <app-list-box-filter
+            [filterUpdates]="saleFilterUpdates$ | async"
             [filterCategoryLabels]="saleFilterCategoryLabels"
             [filterItemLabels]="saleFilterItemLabels"
             [defaultFilters]="saleDefaultFilters"
+            (filter)="onFilter($event)"
         ></app-list-box-filter>
     </div>
 
     <div class="list-header">Ventes</div>
 
     <div class="list">
-
+        <app-loader [isLoading]="salesLoading$ | async">
+            <app-sale-list [sales]="sales$ | async"></app-sale-list>
+        </app-loader>
     </div>
 
     <div class="detail">
@@ -26,6 +34,6 @@
 
     <footer>
         <div>&nbsp;</div>
-        <app-pagination></app-pagination>
+        <app-pagination [totalItems]="totalItems$ | async" (paginate)="onPaginate($event)"></app-pagination>
     </footer>
 </div>
