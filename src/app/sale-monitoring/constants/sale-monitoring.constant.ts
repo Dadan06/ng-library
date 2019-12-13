@@ -1,3 +1,4 @@
+import { SALE_TYPE_LABELS } from 'src/app/sale/constants/sale.constant';
 import { SaleCriteria } from '../types/sale-criteria.interface';
 
 export const SALE_DEFAULT_CRITERIA: SaleCriteria = {
@@ -18,7 +19,7 @@ export const SALE_FILTER_CATEGORY_LABELS: Record<string, string> = {
     clients: 'clients'
 };
 
-export const SALE_FILTER_ITEM_LABELS: Record<string, Object> = {};
+export const SALE_FILTER_ITEM_LABELS: Record<string, Object> = { types: { ...SALE_TYPE_LABELS } };
 
 export const SALE_DEFAULT_FILTERS: string[] = [];
 
