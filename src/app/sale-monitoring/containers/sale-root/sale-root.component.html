@@ -24,16 +24,16 @@
 
     <div class="list">
         <app-loader [isLoading]="salesLoading$ | async">
-            <app-sale-list [sales]="sales$ | async"></app-sale-list>
+            <app-sale-list [sales]="sales$ | async" (view)="onViewDetails($event)"></app-sale-list>
         </app-loader>
     </div>
 
     <div class="detail">
-        <router-outlet></router-outlet>
+        <app-sale-detail *ngIf="currentSaleItems && currentSaleItems.length" [saleItems]="currentSaleItems"></app-sale-detail>
     </div>
 
     <footer>
-        <div>&nbsp;</div>
+        <div></div>
         <app-pagination [totalItems]="totalItems$ | async" (paginate)="onPaginate($event)"></app-pagination>
     </footer>
 </div>

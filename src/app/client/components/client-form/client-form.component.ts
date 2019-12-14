@@ -50,6 +50,8 @@ export class ClientFormComponent {
         return this.formBuilder.group({
             _id: [client._id],
             name: [client.name, Validators.required],
+            email: [client.email, Validators.email],
+            remark: [client.remark],
             address: [client.address, Validators.required],
             contact: [client.contact, Validators.required],
             type: [client.type, Validators.required]

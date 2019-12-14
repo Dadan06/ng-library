@@ -5,6 +5,8 @@
                 <th>Nom</th>
                 <th>Adresse</th>
                 <th>Contact</th>
+                <th>Email</th>
+                <th>Remarque</th>
                 <th>Type</th>
                 <th></th>
             </tr>
@@ -17,6 +19,8 @@
                 <td>{{ client.name | uppercase }}</td>
                 <td>{{ client.address }}</td>
                 <td>{{ client.contact }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.remark }}</td>
                 <td>{{ clientTypes[client.type] }}</td>
                 <td class="actions">
                     <img

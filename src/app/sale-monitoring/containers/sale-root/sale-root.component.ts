@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { SaleItem } from 'src/app/sale/types/sale-item.interface';
 import { Sale } from 'src/app/sale/types/sale.interface';
 import { FilterUpdates } from 'src/app/shared/types/filter-updates.interface';
 import { Page } from 'src/app/shared/types/page.interface';
@@ -38,6 +39,7 @@ export class SaleRootComponent implements OnInit {
     saleDefaultFilters = SALE_DEFAULT_FILTERS;
     saleCriteria: SaleCriteria;
     periodFilter: PeriodFilter;
+    currentSaleItems: SaleItem[];
 
     constructor(private store: Store<SaleMonitoringState>) {}
 
@@ -69,6 +71,10 @@ export class SaleRootComponent implements OnInit {
     onSearch(search: string) {
         this.saleCriteria.search = search;
         this.reload();
+    }
+
+    onViewDetails(sale: Sale) {
+        this.currentSaleItems = sale.saleItems;
     }
 
     private reload() {

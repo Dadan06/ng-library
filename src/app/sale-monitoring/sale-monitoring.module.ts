@@ -10,9 +10,10 @@ import { SaleMonitoringService } from './services/sale-monitoring.service';
 import { SaleMonitoringRouterEffects } from './store/effects/sale-monitoring-router.effects';
 import { SaleMonitoringEffects } from './store/effects/sale-monitoring.effects';
 import { saleMonitoringReducer } from './store/reducers/sale-monitoring.reducers';
+import { SaleDetailComponent } from './components/sale-detail/sale-detail.component';
 
 @NgModule({
-    declarations: [SaleListComponent, SaleRootComponent],
+    declarations: [SaleListComponent, SaleRootComponent, SaleDetailComponent],
     imports: [
         CommonModule,
         SaleMonitoringRoutingModule,

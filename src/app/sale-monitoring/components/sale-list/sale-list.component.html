@@ -11,7 +11,7 @@
             </tr>
         </thead>
         <tbody data-simplebar>
-            <tr *ngFor="let sale of sales">
+            <tr *ngFor="let sale of sales"  [class.selected]="sale._id === currentSale?._id">
                 <td>{{ sale.saleDate | date: 'dd/MM/y - HH:mm' }}</td>
                 <td>{{ saleTypeLabels[sale.saleType] }}</td>
                 <td>{{ sale.seller.login | uppercase }}</td>
@@ -19,7 +19,7 @@
                 <td>{{ sale.amount }}</td>
                 <td class="actions">
                     <img
-                        (click)="view.emit(product); currentProduct = product"
+                        (click)="view.emit(sale); currentSale = sale"
                         src="/assets/images/ico-details.png"
                     />
                 </td>

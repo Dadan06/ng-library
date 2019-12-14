@@ -26,6 +26,20 @@
                 <app-validation-error [control]="form.controls['contact']"></app-validation-error>
             </div>
             <div class="control">
+                <label>
+                    Email *
+                </label>
+                <input formControlName="email" type="text" />
+                <app-validation-error [control]="form.controls['email']"></app-validation-error>
+            </div>
+            <div class="control">
+                <label>
+                    Remarque *
+                </label>
+                <input formControlName="remark" type="text" />
+                <app-validation-error [control]="form.controls['remark']"></app-validation-error>
+            </div>
+            <div class="control">
                 <label>Type *</label>
                 <div class="custom-select">
                     <ng-select

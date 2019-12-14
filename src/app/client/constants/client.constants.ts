@@ -7,10 +7,12 @@ export const CLIENT_DEFAULT_CRITERIA: ClientCriteria = {
 };
 
 export const EMPTY_CLIENT_MODEL: Client = {
-    _id: null,
-    name: null,
-    address: null,
-    contact: null,
+    _id: undefined,
+    name: '',
+    address: '',
+    email: null,
+    remark: null,
+    contact: '',
     type: undefined
 };
 
