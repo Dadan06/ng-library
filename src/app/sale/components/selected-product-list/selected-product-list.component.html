@@ -45,7 +45,6 @@
         <tbody data-simplebar>
             <tr *ngFor="let saleItem of saleItems">
                 <td [class.strikethrough]="saleItem.status !== 'ORDERED'">{{ saleItem.product.name | titlecase }}</td>
-                <td>{{ saleItem.product.costPrice | number: '1.0-0' }}</td>
                 <td>{{ saleItem.product.sellingPrice | number: '1.0-0' }}</td>
                 <td>
                     <input type="text" [disabled]="saleItem.status !== 'ORDERED'" [value]="editedQuantity" [value]="editedQuantity" (keyup)="onEditQty(saleItem, $event)" appDigitOnly>
