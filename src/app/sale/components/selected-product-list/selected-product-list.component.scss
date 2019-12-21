@@ -46,9 +46,6 @@ table {
     thead th:nth-child(5) {
         @include thTdWidth($c5Width);
     }
-    tbody td:nth-child(4) {
-        padding: 0;
-    }
 
     td input {
         text-align: center;
