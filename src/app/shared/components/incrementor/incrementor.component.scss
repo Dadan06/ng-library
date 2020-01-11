@@ -1,0 +1,46 @@
+
+@import 'colors.scss';
+@import 'forms.scss';
+@import 'buttons.scss';
+@import 'colors.scss';
+
+.container {
+    width: 100%;
+    height: 26px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+label {
+    padding: 0 5px;
+}
+
+button {
+    @extend %button;
+
+    width: 26px;
+    height: 26px;
+    background: #b71a73;
+    padding: 0;
+    margin: 0;
+}
+
+input, select {
+    @extend %generic-input;
+
+    height: 26px;
+    padding: 0;
+}
+
+input {
+    width: 50px;
+    text-align: center;
+    margin-left: 2px;
+}
+
+select {
+    width: 20px;
+    min-width: 20px;
+    margin-right: 2px;
+}

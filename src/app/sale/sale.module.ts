@@ -13,8 +13,11 @@ import { SaleService } from './services/sale.service';
 import { SaleRouterEffects } from './store/effects/sale-router.effects';
 import { SaleEffects } from './store/effects/sale.effects';
 import { saleReducer } from './store/reducers/sale.reducers';
+import { ConsignationRootComponent } from './containers/consignation-root/consignation-root.component';
+import { ConsignationListComponent } from './components/consignation-list/consignation-list.component';
+import { ConsignationFormComponent } from './components/consignation-form/consignation-form.component';
 @NgModule({
-    declarations: [SelectableProductListComponent, SelectedProductListComponent, SaleRootComponent],
+    declarations: [SelectableProductListComponent, SelectedProductListComponent, SaleRootComponent, ConsignationRootComponent, ConsignationListComponent, ConsignationFormComponent],
     imports: [
         CommonModule,
         NgSelectModule,

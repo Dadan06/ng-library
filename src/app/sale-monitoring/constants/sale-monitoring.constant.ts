@@ -1,3 +1,4 @@
+import { CLIENT_TYPE_LABELS } from 'src/app/client/constants/client.constants';
 import { SALE_TYPE_LABELS } from 'src/app/sale/constants/sale.constant';
 import { SaleCriteria } from '../types/sale-criteria.interface';
 
@@ -9,17 +10,22 @@ export const SALE_DEFAULT_CRITERIA: SaleCriteria = {
         to: ((d = new Date()) => `${d.getMonth() + 1}-${d.getDate()}-${d.getFullYear()} 23:59`)(),
         sellers: null,
         clients: null,
-        types: null
+        types: null,
+        clientTypes: null
     }
 };
 
 export const SALE_FILTER_CATEGORY_LABELS: Record<string, string> = {
     sellers: 'Vendeurs',
-    types: 'Types de vente',
-    clients: 'clients'
+    types: 'Types vente',
+    clients: 'Clients',
+    clientTypes: 'Types client'
 };
 
-export const SALE_FILTER_ITEM_LABELS: Record<string, Object> = { types: { ...SALE_TYPE_LABELS } };
+export const SALE_FILTER_ITEM_LABELS: Record<string, Object> = {
+    types: { ...SALE_TYPE_LABELS },
+    clientTypes: { ...CLIENT_TYPE_LABELS }
+};
 
 export const SALE_DEFAULT_FILTERS: string[] = [];
 

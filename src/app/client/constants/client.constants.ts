@@ -1,5 +1,5 @@
 import { ClientCriteria } from '../types/client-criteria.interface';
-import { Client } from '../types/client.interface';
+import { Client, ClientType } from '../types/client.interface';
 
 export const CLIENT_DEFAULT_CRITERIA: ClientCriteria = {
     page: { page: 1, pageSize: 15 },
@@ -19,3 +19,8 @@ export const EMPTY_CLIENT_MODEL: Client = {
 export const CLIENT_BASE_ROUTE = '/root/home/client';
 
 export const CLIENT_API_ROUTE = 'client';
+
+export const CLIENT_TYPE_LABELS = {
+    [ClientType.PARTICULAR]: 'PARTICULIER',
+    [ClientType.GROUP]: 'GROUPE'
+};

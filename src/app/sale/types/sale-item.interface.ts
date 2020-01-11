@@ -1,13 +1,14 @@
 import { Product } from 'src/app/product/types/product.interface';
+import { Incrementation } from 'src/app/shared/types/incrementation.interface';
 
 export enum SaleItemStatus {
     ORDERED = 'ORDERED',
     DELETED = 'DELETED'
 }
 
-export interface QuantityChangingData {
-    previousValue: number;
+export interface ChangeQtyPayload {
     saleItem: SaleItem;
+    incrementation: Incrementation;
 }
 
 export interface SaleItem {

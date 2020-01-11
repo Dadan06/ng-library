@@ -69,3 +69,13 @@ export const getSaleCanceled = createSelector<SaleState, SaleState, boolean>(
     getSaleState,
     (state: SaleState) => state.saleCanceled
 );
+
+export const getConsignations = createSelector(
+    getSaleState,
+    (sale: SaleState) => sale.consignations
+);
+
+export const getConsignationsLoading = createSelector(
+    getSaleState,
+    (sale: SaleState) => sale.consignationsLoading
+);

@@ -8,6 +8,7 @@ import { ModalModule } from 'angular-custom-modal';
 import { ClientService } from '../client/services/client.service';
 import { ChipsComponent } from './components/chips/chips.component';
 import { CollapsibleChipsComponent } from './components/collapsible-chips/collapsible-chips.component';
+import { IncrementorComponent } from './components/incrementor/incrementor.component';
 import { InputNumberComponent } from './components/input-number/input-number.component';
 import { ListBoxFilterComponent } from './components/list-box-filter/list-box-filter.component';
 import { ListBoxComponent } from './components/list-box/list-box.component';
@@ -41,7 +42,8 @@ import { sharedReducer } from './store/reducers/shared.reducers';
         SearchBarComponent,
         InputNumberComponent,
         PeriodFilterComponent,
-        DigitOnlyDirective
+        DigitOnlyDirective,
+        IncrementorComponent
     ],
     exports: [
         CommonModule,
@@ -57,7 +59,8 @@ import { sharedReducer } from './store/reducers/shared.reducers';
         SearchBarComponent,
         InputNumberComponent,
         PeriodFilterComponent,
-        DigitOnlyDirective
+        DigitOnlyDirective,
+        IncrementorComponent
     ],
     providers: [ClientService]
 })

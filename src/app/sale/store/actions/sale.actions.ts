@@ -3,7 +3,7 @@ import { Action } from '@ngrx/store';
 import { ProductCriteria } from 'src/app/product/types/product-criteria.interface';
 import { Product } from 'src/app/product/types/product.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
-import { QuantityChangingData, SaleItem } from '../../types/sale-item.interface';
+import { ChangeQtyPayload, SaleItem } from '../../types/sale-item.interface';
 import { Sale } from '../../types/sale.interface';
 
 export const enum SaleActionTypes {
@@ -28,7 +28,10 @@ export const enum SaleActionTypes {
     CLEAR_CHANGING_QTY_ERROR = '[Sale] Clear Changing Qty Error',
     SAVE_SALE = '[Sale] Save Sale',
     SAVE_SALE_FAIL = '[Sale] Save Sale Fail',
-    SAVE_SALE_SUCCESS = '[Sale] Save Sale Success'
+    SAVE_SALE_SUCCESS = '[Sale] Save Sale Success',
+    LOAD_CONSIGNATIONS = '[Sale] Load Consignations',
+    LOAD_CONSIGNATIONS_FAIL = '[Sale] Load Consignations Fail',
+    LOAD_CONSIGNATION_SUCCESS = '[Sale] Load Consignations Success'
 }
 
 export class LoadProducts implements Action {
@@ -104,7 +107,7 @@ export class ClearProductAdditionError implements Action {
 
 export class ChangeQty implements Action {
     readonly type = SaleActionTypes.CHANGE_QTY;
-    constructor(public payload: QuantityChangingData) {}
+    constructor(public payload: ChangeQtyPayload) {}
 }
 
 export class ChangeQtyFail implements Action {
@@ -135,6 +138,20 @@ export class SaveSaleSuccess implements Action {
     readonly type = SaleActionTypes.SAVE_SALE_SUCCESS;
 }
 
+export class LoadConsignations implements Action {
+    readonly type = SaleActionTypes.LOAD_CONSIGNATIONS;
+}
+
+export class LoadConsignationsFail implements Action {
+    readonly type = SaleActionTypes.LOAD_CONSIGNATIONS_FAIL;
+    constructor(public payload: HttpErrorResponse) {}
+}
+
+export class LoadConsignationsSuccess implements Action {
+    readonly type = SaleActionTypes.LOAD_CONSIGNATION_SUCCESS;
+    constructor(public payload: Sale[]) {}
+}
+
 export type SaleAction =
     | LoadProducts
     | LoadProductsSuccess
@@ -157,4 +174,7 @@ export type SaleAction =
     | ClearChangingQtyError
     | SaveSale
     | SaveSaleFail
-    | SaveSaleSuccess;
+    | SaveSaleSuccess
+    | LoadConsignations
+    | LoadConsignationsFail
+    | LoadConsignationsSuccess;

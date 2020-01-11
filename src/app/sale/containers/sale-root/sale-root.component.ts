@@ -33,7 +33,7 @@ import {
     getSaleCanceled,
     getSaleSaved
 } from '../../store/selectors/sale.selectors';
-import { QuantityChangingData, SaleItem } from '../../types/sale-item.interface';
+import { ChangeQtyPayload, SaleItem } from '../../types/sale-item.interface';
 import { Sale } from '../../types/sale.interface';
 
 @Component({
@@ -114,13 +114,13 @@ export class SaleRootComponent implements OnInit {
         this.productAdditionErrorModal.close();
     }
 
-    onChangeQty(quantityChangingData: QuantityChangingData) {
-        this.saleStore.dispatch(new ChangeQty(quantityChangingData));
-    }
-
     onCloseChangingQtyErrorModal() {
         this.saleStore.dispatch(new ClearChangingQtyError());
         this.changingQtyErrorModal.close();
+    }
+
+    onChangeQty(changeQtyPayload: ChangeQtyPayload) {
+        this.saleStore.dispatch(new ChangeQty(changeQtyPayload));
     }
 
     private subscribeModals() {

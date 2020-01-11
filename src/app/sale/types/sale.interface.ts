@@ -16,6 +16,11 @@ export enum SaleType {
     CONSIGNATION = 'CONSIGNATION'
 }
 
+export interface Consignation {
+    selled: number;
+    left: number;
+}
+
 export interface Sale {
     _id: string;
     no: number;
@@ -27,6 +32,7 @@ export interface Sale {
     saleStatus: SaleStatus;
     seller: User;
     client: Client;
+    consignation: Consignation;
 }
 
 export interface PaginatedSale extends Paginated<Sale> {

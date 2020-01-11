@@ -9,6 +9,12 @@ export const ADMIN_MENU: Menu[] = [
         accessRight: UserPrivileges.CREATE_SALE
     },
     {
+        title: `Consignation`,
+        icon: '',
+        routerLink: '/root/admin/sale/consignation',
+        accessRight: UserPrivileges.CREATE_SALE
+    },
+    {
         title: `Suivi`,
         icon: '',
         routerLink: '/root/admin/sale-monitoring',

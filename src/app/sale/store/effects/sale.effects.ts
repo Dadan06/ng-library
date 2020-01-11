@@ -28,6 +28,9 @@ import {
     DeleteSaleItem,
     DeleteSaleItemFail,
     DeleteSaleItemSuccess,
+    LoadConsignations,
+    LoadConsignationsFail,
+    LoadConsignationsSuccess,
     LoadProducts,
     LoadProductsFail,
     LoadProductsSuccess,
@@ -165,5 +168,15 @@ export class SaleEffects {
         ofType(SaleActionTypes.SAVE_SALE_SUCCESS),
         withLatestFrom(this.saleStore.pipe(select(getProductCriteria))),
         mergeMap(([action, criteria]) => [new LoadProducts({ ...criteria }), new ClearSale()])
+    );
+
+    @Effect()
+    loadConsignations$ = this.action$.pipe(
+        ofType(SaleActionTypes.LOAD_CONSIGNATIONS),
+        switchMap(
+            (action: LoadConsignations): Observable<Sale[]> => this.saleService.loadConsignations()
+        ),
+        map((response: Sale[]) => new LoadConsignationsSuccess(response)),
+        catchError(error => of(new LoadConsignationsFail(error)))
     );
 }

@@ -1,0 +1,18 @@
+<div class="container">
+    <header>Gestion des consignations</header>
+    <div class="search-bar">
+        <app-search-bar (search)="onSearch($event)"></app-search-bar>
+    </div>
+    <div class="list">
+        <app-loader [isLoading]="consignationsLoading$ | async">
+            <app-consignation-list [consignations]="consignations$ | async"></app-consignation-list>
+        </app-loader>
+    </div>
+    <footer>
+        <div></div>
+        <app-pagination (paginate)="onPaginate($event)"></app-pagination>
+    </footer>
+    <div class="detail">
+        <router-outlet></router-outlet>
+    </div>
+</div>

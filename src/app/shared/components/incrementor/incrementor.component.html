@@ -1,0 +1,8 @@
+<div class="container">
+    <button (click)="onDecrement()">-</button>
+    <input type="text" [value]="value" disabled appDigitOnly>
+    <select (change)="onChangeSelection($event)">
+        <option *ngFor="let digit of digits" >{{ digit }}</option>
+    </select>
+    <button (click)="onIncrement()">+</button>
+</div>

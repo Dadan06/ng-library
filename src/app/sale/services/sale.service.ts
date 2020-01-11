@@ -7,7 +7,7 @@ import { ApiResponse } from 'src/app/shared/types/api-response.interface';
 import { User } from 'src/app/user/types/user.interface';
 import { environment } from 'src/environments/environment';
 import { SALE_API_ROUTE, SALE_ITEM_API_ROUTE } from '../constants/sale.constant';
-import { QuantityChangingData, SaleItem } from '../types/sale-item.interface';
+import { ChangeQtyPayload, SaleItem } from '../types/sale-item.interface';
 import { Sale } from '../types/sale.interface';
 
 @Injectable()
@@ -41,18 +41,21 @@ export class SaleService {
             .pipe(map(() => null));
     }
 
-    changeQty(quantityChangingData: QuantityChangingData): Observable<SaleItem> {
+    changeQty(changeQtyPayload: ChangeQtyPayload): Observable<SaleItem> {
         return this.http
-            .post(
-                `${environment.apiBaseUrl}/${SALE_ITEM_API_ROUTE}/change-qty`,
-                quantityChangingData
-            )
+            .put(`${environment.apiBaseUrl}/${SALE_ITEM_API_ROUTE}/change-qty`, changeQtyPayload)
             .pipe(map((response: ApiResponse) => response.data as SaleItem));
     }
 
     saveSale(sale: Sale): Observable<void> {
         return this.http
-            .post(`${environment.apiBaseUrl}/${SALE_API_ROUTE}/save`, sale)
+            .post(`${environment.apiBaseUrl}/${SALE_API_ROUTE}`, sale)
             .pipe(map(() => null));
+    }
+
+    loadConsignations(): Observable<Sale[]> {
+        return this.http
+            .get(`${environment.apiBaseUrl}/${SALE_API_ROUTE}/consignation`)
+            .pipe(map((response: ApiResponse) => response.data as Sale[]));
     }
 }

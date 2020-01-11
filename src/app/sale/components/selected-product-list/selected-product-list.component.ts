@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Client } from 'src/app/client/types/client.interface';
-import { QuantityChangingData, SaleItem, SaleItemStatus } from '../../types/sale-item.interface';
+import { Incrementation } from 'src/app/shared/types/incrementation.interface';
+import { ChangeQtyPayload, SaleItem, SaleItemStatus } from '../../types/sale-item.interface';
 import { Sale, SaleType } from '../../types/sale.interface';
 
 @Component({
@@ -15,20 +16,11 @@ export class SelectedProductListComponent implements OnInit {
     @Output() delete: EventEmitter<SaleItem> = new EventEmitter();
     @Output() cancel: EventEmitter<void> = new EventEmitter();
     @Output() save: EventEmitter<Partial<Sale>> = new EventEmitter();
-    @Output() changeQty: EventEmitter<QuantityChangingData> = new EventEmitter();
-
-    currentValues = [1];
+    @Output() changeQty: EventEmitter<ChangeQtyPayload> = new EventEmitter();
 
     saleType: SaleType;
     client: Client;
     discount: number;
-
-    private digits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-    private notDigits = ['Delete', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-
-    constructor() {
-        /** */
-    }
 
     ngOnInit() {
         this.init();
@@ -50,37 +42,17 @@ export class SelectedProductListComponent implements OnInit {
         return this.saleItems.length;
     }
 
-    get editedQuantity() {
-        return this.normalizeValue();
-    }
-
-    onEditQty(saleItem: SaleItem, event: KeyboardEvent) {
-        let previousValue = 0;
-        if (this.digits.indexOf(event.key) > -1) {
-            this.currentValues.push(+event.key);
-        }
-        if (event.key === 'Backspace') {
-            previousValue = this.normalizeValue();
-            this.currentValues.pop();
-        }
-        if (this.notDigits.indexOf(event.key) === -1) {
-            this.changeQty.emit({
-                saleItem: { ...saleItem, quantity: this.normalizeValue() },
-                previousValue
-            });
-        }
+    onChangeQty(saleItem: SaleItem, incrementation: Incrementation) {
+        this.changeQty.emit({ saleItem, incrementation });
     }
 
     onSave() {
         this.save.emit({
             saleType: this.saleType,
             discount: this.computedDiscount,
-            client: this.client
+            client: this.client,
+            consignation: this.saleType === SaleType.CONSIGNATION ? { selled: 0, left: 0 } : null
         });
-    }
-
-    private normalizeValue(): number {
-        return this.currentValues.length ? +this.currentValues.join('') : 1;
     }
 
     private init() {

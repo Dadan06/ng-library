@@ -6,7 +6,7 @@ import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { AppRouterState } from 'src/app/core/store/reducers/router.reducers';
 import { LoadClients } from 'src/app/shared/store/actions/shared.actions';
 import { SALE_BASE_ROUTE } from '../../constants/sale.constant';
-import { LoadProducts } from '../actions/sale.actions';
+import { LoadConsignations, LoadProducts } from '../actions/sale.actions';
 import { SaleState } from '../reducers/sale.reducers';
 import { getProductCriteria } from '../selectors/sale.selectors';
 
@@ -17,14 +17,22 @@ export class SaleRouterEffects {
     private mapToRouterStateUrl = (action): AppRouterState => action.payload.routerState;
 
     @Effect()
-    productRoute$ = this.action$.pipe(
+    saleRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes(`${SALE_BASE_ROUTE}`)),
+        filter(state => state.url === SALE_BASE_ROUTE),
         withLatestFrom(this.store.pipe(select(getProductCriteria))),
         mergeMap(([routerState, productCriteria]) => [
             new LoadClients(),
             new LoadProducts(productCriteria)
         ])
+    );
+
+    @Effect()
+    consignationRoute$ = this.action$.pipe(
+        ofType(ROUTER_NAVIGATION),
+        map(this.mapToRouterStateUrl),
+        filter(state => state.url.includes('consignation')),
+        map(() => new LoadConsignations())
     );
 }

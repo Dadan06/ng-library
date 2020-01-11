@@ -4,6 +4,7 @@ import { ProductCriteria } from 'src/app/product/types/product-criteria.interfac
 import { Product } from 'src/app/product/types/product.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
 import { SaleItem } from '../../types/sale-item.interface';
+import { Sale } from '../../types/sale.interface';
 import {
     AddProduct,
     AddProductFail,
@@ -19,6 +20,9 @@ import {
     DeleteSaleItem,
     DeleteSaleItemFail,
     DeleteSaleItemSuccess,
+    LoadConsignations,
+    LoadConsignationsFail,
+    LoadConsignationsSuccess,
     LoadProducts,
     LoadProductsFail,
     LoadProductsSuccess,
@@ -50,6 +54,9 @@ export interface SaleState {
     saleItemQtyChangeError: HttpErrorResponse;
     saleSaving: boolean;
     saleSaved: boolean;
+    consignations: Sale[];
+    consignationsLoading: boolean;
+    consignationsLoaded: boolean;
 }
 
 const initialState = {
@@ -71,7 +78,10 @@ const initialState = {
     saleItemQtyChanged: false,
     saleItemQtyChangeError: undefined,
     saleSaving: false,
-    saleSaved: false
+    saleSaved: false,
+    consignations: [],
+    consignationsLoading: false,
+    consignationsLoaded: false
 };
 
 const loadProducts = (state: SaleState, action: LoadProducts): SaleState => ({
@@ -184,7 +194,7 @@ const changeQtySuccess = (state: SaleState, action: ChangeQtySuccess): SaleState
     saleItemQtyChanged: true,
     saleItems: state.saleItems
         .map(s => (s._id === action.payload._id ? action.payload : s))
-        .filter(s => s.quantity)
+        .filter(s => s.quantity > 0)
 });
 
 const clearChangingQtyError = (state: SaleState, action: ClearChangingQtyError): SaleState => ({
@@ -208,6 +218,28 @@ const saveSaleSuccess = (state: SaleState, action: SaveSaleSuccess): SaleState =
     ...state,
     saleSaving: false,
     saleSaved: true
+});
+
+const loadConsignations = (state: SaleState, action: LoadConsignations): SaleState => ({
+    ...state,
+    consignationsLoading: true,
+    consignationsLoaded: false
+});
+
+const loadConsignationsSuccess = (
+    state: SaleState,
+    action: LoadConsignationsSuccess
+): SaleState => ({
+    ...state,
+    consignationsLoading: false,
+    consignationsLoaded: true,
+    consignations: action.payload
+});
+
+const loadConsignationsFail = (state: SaleState, action: LoadConsignationsFail): SaleState => ({
+    ...state,
+    consignationsLoading: false,
+    consignationsLoaded: false
 });
 
 // tslint:disable-next-line: cyclomatic-complexity no-big-function
@@ -261,6 +293,12 @@ export function saleReducer(state: SaleState = initialState, action: SaleAction)
             return saveSaleSuccess(state, action);
         case SaleActionTypes.SAVE_SALE_FAIL:
             return saveSaleFail(state, action);
+        case SaleActionTypes.LOAD_CONSIGNATIONS:
+            return loadConsignations(state, action);
+        case SaleActionTypes.LOAD_CONSIGNATIONS_FAIL:
+            return loadConsignationsFail(state, action);
+        case SaleActionTypes.LOAD_CONSIGNATION_SUCCESS:
+            return loadConsignationsSuccess(state, action);
         default:
             return state;
     }
