@@ -49,7 +49,7 @@ export class SaleService {
 
     saveSale(sale: Sale): Observable<void> {
         return this.http
-            .post(`${environment.apiBaseUrl}/${SALE_API_ROUTE}`, sale)
+            .post(`${environment.apiBaseUrl}/${SALE_API_ROUTE}/save`, sale)
             .pipe(map(() => null));
     }
 
