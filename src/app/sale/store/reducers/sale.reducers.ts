@@ -2,33 +2,31 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PRODUCT_DEFAULT_CRITERIA } from 'src/app/product/constants/product.constants';
 import { ProductCriteria } from 'src/app/product/types/product-criteria.interface';
 import { Product } from 'src/app/product/types/product.interface';
+import { SALE_DEFAULT_CRITERIA } from 'src/app/sale-monitoring/constants/sale-monitoring.constant';
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
+import { EMPTY_SALE_ITEM } from '../../constants/sale.constant';
 import { SaleItem } from '../../types/sale-item.interface';
-import { Sale } from '../../types/sale.interface';
+import { Payment } from '../../types/sale.interface';
 import {
-    AddProduct,
-    AddProductFail,
-    AddProductSuccess,
-    CancelSale,
-    CancelSaleFail,
-    CancelSaleSuccess,
-    ChangeQty,
-    ChangeQtyFail,
-    ChangeQtySuccess,
-    ClearChangingQtyError,
-    ClearProductAdditionError,
-    DeleteSaleItem,
-    DeleteSaleItemFail,
-    DeleteSaleItemSuccess,
+    AddAsSaleItem,
+    ExportPdf,
+    ExportPdfFail,
+    ExportPdfSuccess,
+    LoadConsignation,
+    LoadConsignationFail,
     LoadConsignations,
     LoadConsignationsFail,
     LoadConsignationsSuccess,
+    LoadConsignationSuccess,
     LoadProducts,
     LoadProductsFail,
     LoadProductsSuccess,
-    NewSale,
     SaleAction,
     SaleActionTypes,
+    SaveConsignation,
+    SaveConsignationFail,
+    SaveConsignationSuccess,
     SaveSale,
     SaveSaleFail,
     SaveSaleSuccess
@@ -39,49 +37,45 @@ export interface SaleState {
     productsLoaded: boolean;
     productsLoading: boolean;
     productCriteria: ProductCriteria;
-    saleId: string;
-    no: number;
-    saleItems: SaleItem[];
-    productAdding: boolean;
-    productAdded: boolean;
-    productAdditionError: HttpErrorResponse;
-    saleItemDeleting: boolean;
-    saleItemDeleted: boolean;
-    saleCanceling: boolean;
-    saleCanceled: boolean;
-    saleItemQtyChanging: boolean;
-    saleItemQtyChanged: boolean;
-    saleItemQtyChangeError: HttpErrorResponse;
     saleSaving: boolean;
     saleSaved: boolean;
-    consignations: Sale[];
+    saleSaveError: HttpErrorResponse;
+    consignations: Paginated<Payment>;
+    consignationCriteria: ListCriteria;
     consignationsLoading: boolean;
     consignationsLoaded: boolean;
+    consignation: Payment;
+    consignationLoading: boolean;
+    consignationLoaded: boolean;
+    pdfExporting: boolean;
+    pdfExported: boolean;
+    consignationSaving: boolean;
+    consignationSaved: boolean;
+    newAddedSaleItem: SaleItem;
 }
 
+const DEFAULT_PAGINATED_LIST = { items: [], totalItems: 0 };
+
 const initialState = {
-    products: { items: [], totalItems: 0 },
+    products: DEFAULT_PAGINATED_LIST,
     productsLoaded: false,
     productsLoading: false,
     productCriteria: PRODUCT_DEFAULT_CRITERIA,
-    saleId: null,
-    no: null,
-    saleItems: [],
-    productAdding: false,
-    productAdded: false,
-    productAdditionError: undefined,
-    saleItemDeleting: false,
-    saleItemDeleted: false,
-    saleCanceling: false,
-    saleCanceled: false,
-    saleItemQtyChanging: false,
-    saleItemQtyChanged: false,
-    saleItemQtyChangeError: undefined,
     saleSaving: false,
     saleSaved: false,
-    consignations: [],
+    saleSaveError: undefined,
+    consignations: DEFAULT_PAGINATED_LIST,
+    consignationCriteria: SALE_DEFAULT_CRITERIA,
     consignationsLoading: false,
-    consignationsLoaded: false
+    consignationsLoaded: false,
+    consignation: undefined,
+    consignationLoading: false,
+    consignationLoaded: false,
+    pdfExporting: false,
+    pdfExported: false,
+    consignationSaving: false,
+    consignationSaved: false,
+    newAddedSaleItem: null
 };
 
 const loadProducts = (state: SaleState, action: LoadProducts): SaleState => ({
@@ -104,114 +98,18 @@ const loadProductsSuccess = (state: SaleState, action: LoadProductsSuccess): Sal
     products: action.payload
 });
 
-const newSale = (state: SaleState, action: NewSale): SaleState => ({
-    ...state,
-    saleId: action.payload._id,
-    no: action.payload.no
-});
-
-const addProduct = (state: SaleState, action: AddProduct): SaleState => ({
-    ...state,
-    productAdding: true,
-    productAdded: false
-});
-
-const addProductFail = (state: SaleState, action: AddProductFail): SaleState => ({
-    ...state,
-    productAdding: false,
-    productAdded: false,
-    productAdditionError: action.payload
-});
-
-const addProductSuccess = (state: SaleState, action: AddProductSuccess): SaleState => ({
-    ...state,
-    productAdding: false,
-    productAdded: true,
-    saleItems: [...state.saleItems, action.payload]
-});
-
-const deleteSaleItem = (state: SaleState, action: DeleteSaleItem): SaleState => ({
-    ...state,
-    saleItemDeleting: true,
-    saleItemDeleted: false
-});
-
-const deleteSaleItemSuccess = (state: SaleState, action: DeleteSaleItemSuccess): SaleState => ({
-    ...state,
-    saleItemDeleting: false,
-    saleItemDeleted: true,
-    saleItems: state.saleItems.map(s => (s._id === action.payload._id ? action.payload : s))
-});
-
-const deleteSaleItemFail = (state: SaleState, action: DeleteSaleItemFail): SaleState => ({
-    ...state,
-    saleItemDeleting: false,
-    saleItemDeleted: false
-});
-
-const cancelSale = (state: SaleState, action: CancelSale): SaleState => ({
-    ...state,
-    saleCanceling: true,
-    saleCanceled: false
-});
-
-const cancelSaleFail = (state: SaleState, action: CancelSaleFail): SaleState => ({
-    ...state,
-    saleCanceling: false,
-    saleCanceled: false
-});
-
-const cancelSaleSuccess = (state: SaleState, action: CancelSaleSuccess): SaleState => ({
-    ...state,
-    saleCanceling: false,
-    saleCanceled: true
-});
-
-const clearProductAddionError = (
-    state: SaleState,
-    action: ClearProductAdditionError
-): SaleState => ({
-    ...state,
-    productAdditionError: undefined
-});
-
-const changeQty = (state: SaleState, action: ChangeQty): SaleState => ({
-    ...state,
-    saleItemQtyChanging: true,
-    saleItemQtyChanged: false
-});
-
-const changeQtyFail = (state: SaleState, action: ChangeQtyFail): SaleState => ({
-    ...state,
-    saleItemQtyChanging: false,
-    saleItemQtyChanged: false,
-    saleItemQtyChangeError: action.payload
-});
-
-const changeQtySuccess = (state: SaleState, action: ChangeQtySuccess): SaleState => ({
-    ...state,
-    saleItemQtyChanging: false,
-    saleItemQtyChanged: true,
-    saleItems: state.saleItems
-        .map(s => (s._id === action.payload._id ? action.payload : s))
-        .filter(s => s.quantity > 0)
-});
-
-const clearChangingQtyError = (state: SaleState, action: ClearChangingQtyError): SaleState => ({
-    ...state,
-    saleItemQtyChangeError: undefined
-});
-
 const saveSale = (state: SaleState, action: SaveSale): SaleState => ({
     ...state,
     saleSaving: true,
-    saleSaved: false
+    saleSaved: false,
+    saleSaveError: undefined
 });
 
 const saveSaleFail = (state: SaleState, action: SaveSaleFail): SaleState => ({
     ...state,
     saleSaving: false,
-    saleSaved: false
+    saleSaved: false,
+    saleSaveError: action.payload
 });
 
 const saveSaleSuccess = (state: SaleState, action: SaveSaleSuccess): SaleState => ({
@@ -223,7 +121,8 @@ const saveSaleSuccess = (state: SaleState, action: SaveSaleSuccess): SaleState =
 const loadConsignations = (state: SaleState, action: LoadConsignations): SaleState => ({
     ...state,
     consignationsLoading: true,
-    consignationsLoaded: false
+    consignationsLoaded: false,
+    consignationCriteria: action.payload
 });
 
 const loadConsignationsSuccess = (
@@ -242,8 +141,72 @@ const loadConsignationsFail = (state: SaleState, action: LoadConsignationsFail):
     consignationsLoaded: false
 });
 
+const loadConsignation = (state: SaleState, action: LoadConsignation): SaleState => ({
+    ...state,
+    consignationLoading: true,
+    consignationLoaded: false
+});
+
+const loadConsignationSuccess = (state: SaleState, action: LoadConsignationSuccess): SaleState => ({
+    ...state,
+    consignationLoading: false,
+    consignationLoaded: true,
+    consignation: action.payload
+});
+
+const loadConsignationFail = (state: SaleState, action: LoadConsignationFail): SaleState => ({
+    ...state,
+    consignationLoading: false,
+    consignationLoaded: false
+});
+
+const saveConsignation = (state: SaleState, action: SaveConsignation): SaleState => ({
+    ...state,
+    consignationSaving: true,
+    consignationSaved: false
+});
+
+const saveConsignationFail = (state: SaleState, action: SaveConsignationFail): SaleState => ({
+    ...state,
+    consignationSaving: false,
+    consignationSaved: false
+});
+
+const saveConsignationSuccess = (state: SaleState, action: SaveConsignationSuccess): SaleState => ({
+    ...state,
+    consignationSaving: false,
+    consignationSaved: true
+});
+
+const exportPdf = (state: SaleState, action: ExportPdf): SaleState => ({
+    ...state,
+    pdfExporting: true,
+    pdfExported: false
+});
+
+const exportPdfFail = (state: SaleState, action: ExportPdfFail): SaleState => ({
+    ...state,
+    pdfExporting: false,
+    pdfExported: false
+});
+
+const exportPdfSuccess = (state: SaleState, action: ExportPdfSuccess): SaleState => ({
+    ...state,
+    pdfExporting: false,
+    pdfExported: true
+});
+
+const addAsSaleItem = (state: SaleState, action: AddAsSaleItem): SaleState => ({
+    ...state,
+    newAddedSaleItem: {
+        ...EMPTY_SALE_ITEM,
+        product: action.payload
+    }
+});
+
 // tslint:disable-next-line: cyclomatic-complexity no-big-function
 export function saleReducer(state: SaleState = initialState, action: SaleAction): SaleState {
+    // tslint:disable-next-line: max-switch-cases
     switch (action.type) {
         case SaleActionTypes.LOAD_PRODUCTS:
             return loadProducts(state, action);
@@ -251,42 +214,6 @@ export function saleReducer(state: SaleState = initialState, action: SaleAction)
             return loadProductsFail(state, action);
         case SaleActionTypes.LOAD_PRODUCTS_SUCCESS:
             return loadProductsSuccess(state, action);
-        case SaleActionTypes.NEW_SALE:
-            return newSale(state, action);
-        case SaleActionTypes.ADD_PRODUCT:
-            return addProduct(state, action);
-        case SaleActionTypes.ADD_PRODUCT_FAIL:
-            return addProductFail(state, action);
-        case SaleActionTypes.ADD_PRODUCT_SUCCESS:
-            return addProductSuccess(state, action);
-        case SaleActionTypes.DELETE_SALE_ITEM:
-            return deleteSaleItem(state, action);
-        case SaleActionTypes.DELETE_SALE_ITEM_FAIL:
-            return deleteSaleItemFail(state, action);
-        case SaleActionTypes.DELETE_SALE_ITEM_SUCCESS:
-            return deleteSaleItemSuccess(state, action);
-        case SaleActionTypes.CANCEL_SALE:
-            return cancelSale(state, action);
-        case SaleActionTypes.CANCEL_SALE_FAIL:
-            return cancelSaleFail(state, action);
-        case SaleActionTypes.CANCEL_SALE_SUCCESS:
-            return cancelSaleSuccess(state, action);
-        case SaleActionTypes.CLEAR_PRODUCT_ADDITION_ERROR:
-            return clearProductAddionError(state, action);
-        case SaleActionTypes.CLEAR_SALE:
-            return {
-                ...initialState,
-                products: state.products,
-                productCriteria: state.productCriteria
-            };
-        case SaleActionTypes.CHANGE_QTY:
-            return changeQty(state, action);
-        case SaleActionTypes.CHANGE_QTY_FAIL:
-            return changeQtyFail(state, action);
-        case SaleActionTypes.CHANGE_QTY_SUCCESS:
-            return changeQtySuccess(state, action);
-        case SaleActionTypes.CLEAR_CHANGING_QTY_ERROR:
-            return clearChangingQtyError(state, action);
         case SaleActionTypes.SAVE_SALE:
             return saveSale(state, action);
         case SaleActionTypes.SAVE_SALE_SUCCESS:
@@ -297,8 +224,28 @@ export function saleReducer(state: SaleState = initialState, action: SaleAction)
             return loadConsignations(state, action);
         case SaleActionTypes.LOAD_CONSIGNATIONS_FAIL:
             return loadConsignationsFail(state, action);
-        case SaleActionTypes.LOAD_CONSIGNATION_SUCCESS:
+        case SaleActionTypes.LOAD_CONSIGNATIONS_SUCCESS:
             return loadConsignationsSuccess(state, action);
+        case SaleActionTypes.LOAD_CONSIGNATION:
+            return loadConsignation(state, action);
+        case SaleActionTypes.LOAD_CONSIGNATION_FAIL:
+            return loadConsignationFail(state, action);
+        case SaleActionTypes.LOAD_CONSIGNATION_SUCCESS:
+            return loadConsignationSuccess(state, action);
+        case SaleActionTypes.SAVE_CONSIGNATION:
+            return saveConsignation(state, action);
+        case SaleActionTypes.SAVE_CONSIGNATION_FAIL:
+            return saveConsignationFail(state, action);
+        case SaleActionTypes.SAVE_CONSIGNATION_SUCCESS:
+            return saveConsignationSuccess(state, action);
+        case SaleActionTypes.EXPORT_PDF:
+            return exportPdf(state, action);
+        case SaleActionTypes.EXPORT_PDF_FAIL:
+            return exportPdfFail(state, action);
+        case SaleActionTypes.EXPORT_PDF_SUCCESS:
+            return exportPdfSuccess(state, action);
+        case SaleActionTypes.ADD_AS_SALE_ITEM:
+            return addAsSaleItem(state, action);
         default:
             return state;
     }

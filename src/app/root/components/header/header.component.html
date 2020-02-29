@@ -14,7 +14,7 @@
                     <label class="dropdown">
                         <div class="dd-button">
                             <img src="assets/images/header/ico-id.png" />
-                            <p>{{ (user$ | async)?.login }}</p>
+                            <p>{{ (user$ | async)?.login | uppercase }}</p>
                         </div>
                         <input type="checkbox" class="dd-input" id="test" />
                         <ul class="dd-menu">

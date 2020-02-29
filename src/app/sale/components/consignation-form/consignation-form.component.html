@@ -1,3 +1,56 @@
-<p>
-  consignation-form works!
-</p>
+<div class="container">
+    <header>
+        <div class="form-title">Détails</div>
+    </header>
+    <main data-simplebar>
+        <form *ngIf="form" [formGroup]="form">
+            <ng-container formArrayName="consignations">
+                <div class="form-content" *ngFor="let item of getFormArray().controls; let i = index" [formGroupName]="i">
+                    <div class="x-button-container">
+                        <button class="x-button" (click)="i > 0 ? removeAt(i) : clearAt(i)">X</button>
+                    </div>
+                    <div>
+                        <div class="date-container">
+                            <label>Date</label>
+                            <label>{{ item.get('date').value | date: 'dd/MM/y - HH:mm' }}</label>
+                        </div>
+                        <div class="control">
+                            <label>
+                                Vendu *
+                            </label>
+                            <input #first formControlName="selled" type="number" />
+                            <app-validation-error
+                                [control]="item.selled"
+                            ></app-validation-error>
+                        </div>
+                        <div class="control">
+                            <label>
+                                Rendu *
+                            </label>
+                            <input #first formControlName="returned" type="number" />
+                            <app-validation-error
+                                [control]="item.returned"
+                            ></app-validation-error>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </form>
+        <button *ngIf="isEditing" class="btn-new" (click)="add()">+</button>
+    </main>
+    <footer>
+        <div class="buttons">
+            <button
+                class="blue"
+                *ngIf="!isEditing"
+                (click)="edit.emit()"
+            >
+                MODIFIER
+            </button>
+            <button class="blue" *ngIf="isEditing" (click)="onSubmit()">ENREGISTRER</button>
+            <button class="dark-purple" *ngIf="isEditing" (click)="cancel.emit()">
+                ANNULER
+            </button>
+        </div>
+    </footer>
+</div>

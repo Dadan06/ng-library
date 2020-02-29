@@ -19,7 +19,7 @@ $arrow-height: 10px;
     flex-direction: column;
     height: 100%;
     width: 100%;
-    overflow-x: hidden;
+    overflow-y: hidden;
     background-color: $sidenav-background;
 
     .menu-title {
@@ -135,17 +135,18 @@ $arrow-height: 10px;
 
     footer {
         color: white;
-        padding-bottom: 45px;
-        padding-left: 30px;
+        padding-bottom: 25px;
+        padding-left: 10px;
+        font-size: 1.4rem;
 
         .day-display {
             font-family: $worksans-light;
-            font-size: 1.4rem;
+            padding-bottom: 2px;
         }
 
         .hour-display {
             font-family: $worksans-regular;
-            font-size: 1.4rem;
+            padding-top: 2px;
         }
     }
 }

@@ -1,89 +1,45 @@
-<div class="container">
-    <header>Gestion des ventes</header>
-    <div class="selectable-product-container">
-        <main>
-            <app-search-bar (search)="onSearch($event)"></app-search-bar>
-            <app-loader [isLoading]="productsLoading$ | async">
-                <app-selectable-product-list
-                    [products]="products$ | async"
-                    (add)="onAddProduct($event)"
-                ></app-selectable-product-list>
-            </app-loader>
-        </main>
-        <footer>
-            <app-pagination
-                [totalItems]="totalItems$ | async"
-                (paginate)="onPaginate($event)"
-            ></app-pagination>
-        </footer>
+<app-loader [isLoading]="pdfExporting$ | async" [message]="'Exportation facture'">
+    <div class="container">
+        <header>Gestion des ventes</header>
+        <div class="selectable-product-container">
+            <main>
+                <app-search-bar (search)="onSearch($event)"></app-search-bar>
+                <app-loader [isLoading]="productsLoading$ | async">
+                    <app-selectable-product-list
+                        [products]="products$ | async"
+                        (add)="onAddProduct($event)"
+                        (sort)="onSort($event)"
+                    ></app-selectable-product-list>
+                </app-loader>
+            </main>
+            <footer>
+                <app-pagination
+                    [totalItems]="totalItems$ | async"
+                    (paginate)="onPaginate($event)"
+                ></app-pagination>
+            </footer>
+        </div>
+        <div class="selected-product-container">
+            <app-selected-product-list
+                [newLoadedSaleItem]="newAddedSaleItem$ | async"
+                [clients]="clients$ | async"
+                (save)="onSave($event)"
+            ></app-selected-product-list>
+        </div>
     </div>
-    <div class="selected-product-container">
-        <app-selected-product-list
-            [clients]="clients$ | async"
-            [saleItems]="saleItems$ | async"
-            (delete)="currentSaleItem = $event; deletionConfirmModal.open()"
-            (cancel)="onCancelSale()"
-            (save)="onSaveSale($event)"
-            (changeQty)="onChangeQty($event)"
-        ></app-selected-product-list>
-    </div>
-</div>
+</app-loader>
 
-<modal #cancelingConfirmModal class="popup-modal warning">
-    <ng-template #modalHeader>
-        Confirmation
-    </ng-template>
-    <ng-template #modalBody>
-        Voulez vous vraiment annuler la commande en cours?
-    </ng-template>
-    <ng-template #modalFooter>
-        <button class="blue" (click)="cancelingConfirmModal.close(); onConfirmCanceling()">
-            OUI
-        </button>
-        <button class="dark-purple" (click)="cancelingConfirmModal.close()">NON</button>
-    </ng-template>
-</modal>
-
-<modal #deletionConfirmModal class="popup-modal warning">
-    <ng-template #modalHeader>
-        Confirmation
-    </ng-template>
-    <ng-template #modalBody>
-        Voulez vous vraiment supprimer cet element?
-    </ng-template>
-    <ng-template #modalFooter>
-        <button class="blue" (click)="deletionConfirmModal.close(); onConfirmDeletion()">
-            OUI
-        </button>
-        <button class="dark-purple" (click)="deletionConfirmModal.close()">NON</button>
-    </ng-template>
-</modal>
-
-<modal #productAdditionErrorModal class="popup-modal error" [closeOnOutsideClick]="false">
+<modal #saleSaveError class="popup-modal error" [closeOnOutsideClick]="false">
     <ng-template #modalHeader>
         Echec
     </ng-template>
     <ng-template #modalBody>
         <p>
-            {{ getAddingProductError }}
+            {{ (saleSaveError$ | async).error.message }}
         </p>
     </ng-template>
     <ng-template #modalFooter>
-        <button (click)="onCloseProductAdditionErrorModal()" class="blue">OK</button>
-    </ng-template>
-</modal>
-
-<modal #changingQtyErrorModal class="popup-modal error" [closeOnOutsideClick]="false">
-    <ng-template #modalHeader>
-        Echec
-    </ng-template>
-    <ng-template #modalBody>
-        <p>
-            {{ getChangingQtyError }}
-        </p>
-    </ng-template>
-    <ng-template #modalFooter>
-        <button (click)="onCloseChangingQtyErrorModal()" class="blue">OK</button>
+        <button (click)="saleSaveError.close()" class="blue">OK</button>
     </ng-template>
 </modal>
 
@@ -98,19 +54,5 @@
     </ng-template>
     <ng-template #modalFooter>
         <button (click)="saleSaved.close()" class="blue">OK</button>
-    </ng-template>
-</modal>
-
-<modal #saleCanceled class="popup-modal success" [closeOnOutsideClick]="false">
-    <ng-template #modalHeader>
-        Succès
-    </ng-template>
-    <ng-template #modalBody>
-        <p>
-            Vente annulée
-        </p>
-    </ng-template>
-    <ng-template #modalFooter>
-        <button (click)="saleCanceled.close()" class="blue">OK</button>
     </ng-template>
 </modal>

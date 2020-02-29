@@ -1,10 +1,12 @@
 import { CLIENT_TYPE_LABELS } from 'src/app/client/constants/client.constants';
 import { SALE_TYPE_LABELS } from 'src/app/sale/constants/sale.constant';
+import { SortDirection } from 'src/app/shared/types/sort.interface';
 import { SaleCriteria } from '../types/sale-criteria.interface';
 
 export const SALE_DEFAULT_CRITERIA: SaleCriteria = {
     page: { page: 1, pageSize: 15 },
     search: '',
+    sort: { by: 'paymentDate', direction: SortDirection.asc },
     filter: {
         from: ((d = new Date()) => `${d.getMonth() + 1}-${d.getDate()}-${d.getFullYear()} 00:00`)(),
         to: ((d = new Date()) => `${d.getMonth() + 1}-${d.getDate()}-${d.getFullYear()} 23:59`)(),

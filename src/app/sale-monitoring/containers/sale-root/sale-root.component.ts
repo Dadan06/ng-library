@@ -6,6 +6,7 @@ import { Sale } from 'src/app/sale/types/sale.interface';
 import { FilterUpdates } from 'src/app/shared/types/filter-updates.interface';
 import { Page } from 'src/app/shared/types/page.interface';
 import { PeriodFilter } from 'src/app/shared/types/period-filter.interface';
+import { Sort } from 'src/app/shared/types/sort.interface';
 import {
     SALE_DEFAULT_FILTERS,
     SALE_FILTER_CATEGORY_LABELS,
@@ -55,29 +56,34 @@ export class SaleRootComponent implements OnInit {
         this.periodFilter = { from, to };
     }
 
+    onSort(sort: Sort) {
+        this.saleCriteria.sort = sort;
+        this.refreshList();
+    }
+
     onFilter(filter: SaleListBoxFilter | PeriodFilter) {
         this.saleCriteria = {
             ...this.saleCriteria,
             filter: { ...this.saleCriteria.filter, ...filter }
         };
-        this.reload();
+        this.refreshList();
     }
 
     onPaginate(page: Page) {
         this.saleCriteria.page = page;
-        this.reload();
+        this.refreshList();
     }
 
     onSearch(search: string) {
         this.saleCriteria.search = search;
-        this.reload();
+        this.refreshList();
     }
 
     onViewDetails(sale: Sale) {
         this.currentSaleItems = sale.saleItems;
     }
 
-    private reload() {
+    private refreshList() {
         this.store.dispatch(new LoadSales({ ...this.saleCriteria }));
     }
 }

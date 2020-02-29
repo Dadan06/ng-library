@@ -21,7 +21,9 @@ export const enum UserPrivileges {
     VIEW_CLIENT = 'VIEW_CLIENT',
     CREATE_CLIENT = 'CREATE_CLIENT',
     EDIT_CLIENT = 'EDIT_CLIENT',
-    DELETE_CLIENT = 'DELETE_CLIENT'
+    DELETE_CLIENT = 'DELETE_CLIENT',
+    VIEW_CONSIGNATIONS = 'VIEW_CONSIGNATIONS',
+    EDIT_CONSIGNATION = 'EDIT_CONSIGNATION'
 }
 
 export const USER_PRIVILEGE_LABELS: Record<UserPrivileges, string> = {
@@ -33,11 +35,11 @@ export const USER_PRIVILEGE_LABELS: Record<UserPrivileges, string> = {
     [UserPrivileges.CREATE_ROLE]: 'Création rôle',
     [UserPrivileges.EDIT_ROLE]: 'Edition rôle',
     [UserPrivileges.DELETE_ROLE]: 'Suppression rôle',
-    [UserPrivileges.VIEW_PRODUCT]: 'Consultation produit',
+    [UserPrivileges.VIEW_PRODUCT]: 'Consultation produits',
     [UserPrivileges.CREATE_PRODUCT]: 'Création produit',
     [UserPrivileges.EDIT_PRODUCT]: 'Modification produit',
     [UserPrivileges.DELETE_PRODUCT]: 'Suppression produit',
-    [UserPrivileges.VIEW_SUPPLIER]: 'Consultation fournisseur',
+    [UserPrivileges.VIEW_SUPPLIER]: 'Consultation fournisseurs',
     [UserPrivileges.CREATE_SUPPLIER]: 'Création fournisseur',
     [UserPrivileges.EDIT_SUPPLIER]: 'Modification fournisseur',
     [UserPrivileges.DELETE_SUPPLIER]: 'Suppression fournisseur',
@@ -47,7 +49,9 @@ export const USER_PRIVILEGE_LABELS: Record<UserPrivileges, string> = {
     [UserPrivileges.VIEW_CLIENT]: 'Consultation clients',
     [UserPrivileges.CREATE_CLIENT]: 'Création client',
     [UserPrivileges.EDIT_CLIENT]: 'Modification client',
-    [UserPrivileges.DELETE_CLIENT]: 'Suppression client'
+    [UserPrivileges.DELETE_CLIENT]: 'Suppression client',
+    [UserPrivileges.VIEW_CONSIGNATIONS]: 'Consultation consignations',
+    [UserPrivileges.EDIT_CONSIGNATION]: 'Modification consignation'
 };
 
 export const enum PrivilegeCategories {

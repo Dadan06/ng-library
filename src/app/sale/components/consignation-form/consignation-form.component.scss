@@ -1,0 +1,64 @@
+@import 'forms.scss';
+@import 'sizes.scss';
+@import 'buttons.scss';
+@import 'texts.scss';
+@import 'details.scss';
+@import 'colors.scss';
+
+.container {
+    @extend %detail-layout;
+}
+
+form {
+    @extend %generic-form;
+}
+
+.blue {
+    @extend %blue-button;
+}
+
+.dark-purple {
+    @extend %dark-purple-button;
+}
+
+.btn-new {
+    @extend %add-button;
+}
+
+.form-content {
+    width: 100%;
+    padding: 4px;
+    border: solid 1px $light-gray;
+    border-radius: 4px;
+    margin: 5px 0;
+
+    .x-button-container {
+        width: 100%;
+        height: 20px;
+        display:flex;
+        flex-direction:row-reverse;
+    }
+
+    .x-button {
+        @extend %button;
+        width: 20px;
+        height: 100%;
+        background: white;
+        color: black;
+        font-size: 1.2em;
+        margin: 0;
+    }
+}
+
+.date-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+
+    label {
+        @extend %default-form-text;
+        min-height: 22px;
+        padding-bottom: 1px;
+    }
+}

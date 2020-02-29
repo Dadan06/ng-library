@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { SortableTableComponent } from 'src/app/shared/components/sortable-table/sortable-table.component';
 import { User } from '../../types/user.interface';
 
 @Component({
@@ -6,7 +7,7 @@ import { User } from '../../types/user.interface';
     templateUrl: './user-list.component.html',
     styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent {
+export class UserListComponent extends SortableTableComponent {
     @Input() users: User[];
     @Input() currentUser: User;
     @Input() editEnabled = true;

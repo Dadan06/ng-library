@@ -1,70 +1,67 @@
 <div class="container">
-    <div class="custom-control">
-        <label>Type de vente</label>
-        <div class="radio-container">
-            <div class="radio-control">
-                <label>
-                    <input type="radio" name="type" [(ngModel)]="saleType" [value]="'DIRECT_SALE'"/>
-                    Direct
-                </label>
-            </div>
-            <div class="radio-control">
-                <label>
-                    <input type="radio" name="type" [(ngModel)]="saleType" [value]="'CONSIGNATION'"/>
-                    Consignation
-                </label>
+    <form [formGroup]="form">
+        <div class="custom-control">
+            <label>Type de vente</label>
+            <div class="radio-container">
+                <div class="radio-control">
+                    <label>
+                        <input type="radio" name="saleType" formControlName="saleType" [value]="'DIRECT_SALE'"/>
+                        Direct
+                    </label>
+                </div>
+                <div class="radio-control">
+                    <label>
+                        <input type="radio" name="saleType" formControlName="saleType" [value]="'CONSIGNATION'"/>
+                        Consignation
+                    </label>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="control">
-        <label for="supplier">Client</label>
-        <div class="custom-select">
-            <ng-select
-                [items]="clients"
-                bindLabel="name"
-                [(ngModel)]="client"
-            ></ng-select>
+        <div class="control">
+            <label for="supplier">Client</label>
+            <div class="custom-select">
+                <ng-select
+                    [items]="clients"
+                    bindLabel="name"
+                    formControlName="client"
+                ></ng-select>
+            </div>
         </div>
-    </div>
-    <div class="control">
-        <label>
-            Remise (en %)
-        </label>
-        <input type="text" min="0" [(ngModel)]="discount" appDigitOnly />
-    </div>
-    <table>
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>PV (Ar)</th>
-                <th>Qté commandée</th>
-                <th>Sous-total (Ar)</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody data-simplebar>
-            <tr *ngFor="let saleItem of saleItems">
-                <td [class.strikethrough]="saleItem.status !== 'ORDERED'">{{ saleItem.product.name | titlecase }}</td>
-                <td>{{ saleItem.product.sellingPrice | number: '1.0-0' }}</td>
-                <td>
-                    <app-incrementor [value]="saleItem.quantity" (changeValue)="onChangeQty(saleItem, $event)"></app-incrementor>
-                </td>
-                <td>{{ saleItem.product.sellingPrice * saleItem.quantity | number: '1.0-0' }}</td>
-                <td>
-                    <img (click)="delete.emit(saleItem)" [src]="'/assets/images/ico-delete.png'" />
-                </td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td class="total">TOTAL: {{ billTotal - computedDiscount | number: '1.0-0' }} Ar</td>
-            </tr>
-        </tfoot>
-    </table>
-    <div class="buttons-container">
-        <button class="blue" [disabled]="billTotal === 0" (click)="onSave(); init()">VALIDER</button>
-        <button class="dark-purple" [disabled]="!saleItemsLength" (click)="cancel.emit(); init()">
-            ANNULER
-        </button>
-    </div>
+        <div class="control">
+            <label>
+                Remise (en %)
+            </label>
+            <input type="number" min="0" formControlName="discount" appDigitOnly />
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>PV (Ar)</th>
+                    <th>Qté commandée</th>
+                    <th>Sous-total (Ar)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody data-simplebar formArrayName="saleItems">
+                <tr *ngFor="let item of getFormArray('saleItems').controls; let i = index" [formGroupName]="i">
+                    <td>{{ item.get('product')?.value?.name | titlecase }}</td>
+                    <td>{{ item.get('product')?.value?.sellingPrice | number: '1.0-0' }}</td>
+                    <td>
+                        <input type="number" min="0" formControlName="quantity" appDigitOnly />
+                    </td>
+                    <td>{{ item.get('amount')?.value | number: '1.0-0' }}</td>
+                    <td>
+                        <img (click)="removeItem(i)" [src]="'/assets/images/ico-delete.png'" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="bill-container">
+            TOTAL: {{ billTotal | number: '1.0-0' }} Ar
+        </div>
+        <div class="buttons-container">
+            <button class="blue" [disabled]="!billTotal" (click)="onSubmit()">VALIDER</button>
+        </div>
+    </form>
 </div>

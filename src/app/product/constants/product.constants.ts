@@ -1,9 +1,11 @@
+import { SortDirection } from 'src/app/shared/types/sort.interface';
 import { ProductCriteria } from '../types/product-criteria.interface';
 import { Product, Type } from '../types/product.interface';
 
 export const PRODUCT_DEFAULT_CRITERIA: ProductCriteria = {
     page: { page: 1, pageSize: 15 },
-    search: ''
+    search: '',
+    sort: { by: 'name', direction: SortDirection.asc }
 };
 
 export const EMPTY_PRODUCT_MODEL: Product = {

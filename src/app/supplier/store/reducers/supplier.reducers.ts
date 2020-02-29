@@ -1,6 +1,6 @@
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
 import { SUPPLIER_DEFAULT_CRITERIA } from '../../constants/supplier.constants';
-import { SupplierCriteria } from '../../types/supplier-criteria.interface';
 import { Supplier } from '../../types/supplier.interface';
 import {
     DeleteSupplier,
@@ -23,7 +23,7 @@ export interface SupplierState {
     suppliers: Paginated<Supplier>;
     suppliersLoaded: boolean;
     suppliersLoading: boolean;
-    supplierCriteria: SupplierCriteria;
+    supplierCriteria: ListCriteria;
     supplier: Supplier;
     supplierLoaded: boolean;
     supplierLoading: boolean;

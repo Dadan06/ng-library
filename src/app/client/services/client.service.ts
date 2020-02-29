@@ -3,18 +3,18 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from 'src/app/shared/types/api-response.interface';
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
 import { flatten } from 'src/app/shared/utils/flatten';
 import { environment } from 'src/environments/environment';
 import { CLIENT_API_ROUTE, EMPTY_CLIENT_MODEL } from '../constants/client.constants';
-import { ClientCriteria } from '../types/client-criteria.interface';
 import { Client } from '../types/client.interface';
 
 @Injectable()
 export class ClientService {
     constructor(private http: HttpClient) {}
 
-    loadClients(criteria: ClientCriteria): Observable<Paginated<Client>> {
+    loadClients(criteria: ListCriteria): Observable<Paginated<Client>> {
         return this.http
             .get(`${environment.apiBaseUrl}/${CLIENT_API_ROUTE}`, {
                 params: flatten(criteria)

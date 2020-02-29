@@ -5,11 +5,12 @@ import * as cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
+import { Sort } from 'src/app/shared/types/sort.interface';
 import { go } from 'src/app/shared/utils/go.utils';
 import { Page } from '../../../shared/types/page.interface';
 import { subscribeModal } from '../../../shared/utils/modal.utils';
 import { ROLE_BASE_ROUTE, ROLE_DEFAULT_CRITERIA } from '../../constants/role.constant';
-import { DeleteRole, EditRole, LoadRoles, SelectRole } from '../../store/actions/role.actions';
+import { DeleteRole, LoadRoles } from '../../store/actions/role.actions';
 import { RoleState } from '../../store/reducers/role.reducer';
 import {
     getRole,
@@ -58,17 +59,22 @@ export class RoleRootComponent implements OnInit {
         this.subscribeModals();
     }
 
+    onSort(sort: Sort) {
+        this.roleCriteria.sort = sort;
+        this.refreshList();
+    }
+
     onPaginate(page: Page) {
         this.roleCriteria.page = page;
-        this.store.dispatch(new LoadRoles({ ...this.roleCriteria }));
+        this.refreshList();
     }
 
     onViewDetails(role: Role) {
-        this.store.dispatch(new SelectRole(role));
+        go(this.store, [`${ROLE_BASE_ROUTE}/detail/${role._id}`]);
     }
 
     onEdit(role: Role) {
-        this.store.dispatch(new EditRole(role));
+        go(this.store, [`${ROLE_BASE_ROUTE}/edit/${role._id}`]);
     }
 
     onCreate() {
@@ -87,10 +93,14 @@ export class RoleRootComponent implements OnInit {
 
     onSearch(search: string) {
         this.roleCriteria.search = search;
-        this.store.dispatch(new LoadRoles({ ...this.roleCriteria }));
+        this.refreshList();
     }
 
     private subscribeModals() {
         subscribeModal(this.store, getRoleSaved, true, this.saveSuccessModal);
+    }
+
+    private refreshList() {
+        this.store.dispatch(new LoadRoles({ ...this.roleCriteria }));
     }
 }

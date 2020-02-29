@@ -1,5 +1,6 @@
-<div class="container" data-simplebar>
-    <nav *ngIf="menus">
+<div class="container">
+    <nav
+    *ngIf="menus">
         <div *ngFor="let menu of menus; let i = index">
             <div
                 [class.menu-active]="activeMenuIndex === i"
@@ -27,4 +28,8 @@
             </nav>
         </div>
     </nav>
+    <footer>
+        <div class="day-display">{{ today | date: 'EEEE d MMMM y' | titlecase }}</div>
+        <div class="hour-display">{{ today | date: 'HH:mm:ss' }}</div>
+    </footer>
 </div>

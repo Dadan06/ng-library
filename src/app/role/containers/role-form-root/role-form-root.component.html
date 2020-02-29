@@ -1,6 +1,12 @@
-<app-role-form
-    (cancel)="onCancel($event)"
-    (save)="onSave($event)"
-    [privilegeList]="privileges$ | async"
-    [role]="role$ | async"
-></app-role-form>
+<div class="container">
+    <app-role-form
+        *ngIf="role$ | async as role"
+        [role]="role$ | async"
+        [privileges]="privileges$ | async"
+        [isEditing]="isEditing$ | async"
+        [editEnabled]="roleEditEnabled$ | async"
+        (edit)="onEdit($event)"
+        (save)="onSave($event)"
+        (cancel)="onCancelEdit(role)"
+    ></app-role-form>
+</div>

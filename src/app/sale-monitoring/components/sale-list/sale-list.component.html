@@ -2,11 +2,11 @@
     <table>
         <thead>
             <tr>
-                <th>Date</th>
+                <th app-sortable-column="saleDate" (sort)="onSort($event)" [sortDirections]="sortDirections" initialDirection="asc">Date</th>
                 <th>Type</th>
-                <th>Vendeur</th>
-                <th>Client</th>
-                <th>Total</th>
+                <th app-sortable-column="seller.login" (sort)="onSort($event)" [sortDirections]="sortDirections">Vendeur</th>
+                <th app-sortable-column="client.name" (sort)="onSort($event)" [sortDirections]="sortDirections">Client</th>
+                <th app-sortable-column="amount" (sort)="onSort($event)" [sortDirections]="sortDirections">Total (Ar)</th>
                 <th></th>
             </tr>
         </thead>
@@ -15,8 +15,8 @@
                 <td>{{ sale.saleDate | date: 'dd/MM/y - HH:mm' }}</td>
                 <td>{{ saleTypeLabels[sale.saleType] }}</td>
                 <td>{{ sale.seller.login | uppercase }}</td>
-                <td>{{ sale.client.name | uppercase }}</td>
-                <td>{{ sale.amount }}</td>
+                <td>{{ (sale.client?.name | uppercase) || '-' }}</td>
+                <td>{{ sale.amount | number: '1.0-0' }}</td>
                 <td class="actions">
                     <img
                         (click)="view.emit(sale); currentSale = sale"

@@ -5,6 +5,7 @@ import * as cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { Page } from 'src/app/shared/types/page.interface';
+import { Sort } from 'src/app/shared/types/sort.interface';
 import { go } from 'src/app/shared/utils/go.utils';
 import { subscribeModal } from 'src/app/shared/utils/modal.utils';
 import { PRODUCT_BASE_ROUTE, PRODUCT_DEFAULT_CRITERIA } from '../../constants/product.constants';
@@ -61,9 +62,14 @@ export class ProductListRootComponent implements OnInit {
         this.subscribeModals();
     }
 
+    onSort(sort: Sort) {
+        this.productCriteria.sort = sort;
+        this.refreshList();
+    }
+
     onSearch(search: string) {
         this.productCriteria.search = search;
-        this.productStore.dispatch(new LoadProducts({ ...this.productCriteria }));
+        this.refreshList();
     }
 
     onViewDetail(product: Product) {
@@ -81,7 +87,7 @@ export class ProductListRootComponent implements OnInit {
 
     onPaginate(page: Page) {
         this.productCriteria.page = page;
-        this.productStore.dispatch(new LoadProducts({ ...this.productCriteria }));
+        this.refreshList();
     }
 
     onCreate() {
@@ -90,6 +96,10 @@ export class ProductListRootComponent implements OnInit {
 
     onConfirmDeletion() {
         this.productStore.dispatch(new DeleteProduct(this.toBeDeletedProduct));
+    }
+
+    private refreshList() {
+        this.productStore.dispatch(new LoadProducts({ ...this.productCriteria }));
     }
 
     private subscribeModals() {

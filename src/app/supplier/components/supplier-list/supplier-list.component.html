@@ -2,12 +2,12 @@
     <table>
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Adresse</th>
-                <th>Contact</th>
-                <th>NIF</th>
-                <th>STAT</th>
-                <th>CIN</th>
+                <th app-sortable-column="name" (sort)="onSort($event)" [sortDirections]="sortDirections" initialDirection="asc">Nom</th>
+                <th app-sortable-column="address" (sort)="onSort($event)" [sortDirections]="sortDirections" >Adresse</th>
+                <th app-sortable-column="contact" (sort)="onSort($event)" [sortDirections]="sortDirections">Contact</th>
+                <th app-sortable-column="nif" (sort)="onSort($event)" [sortDirections]="sortDirections" >NIF</th>
+                <th app-sortable-column="stat" (sort)="onSort($event)" [sortDirections]="sortDirections" >STAT</th>
+                <th app-sortable-column="cin" (sort)="onSort($event)" [sortDirections]="sortDirections">CIN</th>
                 <th></th>
             </tr>
         </thead>

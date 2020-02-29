@@ -2,7 +2,7 @@
     <table>
         <thead>
             <tr>
-                <th>Nom</th>
+                <th app-sortable-column="name" (sort)="onSort($event)" [sortDirections]="sortDirections" initialDirection="asc" >Nom</th>
             </tr>
         </thead>
         <tbody data-simplebar>

@@ -5,10 +5,10 @@ import { select, Store } from '@ngrx/store';
 import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { AppRouterState } from 'src/app/core/store/reducers/router.reducers';
 import { LoadClients } from 'src/app/shared/store/actions/shared.actions';
-import { SALE_BASE_ROUTE } from '../../constants/sale.constant';
-import { LoadConsignations, LoadProducts } from '../actions/sale.actions';
+import { CONSIGNATION_BASE_ROUTE, SALE_BASE_ROUTE } from '../../constants/sale.constant';
+import { LoadConsignation, LoadConsignations, LoadProducts } from '../actions/sale.actions';
 import { SaleState } from '../reducers/sale.reducers';
-import { getProductCriteria } from '../selectors/sale.selectors';
+import { getConsignationCriteria, getProductCriteria } from '../selectors/sale.selectors';
 
 @Injectable()
 export class SaleRouterEffects {
@@ -20,7 +20,9 @@ export class SaleRouterEffects {
     saleRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url === SALE_BASE_ROUTE),
+        filter(
+            state => state.url.includes(`${SALE_BASE_ROUTE}`) && !state.url.endsWith('consignation')
+        ),
         withLatestFrom(this.store.pipe(select(getProductCriteria))),
         mergeMap(([routerState, productCriteria]) => [
             new LoadClients(),
@@ -29,10 +31,23 @@ export class SaleRouterEffects {
     );
 
     @Effect()
-    consignationRoute$ = this.action$.pipe(
+    consignationsRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes('consignation')),
-        map(() => new LoadConsignations())
+        filter(state => state.url.endsWith('consignation')),
+        withLatestFrom(this.store.pipe(select(getConsignationCriteria))),
+        map(([routerState, criteria]) => new LoadConsignations(criteria))
+    );
+
+    @Effect()
+    consignationFormRoute$ = this.action$.pipe(
+        ofType(ROUTER_NAVIGATION),
+        map(this.mapToRouterStateUrl),
+        filter(
+            state =>
+                state.url.includes(`${CONSIGNATION_BASE_ROUTE}/detail`) ||
+                state.url.includes(`${CONSIGNATION_BASE_ROUTE}/edit`)
+        ),
+        map(routerState => new LoadConsignation(routerState.params.consignationId))
     );
 }

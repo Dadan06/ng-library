@@ -4,7 +4,9 @@ import { ModalComponent } from 'angular-custom-modal';
 import * as cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Page } from 'src/app/shared/types/page.interface';
+import { Sort } from 'src/app/shared/types/sort.interface';
 import { go } from 'src/app/shared/utils/go.utils';
 import { subscribeModal } from 'src/app/shared/utils/modal.utils';
 import { SUPPLIER_BASE_ROUTE, SUPPLIER_DEFAULT_CRITERIA } from '../../constants/supplier.constants';
@@ -21,7 +23,6 @@ import {
     getSuppliersLoading,
     getSuppliersTotalItems
 } from '../../store/selectors/supplier.selectors';
-import { SupplierCriteria } from '../../types/supplier-criteria.interface';
 import { Supplier } from '../../types/supplier.interface';
 
 @Component({
@@ -38,7 +39,7 @@ export class SupplierRootComponent implements OnInit {
     isEditingOrDetail$: Observable<boolean>;
     totalItems$: Observable<number>;
     currentSupplier$: Observable<Supplier>;
-    supplierCriteria: SupplierCriteria = cloneDeep(SUPPLIER_DEFAULT_CRITERIA);
+    supplierCriteria: ListCriteria = cloneDeep(SUPPLIER_DEFAULT_CRITERIA);
     toBeDeletedSupplier: Supplier;
 
     @ViewChild('deletionConfirmModal') deletionConfirmModal: ModalComponent;
@@ -65,9 +66,14 @@ export class SupplierRootComponent implements OnInit {
         this.subscribeModals();
     }
 
+    onSort(sort: Sort) {
+        this.supplierCriteria.sort = sort;
+        this.refreshList();
+    }
+
     onSearch(search: string) {
         this.supplierCriteria.search = search;
-        this.supplierStore.dispatch(new LoadSuppliers({ ...this.supplierCriteria }));
+        this.refreshList();
     }
 
     onViewDetail(supplier: Supplier) {
@@ -85,7 +91,7 @@ export class SupplierRootComponent implements OnInit {
 
     onPaginate(page: Page) {
         this.supplierCriteria.page = page;
-        this.supplierStore.dispatch(new LoadSuppliers({ ...this.supplierCriteria }));
+        this.refreshList();
     }
 
     onCreate() {
@@ -98,5 +104,9 @@ export class SupplierRootComponent implements OnInit {
 
     private subscribeModals() {
         subscribeModal(this.supplierStore, getSupplierSaved, true, this.successfullSavingModal);
+    }
+
+    private refreshList() {
+        this.supplierStore.dispatch(new LoadSuppliers({ ...this.supplierCriteria }));
     }
 }

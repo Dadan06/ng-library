@@ -24,7 +24,7 @@
 
     <div class="list">
         <app-loader [isLoading]="salesLoading$ | async">
-            <app-sale-list [sales]="sales$ | async" (view)="onViewDetails($event)"></app-sale-list>
+            <app-sale-list [sales]="sales$ | async" (view)="onViewDetails($event)" (sort)="onSort($event)"></app-sale-list>
         </app-loader>
     </div>
 

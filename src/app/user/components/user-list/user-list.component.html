@@ -2,10 +2,10 @@
     <table>
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Prénom(s)</th>
-                <th>Login</th>
-                <th>Rôle</th>
+                <th app-sortable-column="lastname" (sort)="onSort($event)" [sortDirections]="sortDirections" initialDirection="asc">Nom</th>
+                <th app-sortable-column="firstname" (sort)="onSort($event)" [sortDirections]="sortDirections">Prénom(s)</th>
+                <th app-sortable-column="login" (sort)="onSort($event)" [sortDirections]="sortDirections">Login</th>
+                <th app-sortable-column="role.name" (sort)="onSort($event)" [sortDirections]="sortDirections">Rôle</th>
                 <th></th>
             </tr>
         </thead>

@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { ModalComponent } from 'angular-custom-modal';
@@ -11,29 +12,21 @@ import { Product } from 'src/app/product/types/product.interface';
 import { SharedState } from 'src/app/shared/store/reducers/shared.reducers';
 import { getClients } from 'src/app/shared/store/selectors/shared.selectors';
 import { Page } from 'src/app/shared/types/page.interface';
-import { getErrorFrom } from 'src/app/shared/utils/error.utils';
-import { subscribeModal, subscribeModalFromError } from 'src/app/shared/utils/modal.utils';
-import {
-    AddProduct,
-    CancelSale,
-    ChangeQty,
-    ClearChangingQtyError,
-    ClearProductAdditionError,
-    DeleteSaleItem,
-    SaveSale
-} from '../../store/actions/sale.actions';
+import { Sort } from 'src/app/shared/types/sort.interface';
+import { subscribeModal } from 'src/app/shared/utils/modal.utils';
+import { AddAsSaleItem, SaveSale } from '../../store/actions/sale.actions';
 import { SaleState } from '../../store/reducers/sale.reducers';
 import {
-    getChangingQtyError,
-    getOrderedSaleItems,
-    getProductAdditionError,
+    getNewAddedSaleItem,
+    getPdfExporting,
     getProducts,
     getProductsLoading,
     getProductsTotalItems,
-    getSaleCanceled,
-    getSaleSaved
+    getSaleSaved,
+    getSaleSaveError,
+    getSaleSaveFail
 } from '../../store/selectors/sale.selectors';
-import { ChangeQtyPayload, SaleItem } from '../../types/sale-item.interface';
+import { SaleItem } from '../../types/sale-item.interface';
 import { Sale } from '../../types/sale.interface';
 
 @Component({
@@ -44,93 +37,63 @@ import { Sale } from '../../types/sale.interface';
 export class SaleRootComponent implements OnInit {
     products$: Observable<Product[]>;
     productsLoading$: Observable<boolean>;
+    pdfExporting$: Observable<boolean>;
     totalItems$: Observable<number>;
     saleItems$: Observable<SaleItem[]>;
     clients$: Observable<Client[]>;
+    newAddedSaleItem$: Observable<SaleItem>;
+    saleSaveError$: Observable<HttpErrorResponse>;
 
     productCriteria: ProductCriteria = cloneDeep(PRODUCT_DEFAULT_CRITERIA);
     currentSaleItem: SaleItem;
 
-    @ViewChild('deletionConfirmModal') deletionConfirmModal: ModalComponent;
-    @ViewChild('cancelingConfirmModal') cancelingConfirmModal: ModalComponent;
-    @ViewChild('productAdditionErrorModal') productAdditionErrorModal: ModalComponent;
-    @ViewChild('changingQtyErrorModal') changingQtyErrorModal: ModalComponent;
     @ViewChild('saleSaved') saleSaved: ModalComponent;
-    @ViewChild('saleCanceled') saleCanceled: ModalComponent;
+    @ViewChild('saleSaveError') saleSaveError: ModalComponent;
 
     constructor(private saleStore: Store<SaleState>, private sharedStore: Store<SharedState>) {
         /** */
     }
 
-    get getAddingProductError() {
-        return getErrorFrom(this.saleStore, getProductAdditionError);
-    }
-
-    get getChangingQtyError() {
-        return getErrorFrom(this.saleStore, getChangingQtyError);
-    }
-
     ngOnInit() {
         this.products$ = this.saleStore.pipe(select(getProducts));
         this.productsLoading$ = this.saleStore.pipe(select(getProductsLoading));
+        this.pdfExporting$ = this.saleStore.pipe(select(getPdfExporting));
         this.totalItems$ = this.saleStore.pipe(select(getProductsTotalItems));
-        this.saleItems$ = this.saleStore.pipe(select(getOrderedSaleItems));
         this.clients$ = this.sharedStore.pipe(select(getClients));
+        this.newAddedSaleItem$ = this.saleStore.pipe(select(getNewAddedSaleItem));
+        this.saleSaveError$ = this.saleStore.pipe(select(getSaleSaveError));
         this.subscribeModals();
+    }
+
+    onSort(sort: Sort) {
+        this.productCriteria.sort = sort;
+        this.refreshList();
     }
 
     onSearch(search: string) {
         this.productCriteria.search = search;
-        this.saleStore.dispatch(new LoadProducts({ ...this.productCriteria }));
+        this.refreshList();
     }
 
     onPaginate(page: Page) {
         this.productCriteria.page = page;
-        this.saleStore.dispatch(new LoadProducts({ ...this.productCriteria }));
+        this.refreshList();
     }
 
-    onAddProduct(product: Product) {
-        this.saleStore.dispatch(new AddProduct(product));
-    }
-
-    onConfirmDeletion() {
-        this.saleStore.dispatch(new DeleteSaleItem(this.currentSaleItem));
-    }
-
-    onCancelSale() {
-        this.cancelingConfirmModal.open();
-    }
-
-    onSaveSale(sale: Partial<Sale>) {
+    onSave(sale: Sale) {
         this.saleStore.dispatch(new SaveSale(sale));
     }
 
-    onConfirmCanceling() {
-        this.saleStore.dispatch(new CancelSale());
-    }
-
-    onCloseProductAdditionErrorModal() {
-        this.saleStore.dispatch(new ClearProductAdditionError());
-        this.productAdditionErrorModal.close();
-    }
-
-    onCloseChangingQtyErrorModal() {
-        this.saleStore.dispatch(new ClearChangingQtyError());
-        this.changingQtyErrorModal.close();
-    }
-
-    onChangeQty(changeQtyPayload: ChangeQtyPayload) {
-        this.saleStore.dispatch(new ChangeQty(changeQtyPayload));
+    onAddProduct(product: Product) {
+        this.saleStore.dispatch(new AddAsSaleItem(product));
     }
 
     private subscribeModals() {
-        subscribeModalFromError(
-            this.saleStore,
-            getProductAdditionError,
-            this.productAdditionErrorModal
-        );
-        subscribeModalFromError(this.saleStore, getChangingQtyError, this.changingQtyErrorModal);
         subscribeModal(this.saleStore, getSaleSaved, true, this.saleSaved);
-        subscribeModal(this.saleStore, getSaleCanceled, true, this.saleCanceled);
+        subscribeModal(this.saleStore, getSaleSaveFail, true, this.saleSaveError);
+    }
+
+    private refreshList() {
+        this.saleStore.dispatch(new LoadProducts({ ...this.productCriteria }));
     }
 }

@@ -103,6 +103,7 @@
 
                     .dd-menu {
                         position: absolute;
+                        width: 100%;
                         top: 100%;
                         border: 1px solid #ccc;
                         border-radius: 4px;
@@ -122,10 +123,11 @@
                     }
 
                     .dd-menu li {
-                        padding: 10px 20px;
                         cursor: pointer;
                         white-space: nowrap;
-                        width: 8vw;
+                        width: 100%;
+                        padding: 10px 5px;
+                        font-size: 0.6rem;
                     }
 
                     .dd-menu li:hover {

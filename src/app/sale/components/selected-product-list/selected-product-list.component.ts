@@ -1,63 +1,115 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from 'src/app/client/types/client.interface';
-import { Incrementation } from 'src/app/shared/types/incrementation.interface';
-import { ChangeQtyPayload, SaleItem, SaleItemStatus } from '../../types/sale-item.interface';
-import { Sale, SaleType } from '../../types/sale.interface';
+import {
+    getFormArray,
+    markFormArrayAsTouchedAndDirty,
+    removeInFormArray
+} from 'src/app/shared/utils/form.utils';
+import { EMPTY_SALE } from '../../constants/sale.constant';
+import { SaleItem } from '../../types/sale-item.interface';
+import { Sale } from '../../types/sale.interface';
 
 @Component({
     selector: 'app-selected-product-list',
     templateUrl: './selected-product-list.component.html',
     styleUrls: ['./selected-product-list.component.scss']
 })
-export class SelectedProductListComponent implements OnInit {
+export class SelectedProductListComponent implements OnInit, OnChanges {
     @Input() clients: Client[];
-    @Input() saleItems: SaleItem[];
+    @Input() newLoadedSaleItem: SaleItem;
 
-    @Output() delete: EventEmitter<SaleItem> = new EventEmitter();
     @Output() cancel: EventEmitter<void> = new EventEmitter();
-    @Output() save: EventEmitter<Partial<Sale>> = new EventEmitter();
-    @Output() changeQty: EventEmitter<ChangeQtyPayload> = new EventEmitter();
+    @Output() save: EventEmitter<Sale> = new EventEmitter();
 
-    saleType: SaleType;
-    client: Client;
-    discount: number;
+    form: FormGroup;
 
-    ngOnInit() {
-        this.init();
-    }
+    formArrayName = 'saleItems';
+
+    constructor(private formBuilder: FormBuilder) {}
 
     get billTotal() {
-        const validSaleItems = this.saleItems.filter(s => s.status === SaleItemStatus.ORDERED);
-        return validSaleItems.reduce(
-            (m: number, s: SaleItem) => m + s.quantity * s.product.sellingPrice,
+        return this.computeTotalWithoutDiscount() - this.computeDiscount();
+    }
+
+    ngOnInit() {
+        this.form = this.initForm(EMPTY_SALE);
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (this.newLoadedSaleItem) {
+            this.getFormArray().push(this.initFormArrayItem(this.newLoadedSaleItem));
+            this.onFormArrayItemChange();
+        }
+    }
+
+    getFormArray() {
+        return getFormArray(this.form, this.formArrayName);
+    }
+
+    removeItem(index: number) {
+        removeInFormArray(this.form, this.formArrayName, index);
+    }
+
+    onSubmit() {
+        this.form.valid
+            ? this.save.emit({
+                  ...this.form.value,
+                  discount: this.computeDiscount(),
+                  amount: this.billTotal
+              })
+            : this.showErrors();
+    }
+
+    private showErrors() {
+        markFormArrayAsTouchedAndDirty(this.formArrayName, this.form);
+    }
+
+    private initForm(sale: Sale) {
+        return this.formBuilder.group({
+            _id: [sale._id],
+            saleType: [sale.saleType],
+            saleDate: [new Date()],
+            client: [sale.client],
+            discount: [sale.discount],
+            amount: [sale.amount],
+            saleItems: this.formBuilder.array(sale.saleItems.map(this.initFormArrayItem.bind(this)))
+        });
+    }
+
+    private initFormArrayItem(s: SaleItem) {
+        return this.formBuilder.group({
+            product: [s.product],
+            quantity: [s.quantity, Validators.required],
+            amount: [s.amount]
+        });
+    }
+
+    private onFormArrayItemChange() {
+        this.getFormArray().controls.forEach(control => {
+            control.get('quantity').valueChanges.subscribe(value => {
+                const amount = control.get('product').value.sellingPrice * value;
+                control.patchValue({ amount });
+            });
+        });
+    }
+
+    private computeTotalWithoutDiscount() {
+        return this.getFormArray().controls.reduce(
+            (acc, current) => acc + +current.get('amount').value,
             0
         );
     }
 
-    get computedDiscount() {
-        return (this.billTotal * this.discount || 0) / 100;
-    }
-
-    get saleItemsLength() {
-        return this.saleItems.length;
-    }
-
-    onChangeQty(saleItem: SaleItem, incrementation: Incrementation) {
-        this.changeQty.emit({ saleItem, incrementation });
-    }
-
-    onSave() {
-        this.save.emit({
-            saleType: this.saleType,
-            discount: this.computedDiscount,
-            client: this.client,
-            consignation: this.saleType === SaleType.CONSIGNATION ? { selled: 0, left: 0 } : null
-        });
-    }
-
-    private init() {
-        this.saleType = SaleType.DIRECT_SALE;
-        this.client = null;
-        this.discount = 0;
+    private computeDiscount() {
+        return (this.computeTotalWithoutDiscount() * this.form.get('discount').value) / 100;
     }
 }

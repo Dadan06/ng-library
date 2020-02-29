@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
 import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Page } from 'src/app/shared/types/page.interface';
+import { Sort } from 'src/app/shared/types/sort.interface';
 import { go } from 'src/app/shared/utils/go.utils';
 import { subscribeModal } from 'src/app/shared/utils/modal.utils';
 import { USER_BASE_ROUTE, USER_DEFAULT_CRITERIA } from '../../constants/user.constant';
@@ -58,9 +59,14 @@ export class UserRootComponent implements OnInit {
         this.subscribeModals();
     }
 
+    onSort(sort: Sort) {
+        this.userCriteria.sort = sort;
+        this.refreshList();
+    }
+
     onSearch(search: string) {
         this.userCriteria.search = search;
-        this.userStore.dispatch(new LoadUsers({ ...this.userCriteria }));
+        this.refreshList();
     }
 
     onViewDetail(user: User) {
@@ -78,7 +84,7 @@ export class UserRootComponent implements OnInit {
 
     onPaginate(page: Page) {
         this.userCriteria.page = page;
-        this.userStore.dispatch(new LoadUsers({ ...this.userCriteria }));
+        this.refreshList();
     }
 
     onCreate() {
@@ -91,5 +97,9 @@ export class UserRootComponent implements OnInit {
 
     private subscribeModals() {
         subscribeModal(this.userStore, getUserSaved, true, this.successfullSavingModal);
+    }
+
+    private refreshList() {
+        this.userStore.dispatch(new LoadUsers({ ...this.userCriteria }));
     }
 }

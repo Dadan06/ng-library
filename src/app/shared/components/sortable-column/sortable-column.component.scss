@@ -1,0 +1,26 @@
+@import 'colors.scss';
+
+.container {
+    cursor: pointer;
+    div {
+        user-select: none;
+    }
+    display: flex;
+    flex-direction: row;
+    .right {
+        width: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+        .arrow {
+            background-color: transparent;
+            background-repeat: no-repeat;
+            width: 14px;
+            height: 7px;
+        }
+        .triangle{
+            fill: $sortable-column-arrow;
+        }
+    }
+}

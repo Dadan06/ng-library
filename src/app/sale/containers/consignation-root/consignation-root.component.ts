@@ -1,10 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
+import * as cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
+import { SALE_DEFAULT_CRITERIA } from 'src/app/sale-monitoring/constants/sale-monitoring.constant';
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Page } from 'src/app/shared/types/page.interface';
+import { Sort } from 'src/app/shared/types/sort.interface';
+import { go } from 'src/app/shared/utils/go.utils';
+import { CONSIGNATION_BASE_ROUTE } from '../../constants/sale.constant';
+import { LoadConsignations } from '../../store/actions/sale.actions';
 import { SaleState } from '../../store/reducers/sale.reducers';
-import { getConsignations, getConsignationsLoading } from '../../store/selectors/sale.selectors';
-import { Sale } from '../../types/sale.interface';
+import {
+    getConsignation,
+    getConsignations,
+    getConsignationsLoading,
+    getConsignationsTotalItems
+} from '../../store/selectors/sale.selectors';
+import { Payment } from '../../types/sale.interface';
 
 @Component({
     selector: 'app-consignation-root',
@@ -13,22 +25,44 @@ import { Sale } from '../../types/sale.interface';
 })
 export class ConsignationRootComponent implements OnInit {
     consignationsLoading$: Observable<boolean>;
-    consignation$: Observable<Sale[]>;
+    consignations$: Observable<Payment[]>;
+    totalItems$: Observable<number>;
+    consignationCriteria: ListCriteria = cloneDeep(SALE_DEFAULT_CRITERIA);
+    currentConsignation$: Observable<Payment>;
 
-    constructor(private saleStore: Store<SaleState>) {
-        this.consignationsLoading$ = this.saleStore.pipe(select(getConsignationsLoading));
-        this.consignation$ = this.saleStore.pipe(select(getConsignations));
-    }
+    constructor(private saleStore: Store<SaleState>) {}
 
     ngOnInit() {
-        /** */
+        this.consignationsLoading$ = this.saleStore.pipe(select(getConsignationsLoading));
+        this.consignations$ = this.saleStore.pipe(select(getConsignations));
+        this.totalItems$ = this.saleStore.pipe(select(getConsignationsTotalItems));
+        this.currentConsignation$ = this.saleStore.pipe(select(getConsignation));
+    }
+
+    onSort(sort: Sort) {
+        this.consignationCriteria.sort = sort;
+        this.refreshList();
     }
 
     onSearch(search: string) {
-        /** */
+        this.consignationCriteria.search = search;
+        this.refreshList();
     }
 
     onPaginate(page: Page) {
-        /** */
+        this.consignationCriteria.page = page;
+        this.refreshList();
+    }
+
+    onViewDetail(consignation: Payment) {
+        go(this.saleStore, [`${CONSIGNATION_BASE_ROUTE}/detail`, consignation._id]);
+    }
+
+    onEdit(consignation: Payment) {
+        go(this.saleStore, [`${CONSIGNATION_BASE_ROUTE}/edit`, consignation._id]);
+    }
+
+    private refreshList() {
+        this.saleStore.dispatch(new LoadConsignations({ ...this.consignationCriteria }));
     }
 }

@@ -2,10 +2,10 @@
     <table>
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Adresse</th>
-                <th>Contact</th>
-                <th>Email</th>
+                <th app-sortable-column="name" (sort)="onSort($event)" [sortDirections]="sortDirections" initialDirection="asc">Nom</th>
+                <th app-sortable-column="address" (sort)="onSort($event)" [sortDirections]="sortDirections">Adresse</th>
+                <th app-sortable-column="contact" (sort)="onSort($event)" [sortDirections]="sortDirections" >Contact</th>
+                <th app-sortable-column="email" (sort)="onSort($event)" [sortDirections]="sortDirections">Email</th>
                 <th>Remarque</th>
                 <th>Type</th>
                 <th></th>

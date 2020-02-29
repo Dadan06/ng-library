@@ -1,5 +1,4 @@
 /* tslint:disable:max-line-length */
-import { HttpErrorResponse } from '@angular/common/http';
 import { RouterReducerState } from '@ngrx/router-store';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
@@ -15,10 +14,7 @@ import { RoleState } from '../reducers/role.reducer';
 
 export const getRoleState = createFeatureSelector<RoleState>('role');
 
-export const getPaginatedRoles = createSelector(
-    getRoleState,
-    (state: RoleState) => state.roles
-);
+export const getPaginatedRoles = createSelector(getRoleState, (state: RoleState) => state.roles);
 
 export const getRoles = createSelector(
     getPaginatedRoles,
@@ -50,20 +46,7 @@ export const getRoleCriteria = createSelector(
     (state: RoleState) => state.roleCriteria
 );
 
-export const getSelectedRole = createSelector(
-    getRoleState,
-    (state: RoleState) => state.selectedRole
-);
-
-export const getRole = createSelector(
-    getRoleState,
-    (state: RoleState) => state.role
-);
-
-export const getEditedRole = createSelector(
-    getRoleState,
-    (state: RoleState) => state.editedRole
-);
+export const getRole = createSelector(getRoleState, (state: RoleState) => state.role);
 
 export const getRolesLoading = createSelector<RoleState, RoleState, boolean>(
     getRoleState,
@@ -104,9 +87,4 @@ export const getRoleEditing = createSelector<
     router =>
         router.state.url.includes(`${ROLE_ROUTE}/new`) ||
         router.state.url.includes(`${ROLE_ROUTE}/edit`)
-);
-
-export const getRoleSavingError = createSelector<RoleState, RoleState, HttpErrorResponse>(
-    getRoleState,
-    (state: RoleState) => state.roleSavingError
 );

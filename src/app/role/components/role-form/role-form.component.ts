@@ -8,6 +8,7 @@ import {
     ViewChild
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { markFormAsTouchedAndDirty } from 'src/app/shared/utils/form.utils';
 import {
     PrivilegeCategories,
     PRIVILEGE_CATEGORY_LABELS,
@@ -24,17 +25,20 @@ import { Role } from '../../types/role.interface';
 })
 export class RoleFormComponent implements OnChanges {
     @Input() role: Role;
-    @Input() privilegeList: Privilege[];
+    @Input() isEditing: boolean;
+    @Input() editEnabled = true;
+    @Input() privileges: Privilege[];
 
     @Output() save: EventEmitter<Role> = new EventEmitter();
-    @Output() cancel: EventEmitter<Role> = new EventEmitter();
+    @Output() edit: EventEmitter<Role> = new EventEmitter();
+    @Output() cancel: EventEmitter<void> = new EventEmitter();
 
     categoryLabels = PRIVILEGE_CATEGORY_LABELS;
     userPrivilegeLabels = USER_PRIVILEGE_LABELS;
 
     form: FormGroup;
 
-    @ViewChild('name') name: ElementRef;
+    @ViewChild('first') first: ElementRef;
 
     constructor(private formBuilder: FormBuilder, private roleService: RoleService) {}
 
@@ -43,11 +47,11 @@ export class RoleFormComponent implements OnChanges {
     }
 
     ngOnChanges(): void {
-        if (this.role && this.privilegeList) {
-            this.form = this.initForm(this.role, this.privilegeList);
-            this.form.get('name').setAsyncValidators(this.checkDuplicate.bind(this));
-            this.form.get('name').updateValueAndValidity();
-            this.name && this.name.nativeElement.focus();
+        if (this.role && this.privileges) {
+            this.form = this.initForm(this.role, this.privileges);
+            this.isEditing ? this.form.enable() : this.form.disable();
+            this.first && this.first.nativeElement.focus();
+            this.setAsyncValidators();
         }
     }
 
@@ -55,18 +59,22 @@ export class RoleFormComponent implements OnChanges {
         return (this.getFormGroup('privileges').get(category) as FormGroup).controls;
     }
 
-    showError() {
-        Object.keys(this.form.controls).forEach(key => {
-            this.form.controls[key].markAsDirty();
-        });
+    showErrors() {
+        markFormAsTouchedAndDirty(this.form);
     }
+
     onSubmit() {
-        const role = {
-            ...this.form.value,
-            privileges: this.getFlattenPrivileges(this.form.value.privileges)
-        };
-        this.form.invalid && this.showError();
-        this.form.valid && this.save.emit(role);
+        this.form.valid
+            ? this.save.emit({
+                  ...this.form.value,
+                  privileges: this.getFlattenPrivileges(this.form.value.privileges)
+              })
+            : this.showErrors();
+    }
+
+    private setAsyncValidators() {
+        this.form.get('name').setAsyncValidators(this.checkDuplicate.bind(this));
+        this.form.get('name').updateValueAndValidity();
     }
 
     private getFormGroup(group: string) {

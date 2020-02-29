@@ -8,7 +8,6 @@ import { ModalModule } from 'angular-custom-modal';
 import { ClientService } from '../client/services/client.service';
 import { ChipsComponent } from './components/chips/chips.component';
 import { CollapsibleChipsComponent } from './components/collapsible-chips/collapsible-chips.component';
-import { IncrementorComponent } from './components/incrementor/incrementor.component';
 import { InputNumberComponent } from './components/input-number/input-number.component';
 import { ListBoxFilterComponent } from './components/list-box-filter/list-box-filter.component';
 import { ListBoxComponent } from './components/list-box/list-box.component';
@@ -16,6 +15,8 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { PeriodFilterComponent } from './components/period-filter/period-filter.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { SortableColumnComponent } from './components/sortable-column/sortable-column.component';
+import { SortableTableComponent } from './components/sortable-table/sortable-table.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { SharedEffects } from './store/effects/shared.effects';
@@ -43,7 +44,8 @@ import { sharedReducer } from './store/reducers/shared.reducers';
         InputNumberComponent,
         PeriodFilterComponent,
         DigitOnlyDirective,
-        IncrementorComponent
+        SortableColumnComponent,
+        SortableTableComponent
     ],
     exports: [
         CommonModule,
@@ -60,7 +62,8 @@ import { sharedReducer } from './store/reducers/shared.reducers';
         InputNumberComponent,
         PeriodFilterComponent,
         DigitOnlyDirective,
-        IncrementorComponent
+        SortableColumnComponent,
+        SortableTableComponent
     ],
     providers: [ClientService]
 })

@@ -3,18 +3,18 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from 'src/app/shared/types/api-response.interface';
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
 import { flatten } from 'src/app/shared/utils/flatten';
 import { environment } from 'src/environments/environment';
 import { EMPTY_SUPPLIER_MODEL, SUPPLIER_API_ROUTE } from '../constants/supplier.constants';
-import { SupplierCriteria } from '../types/supplier-criteria.interface';
 import { Supplier } from '../types/supplier.interface';
 
 @Injectable()
 export class SupplierService {
     constructor(private http: HttpClient) {}
 
-    loadSuppliers(criteria: SupplierCriteria): Observable<Paginated<Supplier>> {
+    loadSuppliers(criteria: ListCriteria): Observable<Paginated<Supplier>> {
         return this.http
             .get(`${environment.apiBaseUrl}/${SUPPLIER_API_ROUTE}`, {
                 params: flatten(criteria)

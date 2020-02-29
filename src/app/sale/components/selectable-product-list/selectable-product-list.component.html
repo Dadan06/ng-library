@@ -2,10 +2,10 @@
     <table>
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>PU (Ar)</th>
-                <th>PV (Ar)</th>
-                <th>Qté disponible</th>
+                <th app-sortable-column="name" (sort)="onSort($event)" [sortDirections]="sortDirections" initialDirection="asc">Nom</th>
+                <th app-sortable-column="costPrice" (sort)="onSort($event)" [sortDirections]="sortDirections">PU (Ar)</th>
+                <th app-sortable-column="sellingPrice" (sort)="onSort($event)" [sortDirections]="sortDirections">PV (Ar)</th>
+                <th app-sortable-column="quantity" (sort)="onSort($event)" [sortDirections]="sortDirections">Qté</th>
                 <th></th>
             </tr>
         </thead>

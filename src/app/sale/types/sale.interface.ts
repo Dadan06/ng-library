@@ -18,7 +18,8 @@ export enum SaleType {
 
 export interface Consignation {
     selled: number;
-    left: number;
+    returned: number;
+    date: Date;
 }
 
 export interface Sale {
@@ -32,9 +33,16 @@ export interface Sale {
     saleStatus: SaleStatus;
     seller: User;
     client: Client;
-    consignation: Consignation;
+    consignations: Consignation[];
 }
 
 export interface PaginatedSale extends Paginated<Sale> {
     filter: FilterUpdates | null;
+}
+
+export interface Payment {
+    _id: string;
+    paymentDate: Date;
+    amount: number;
+    sale: Sale;
 }

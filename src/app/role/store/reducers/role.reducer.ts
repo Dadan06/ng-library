@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from '../../../shared/types/paginated.interface';
 import { ROLE_DEFAULT_CRITERIA } from '../../constants/role.constant';
@@ -8,7 +7,6 @@ import {
     DeleteRole,
     DeleteRoleFail,
     DeleteRoleSuccess,
-    EditRole,
     LoadPrivileges,
     LoadPrivilegesFail,
     LoadPrivilegesSuccess,
@@ -18,13 +16,11 @@ import {
     LoadRolesFail,
     LoadRolesSuccess,
     LoadRoleSuccess,
-    RemoveEditedRole,
     RoleAction,
     RoleActionTypes,
     SaveRole,
     SaveRoleFail,
-    SaveRoleSuccess,
-    SelectRole
+    SaveRoleSuccess
 } from '../actions/role.actions';
 
 export interface RoleState {
@@ -35,11 +31,8 @@ export interface RoleState {
     role: Role;
     roleLoaded: boolean;
     roleLoading: boolean;
-    roleSavingError: HttpErrorResponse;
     privilegesLoaded: boolean;
     privilegesLoading: boolean;
-    selectedRole: Role;
-    editedRole: Role;
     roleDeleted: boolean;
     roleDeleting: boolean;
     roleSaved: boolean;
@@ -51,15 +44,12 @@ const initialState: RoleState = {
     roles: { items: [], totalItems: 0 },
     rolesLoaded: false,
     rolesLoading: false,
-    roleSavingError: undefined,
     roleCriteria: ROLE_DEFAULT_CRITERIA,
     role: undefined,
     roleLoaded: false,
     roleLoading: false,
     privilegesLoaded: false,
     privilegesLoading: false,
-    selectedRole: undefined,
-    editedRole: undefined,
     roleDeleted: false,
     roleDeleting: false,
     roleSaved: false,
@@ -125,16 +115,6 @@ const loadPrivilegesSuccess = (state: RoleState, action: LoadPrivilegesSuccess):
     privileges: action.payload
 });
 
-const selectRole = (state: RoleState, action: SelectRole): RoleState => ({
-    ...state,
-    selectedRole: action.payload
-});
-
-const editRole = (state: RoleState, action: EditRole): RoleState => ({
-    ...state,
-    editedRole: action.payload
-});
-
 const deleteRole = (state: RoleState, action: DeleteRole): RoleState => ({
     ...state,
     roleDeleted: false,
@@ -163,20 +143,13 @@ const saveRole = (state: RoleState, action: SaveRole): RoleState => ({
 const saveRoleFail = (state: RoleState, action: SaveRoleFail): RoleState => ({
     ...state,
     roleSaved: false,
-    roleSaving: false,
-    roleSavingError: action.payload
+    roleSaving: false
 });
 
 const saveRoleSuccess = (state: RoleState, action: SaveRoleSuccess): RoleState => ({
     ...state,
     roleSaved: true,
-    roleSaving: false,
-    selectedRole: action.payload
-});
-
-const removeEditedRole = (state: RoleState, action: RemoveEditedRole): RoleState => ({
-    ...state,
-    editedRole: undefined
+    roleSaving: false
 });
 
 // tslint:disable-next-line:cyclomatic-complexity no-big-function
@@ -200,10 +173,6 @@ export function roleReducer(state: RoleState = initialState, action: RoleAction)
             return loadPrivilegesFail(state, action);
         case RoleActionTypes.LOAD_PRIVILEGES_SUCCESS:
             return loadPrivilegesSuccess(state, action);
-        case RoleActionTypes.SELECT_ROLE:
-            return selectRole(state, action);
-        case RoleActionTypes.EDIT_ROLE:
-            return editRole(state, action);
         case RoleActionTypes.DELETE_ROLE:
             return deleteRole(state, action);
         case RoleActionTypes.DELETE_ROLE_FAIL:
@@ -216,10 +185,6 @@ export function roleReducer(state: RoleState = initialState, action: RoleAction)
             return saveRoleFail(state, action);
         case RoleActionTypes.SAVE_ROLE_SUCCESS:
             return saveRoleSuccess(state, action);
-        case RoleActionTypes.REMOVE_EDITED_ROLE:
-            return removeEditedRole(state, action);
-        case RoleActionTypes.CLEAR_ROLE_SAVING_ERROR:
-            return { ...state, roleSavingError: undefined };
         default:
             return state;
     }

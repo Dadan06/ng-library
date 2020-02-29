@@ -1,6 +1,6 @@
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
 import { CLIENT_DEFAULT_CRITERIA } from '../../constants/client.constants';
-import { ClientCriteria } from '../../types/client-criteria.interface';
 import { Client } from '../../types/client.interface';
 import {
     ClientAction,
@@ -23,7 +23,7 @@ export interface ClientState {
     clients: Paginated<Client>;
     clientsLoaded: boolean;
     clientsLoading: boolean;
-    clientCriteria: ClientCriteria;
+    clientCriteria: ListCriteria;
     client: Client;
     clientLoaded: boolean;
     clientLoading: boolean;

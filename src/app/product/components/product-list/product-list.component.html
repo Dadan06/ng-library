@@ -2,13 +2,13 @@
     <table>
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>PU (Ar)</th>
-                <th>PV (Ar)</th>
+                <th app-sortable-column="name" (sort)="onSort($event)" [sortDirections]="sortDirections" initialDirection="asc">Nom</th>
+                <th app-sortable-column="costPrice" (sort)="onSort($event)" [sortDirections]="sortDirections" >PU (Ar)</th>
+                <th app-sortable-column="sellingPrice" (sort)="onSort($event)" [sortDirections]="sortDirections">PV (Ar)</th>
                 <th>Benefice (Ar)</th>
-                <th>Quantité</th>
-                <th>Fournisseur</th>
+                <th app-sortable-column="quantity" (sort)="onSort($event)" [sortDirections]="sortDirections">Quantité</th>
                 <th>Type</th>
+                <th app-sortable-column="supplier.name" (sort)="onSort($event)" [sortDirections]="sortDirections">Fournisseur</th>
                 <th></th>
             </tr>
         </thead>

@@ -14,7 +14,7 @@ export const HEADER_MENU: Menu[] = [
         routerLink: '/root/admin'
     },
     {
-        title: 'Administration accès',
+        title: 'Paramètres',
         icon: 'assets/images/header/ico-param.png',
         iconActive: 'assets/images/header/ico-param--active.png',
         routerLink: '/root/access-management'

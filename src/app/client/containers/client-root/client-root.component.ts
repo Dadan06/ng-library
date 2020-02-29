@@ -4,7 +4,9 @@ import { ModalComponent } from 'angular-custom-modal';
 import * as cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Page } from 'src/app/shared/types/page.interface';
+import { Sort } from 'src/app/shared/types/sort.interface';
 import { go } from 'src/app/shared/utils/go.utils';
 import { subscribeModal } from 'src/app/shared/utils/modal.utils';
 import { CLIENT_BASE_ROUTE, CLIENT_DEFAULT_CRITERIA } from '../../constants/client.constants';
@@ -21,7 +23,6 @@ import {
     getClientsTotalItems,
     getIsEditingOrDetail
 } from '../../store/selectors/client.selectors';
-import { ClientCriteria } from '../../types/client-criteria.interface';
 import { Client } from '../../types/client.interface';
 
 @Component({
@@ -38,7 +39,7 @@ export class ClientRootComponent implements OnInit {
     isEditingOrDetail$: Observable<boolean>;
     totalItems$: Observable<number>;
     currentClient$: Observable<Client>;
-    clientCriteria: ClientCriteria = cloneDeep(CLIENT_DEFAULT_CRITERIA);
+    clientCriteria: ListCriteria = cloneDeep(CLIENT_DEFAULT_CRITERIA);
     toBeDeletedClient: Client;
 
     @ViewChild('deletionConfirmModal') deletionConfirmModal: ModalComponent;
@@ -61,9 +62,14 @@ export class ClientRootComponent implements OnInit {
         this.subscribeModals();
     }
 
+    onSort(sort: Sort) {
+        this.clientCriteria.sort = sort;
+        this.refreshList();
+    }
+
     onSearch(search: string) {
         this.clientCriteria.search = search;
-        this.clientStore.dispatch(new LoadClients({ ...this.clientCriteria }));
+        this.refreshList();
     }
 
     onViewDetail(client: Client) {
@@ -81,7 +87,7 @@ export class ClientRootComponent implements OnInit {
 
     onPaginate(page: Page) {
         this.clientCriteria.page = page;
-        this.clientStore.dispatch(new LoadClients({ ...this.clientCriteria }));
+        this.refreshList();
     }
 
     onCreate() {
@@ -94,5 +100,9 @@ export class ClientRootComponent implements OnInit {
 
     private subscribeModals() {
         subscribeModal(this.clientStore, getClientSaved, true, this.successfullSavingModal);
+    }
+
+    private refreshList() {
+        this.clientStore.dispatch(new LoadClients({ ...this.clientCriteria }));
     }
 }

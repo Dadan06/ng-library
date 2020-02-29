@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
-import { ClientCriteria } from '../../types/client-criteria.interface';
 import { Client } from '../../types/client.interface';
 
 export const enum ClientActionTypes {
@@ -20,7 +20,7 @@ export const enum ClientActionTypes {
 
 export class LoadClients implements Action {
     readonly type = ClientActionTypes.LOAD_CLIENT_MODELS;
-    constructor(public payload: ClientCriteria) {}
+    constructor(public payload: ListCriteria) {}
 }
 
 export class LoadClientsSuccess implements Action {

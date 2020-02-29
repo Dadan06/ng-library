@@ -6,13 +6,14 @@
     <div class="list">
         <app-loader [isLoading]="rolesLoading$ | async">
             <app-role-list
-                (delete)="deleteRole($event)"
-                (view)="onViewDetails($event)"
-                (edit)="onEdit($event)"
                 [roles]="roles$ | async"
                 [currentRole]="selectedRole$ | async"
                 [editEnabled]="roleEditEnabled$ | async"
                 [deleteEnabled]="roleDeleteEnabled$ | async"
+                (delete)="deleteRole($event)"
+                (view)="onViewDetails($event)"
+                (edit)="onEdit($event)"
+                (sort)="onSort($event)"
             ></app-role-list>
         </app-loader>
     </div>

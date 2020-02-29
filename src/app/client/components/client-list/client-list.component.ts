@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { SortableTableComponent } from 'src/app/shared/components/sortable-table/sortable-table.component';
 import { CLIENT_TYPE_LABELS } from '../../constants/client.constants';
 import { Client } from '../../types/client.interface';
 
@@ -7,7 +8,7 @@ import { Client } from '../../types/client.interface';
     templateUrl: './client-list.component.html',
     styleUrls: ['./client-list.component.scss']
 })
-export class ClientListComponent {
+export class ClientListComponent extends SortableTableComponent {
     @Input() clients: Client[];
     @Input() currentClient: Client;
     @Input() editEnabled = true;

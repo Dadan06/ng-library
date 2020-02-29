@@ -1,0 +1,10 @@
+<div class="container">
+    <app-consignation-form
+        *ngIf="consignation$ | async as consignation"
+        [consignation]="consignation$ | async"
+        [isEditing]="isEditing$ | async"
+        (edit)="onEdit(consignation)"
+        (save)="onSave($event)"
+        (cancel)="onCancelEdit(consignation)" >
+    </app-consignation-form>
+</div>

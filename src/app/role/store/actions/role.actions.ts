@@ -15,17 +15,12 @@ export const enum RoleActionTypes {
     LOAD_PRIVILEGES = '[Role] Load Privileges',
     LOAD_PRIVILEGES_FAIL = '[Role] Load Privileges Fail',
     LOAD_PRIVILEGES_SUCCESS = '[Role] Load Privileges Success',
-    SELECT_ROLE = '[Role] Select Role',
-    EDIT_ROLE = '[Role] Edit Role',
-    ADD_ROLE = '[Role] Add Role',
     DELETE_ROLE = '[Role] Delete Role',
     DELETE_ROLE_FAIL = '[Role] Delete Role Fail',
     DELETE_ROLE_SUCCESS = '[Role] Delete Role Success',
     SAVE_ROLE = '[Role] Save Role',
     SAVE_ROLE_FAIL = '[Role] Save Role Fail',
-    SAVE_ROLE_SUCCESS = '[Role] Save Role Success',
-    REMOVE_EDITED_ROLE = '[Role] Remove Edited Role',
-    CLEAR_ROLE_SAVING_ERROR = '[Role] Clear Role Saving Error'
+    SAVE_ROLE_SUCCESS = '[Role] Save Role Success'
 }
 
 export class LoadRoles implements Action {
@@ -72,20 +67,6 @@ export class LoadPrivilegesSuccess implements Action {
     constructor(public payload: Privilege[]) {}
 }
 
-export class SelectRole implements Action {
-    readonly type = RoleActionTypes.SELECT_ROLE;
-    constructor(public payload: Role) {}
-}
-
-export class EditRole implements Action {
-    readonly type = RoleActionTypes.EDIT_ROLE;
-    constructor(public payload: Role) {}
-}
-
-export class AddRole implements Action {
-    readonly type = RoleActionTypes.ADD_ROLE;
-}
-
 export class DeleteRole implements Action {
     readonly type = RoleActionTypes.DELETE_ROLE;
     constructor(public payload: Role) {}
@@ -115,14 +96,6 @@ export class SaveRoleSuccess implements Action {
     constructor(public payload: Role) {}
 }
 
-export class RemoveEditedRole implements Action {
-    readonly type = RoleActionTypes.REMOVE_EDITED_ROLE;
-}
-
-export class ClearRoleSavingError implements Action {
-    readonly type = RoleActionTypes.CLEAR_ROLE_SAVING_ERROR;
-}
-
 export type RoleAction =
     | LoadRoles
     | LoadRolesFail
@@ -133,14 +106,9 @@ export type RoleAction =
     | LoadPrivileges
     | LoadPrivilegesFail
     | LoadPrivilegesSuccess
-    | SelectRole
-    | EditRole
-    | AddRole
     | DeleteRole
     | DeleteRoleFail
     | DeleteRoleSuccess
     | SaveRole
     | SaveRoleFail
-    | SaveRoleSuccess
-    | RemoveEditedRole
-    | ClearRoleSavingError;
+    | SaveRoleSuccess;

@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
-import { SupplierCriteria } from '../../types/supplier-criteria.interface';
 import { Supplier } from '../../types/supplier.interface';
 
 export const enum SupplierActionTypes {
@@ -20,7 +20,7 @@ export const enum SupplierActionTypes {
 
 export class LoadSuppliers implements Action {
     readonly type = SupplierActionTypes.LOAD_SUPPLIER_MODELS;
-    constructor(public payload: SupplierCriteria) {}
+    constructor(public payload: ListCriteria) {}
 }
 
 export class LoadSuppliersSuccess implements Action {
