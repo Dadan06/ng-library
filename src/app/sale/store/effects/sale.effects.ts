@@ -63,7 +63,8 @@ export class SaleEffects {
             this.saleService.saveSale({ ...action.payload, seller }).pipe(
                 mergeMap(response => [
                     new SaveSaleSuccess(response),
-                    new Go({ path: [`${SALE_BASE_ROUTE}`] })
+                    new Go({ path: [`${SALE_BASE_ROUTE}`] }),
+                    new ExportPdf(response)
                 ]),
                 catchError(error => of(new SaveSaleFail(error)))
             )
