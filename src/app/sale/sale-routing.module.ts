@@ -20,13 +20,13 @@ const routes: Routes = [
         data: { privilege: UserPrivileges.VIEW_CONSIGNATIONS },
         children: [
             {
-                path: 'detail/:consignationId',
+                path: 'detail/:saleItemId',
                 component: ConsignationFormRootComponent,
                 canActivate: [PrivilegeGuard],
                 data: { privilege: UserPrivileges.EDIT_CONSIGNATION }
             },
             {
-                path: 'edit/:consignationId',
+                path: 'edit/:saleItemId',
                 component: ConsignationFormRootComponent,
                 canActivate: [PrivilegeGuard],
                 data: { privilege: UserPrivileges.EDIT_CONSIGNATION }

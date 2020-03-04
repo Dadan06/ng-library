@@ -1,12 +1,4 @@
-import {
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from 'src/app/client/types/client.interface';
 import {
@@ -23,9 +15,9 @@ import { Sale } from '../../types/sale.interface';
     templateUrl: './selected-product-list.component.html',
     styleUrls: ['./selected-product-list.component.scss']
 })
-export class SelectedProductListComponent implements OnInit, OnChanges {
+export class SelectedProductListComponent implements OnChanges {
     @Input() clients: Client[];
-    @Input() newLoadedSaleItem: SaleItem;
+    @Input() saleItems: SaleItem[];
 
     @Output() cancel: EventEmitter<void> = new EventEmitter();
     @Output() save: EventEmitter<Sale> = new EventEmitter();
@@ -40,13 +32,9 @@ export class SelectedProductListComponent implements OnInit, OnChanges {
         return this.computeTotalWithoutDiscount() - this.computeDiscount();
     }
 
-    ngOnInit() {
-        this.form = this.initForm(EMPTY_SALE);
-    }
-
     ngOnChanges(changes: SimpleChanges) {
-        if (this.newLoadedSaleItem) {
-            this.getFormArray().push(this.initFormArrayItem(this.newLoadedSaleItem));
+        if (this.saleItems) {
+            this.form = this.initForm({ ...EMPTY_SALE, saleItems: this.saleItems });
             this.onFormArrayItemChange();
         }
     }

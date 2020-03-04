@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
+import { ModalComponent } from 'angular-custom-modal';
 import * as cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 import { SALE_DEFAULT_CRITERIA } from 'src/app/sale-monitoring/constants/sale-monitoring.constant';
@@ -7,15 +8,18 @@ import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Page } from 'src/app/shared/types/page.interface';
 import { Sort } from 'src/app/shared/types/sort.interface';
 import { go } from 'src/app/shared/utils/go.utils';
+import { subscribeModal } from 'src/app/shared/utils/modal.utils';
 import { CONSIGNATION_BASE_ROUTE } from '../../constants/sale.constant';
 import { LoadConsignations } from '../../store/actions/sale.actions';
 import { SaleState } from '../../store/reducers/sale.reducers';
 import {
-    getConsignation,
     getConsignations,
+    getConsignationSaved,
     getConsignationsLoading,
-    getConsignationsTotalItems
+    getConsignationsTotalItems,
+    getSaleItem
 } from '../../store/selectors/sale.selectors';
+import { SaleItem } from '../../types/sale-item.interface';
 import { Payment } from '../../types/sale.interface';
 
 @Component({
@@ -28,7 +32,9 @@ export class ConsignationRootComponent implements OnInit {
     consignations$: Observable<Payment[]>;
     totalItems$: Observable<number>;
     consignationCriteria: ListCriteria = cloneDeep(SALE_DEFAULT_CRITERIA);
-    currentConsignation$: Observable<Payment>;
+    currentSaleItem$: Observable<SaleItem>;
+
+    @ViewChild('consignationSaved') consignationSaved: ModalComponent;
 
     constructor(private saleStore: Store<SaleState>) {}
 
@@ -36,7 +42,8 @@ export class ConsignationRootComponent implements OnInit {
         this.consignationsLoading$ = this.saleStore.pipe(select(getConsignationsLoading));
         this.consignations$ = this.saleStore.pipe(select(getConsignations));
         this.totalItems$ = this.saleStore.pipe(select(getConsignationsTotalItems));
-        this.currentConsignation$ = this.saleStore.pipe(select(getConsignation));
+        this.currentSaleItem$ = this.saleStore.pipe(select(getSaleItem));
+        this.subscribeModals();
     }
 
     onSort(sort: Sort) {
@@ -54,15 +61,19 @@ export class ConsignationRootComponent implements OnInit {
         this.refreshList();
     }
 
-    onViewDetail(consignation: Payment) {
-        go(this.saleStore, [`${CONSIGNATION_BASE_ROUTE}/detail`, consignation._id]);
+    onViewDetail(saleItem: SaleItem) {
+        go(this.saleStore, [`${CONSIGNATION_BASE_ROUTE}/detail`, saleItem._id]);
     }
 
-    onEdit(consignation: Payment) {
-        go(this.saleStore, [`${CONSIGNATION_BASE_ROUTE}/edit`, consignation._id]);
+    onEdit(saleItem: SaleItem) {
+        go(this.saleStore, [`${CONSIGNATION_BASE_ROUTE}/edit`, saleItem._id]);
     }
 
     private refreshList() {
         this.saleStore.dispatch(new LoadConsignations({ ...this.consignationCriteria }));
+    }
+
+    private subscribeModals() {
+        subscribeModal(this.saleStore, getConsignationSaved, true, this.consignationSaved);
     }
 }

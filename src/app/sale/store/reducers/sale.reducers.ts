@@ -13,12 +13,12 @@ import {
     ExportPdf,
     ExportPdfFail,
     ExportPdfSuccess,
-    LoadConsignation,
-    LoadConsignationFail,
+    LoadConsignationItem,
+    LoadConsignationItemFail,
+    LoadConsignationItemSuccess,
     LoadConsignations,
     LoadConsignationsFail,
     LoadConsignationsSuccess,
-    LoadConsignationSuccess,
     LoadProducts,
     LoadProductsFail,
     LoadProductsSuccess,
@@ -44,14 +44,14 @@ export interface SaleState {
     consignationCriteria: ListCriteria;
     consignationsLoading: boolean;
     consignationsLoaded: boolean;
-    consignation: Payment;
-    consignationLoading: boolean;
-    consignationLoaded: boolean;
+    saleItem: SaleItem;
+    consignationItemLoading: boolean;
+    consignationItemLoaded: boolean;
     pdfExporting: boolean;
     pdfExported: boolean;
     consignationSaving: boolean;
     consignationSaved: boolean;
-    newAddedSaleItem: SaleItem;
+    saleItems: SaleItem[];
 }
 
 const DEFAULT_PAGINATED_LIST = { items: [], totalItems: 0 };
@@ -68,14 +68,14 @@ const initialState = {
     consignationCriteria: SALE_DEFAULT_CRITERIA,
     consignationsLoading: false,
     consignationsLoaded: false,
-    consignation: undefined,
-    consignationLoading: false,
-    consignationLoaded: false,
+    saleItem: undefined,
+    consignationItemLoading: false,
+    consignationItemLoaded: false,
     pdfExporting: false,
     pdfExported: false,
     consignationSaving: false,
     consignationSaved: false,
-    newAddedSaleItem: null
+    saleItems: []
 };
 
 const loadProducts = (state: SaleState, action: LoadProducts): SaleState => ({
@@ -115,7 +115,8 @@ const saveSaleFail = (state: SaleState, action: SaveSaleFail): SaleState => ({
 const saveSaleSuccess = (state: SaleState, action: SaveSaleSuccess): SaleState => ({
     ...state,
     saleSaving: false,
-    saleSaved: true
+    saleSaved: true,
+    saleItems: []
 });
 
 const loadConsignations = (state: SaleState, action: LoadConsignations): SaleState => ({
@@ -141,23 +142,29 @@ const loadConsignationsFail = (state: SaleState, action: LoadConsignationsFail):
     consignationsLoaded: false
 });
 
-const loadConsignation = (state: SaleState, action: LoadConsignation): SaleState => ({
+const loadConsignationItem = (state: SaleState, action: LoadConsignationItem): SaleState => ({
     ...state,
-    consignationLoading: true,
-    consignationLoaded: false
+    consignationItemLoading: true,
+    consignationItemLoaded: false
 });
 
-const loadConsignationSuccess = (state: SaleState, action: LoadConsignationSuccess): SaleState => ({
+const loadConsignationItemSuccess = (
+    state: SaleState,
+    action: LoadConsignationItemSuccess
+): SaleState => ({
     ...state,
-    consignationLoading: false,
-    consignationLoaded: true,
-    consignation: action.payload
+    consignationItemLoading: false,
+    consignationItemLoaded: true,
+    saleItem: action.payload
 });
 
-const loadConsignationFail = (state: SaleState, action: LoadConsignationFail): SaleState => ({
+const loadConsignationItemFail = (
+    state: SaleState,
+    action: LoadConsignationItemFail
+): SaleState => ({
     ...state,
-    consignationLoading: false,
-    consignationLoaded: false
+    consignationItemLoading: false,
+    consignationItemLoaded: false
 });
 
 const saveConsignation = (state: SaleState, action: SaveConsignation): SaleState => ({
@@ -198,10 +205,13 @@ const exportPdfSuccess = (state: SaleState, action: ExportPdfSuccess): SaleState
 
 const addAsSaleItem = (state: SaleState, action: AddAsSaleItem): SaleState => ({
     ...state,
-    newAddedSaleItem: {
-        ...EMPTY_SALE_ITEM,
-        product: action.payload
-    }
+    saleItems: [
+        ...state.saleItems,
+        {
+            ...EMPTY_SALE_ITEM,
+            product: action.payload
+        }
+    ]
 });
 
 // tslint:disable-next-line: cyclomatic-complexity no-big-function
@@ -226,12 +236,12 @@ export function saleReducer(state: SaleState = initialState, action: SaleAction)
             return loadConsignationsFail(state, action);
         case SaleActionTypes.LOAD_CONSIGNATIONS_SUCCESS:
             return loadConsignationsSuccess(state, action);
-        case SaleActionTypes.LOAD_CONSIGNATION:
-            return loadConsignation(state, action);
-        case SaleActionTypes.LOAD_CONSIGNATION_FAIL:
-            return loadConsignationFail(state, action);
-        case SaleActionTypes.LOAD_CONSIGNATION_SUCCESS:
-            return loadConsignationSuccess(state, action);
+        case SaleActionTypes.LOAD_CONSIGNATION_ITEM:
+            return loadConsignationItem(state, action);
+        case SaleActionTypes.LOAD_CONSIGNATION_ITEM_FAIL:
+            return loadConsignationItemFail(state, action);
+        case SaleActionTypes.LOAD_CONSIGNATION_ITEM_SUCCESS:
+            return loadConsignationItemSuccess(state, action);
         case SaleActionTypes.SAVE_CONSIGNATION:
             return saveConsignation(state, action);
         case SaleActionTypes.SAVE_CONSIGNATION_FAIL:

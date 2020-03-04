@@ -5,30 +5,41 @@
                 <th app-sortable-column="paymentDate" (sort)="onSort($event)" [sortDirections]="sortDirections" initialDirection="asc">Date</th>
                 <th app-sortable-column="sale.client.name" (sort)="onSort($event)" [sortDirections]="sortDirections">Client</th>
                 <th app-sortable-column="sale.seller.login" (sort)="onSort($event)" [sortDirections]="sortDirections">Vendeur</th>
-                <th app-sortable-column="amount" (sort)="onSort($event)" [sortDirections]="sortDirections">Montant (Ar)</th>
-                <th></th>
+                <th app-sortable-column="amount" (sort)="onSort($event)" [sortDirections]="sortDirections">Total (Ar)</th>
             </tr>
         </thead>
         <tbody data-simplebar>
-            <tr
-                *ngFor="let consignation of consignations"
-                [class.selected]="consignation._id === currentConsignation?._id"
-            >
-                <td>{{ consignation.paymentDate | date: 'dd/MM/y - HH:mm' }}</td>
-                <td>{{ (consignation.sale.client?.name | uppercase) || '-' }}</td>
-                <td>{{ (consignation.sale.seller.login | uppercase) || '-' }}</td>
-                <td>{{ consignation.amount | number: '1.0-0' }}</td>
-                <td class="actions">
-                    <img
-                        (click)="view.emit(consignation); currentConsignation = consignation"
-                        src="/assets/images/ico-details.png"
-                    />
-                    <img
-                        (click)="edit.emit(consignation); currentConsignation = consignation"
-                        src="/assets/images/ico-edit.png"
-                    />
-                </td>
-            </tr>
+            <ng-container *ngFor="let consignation of consignations">
+                <tr class="consignation">
+                    <td>{{ consignation.paymentDate | date: 'dd/MM/y - HH:mm' }}</td>
+                    <td>{{ (consignation.sale.client?.name | uppercase) || '-' }}</td>
+                    <td>{{ (consignation.sale.seller.login | uppercase) || '-' }}</td>
+                    <td>{{ consignation.amount | number: '1.0-0' }}</td>
+                </tr>
+                <ng-container *ngFor="let saleItem of consignation.sale.saleItems; let i = index">
+                    <tr *ngIf="i === 0" style="font-weight: 600;">
+                        <td>Produit</td>
+                        <td>Qte</td>
+                        <td>Sous-total (Ar)</td>
+                        <td></td>
+                    </tr>
+                    <tr [class.selected]="saleItem._id === currentSaleItem?._id" >
+                        <td>{{ saleItem.product.name | titlecase }}</td>
+                        <td>{{ computeLeftQuantity(saleItem) }} / {{ saleItem.quantity }}</td>
+                        <td>{{ saleItem.amount | number: '1.0-0' }}</td>
+                        <td class="actions">
+                            <img
+                                (click)="view.emit(saleItem); currentSaleItem = saleItem"
+                                src="/assets/images/ico-details.png"
+                            />
+                            <img
+                                (click)="edit.emit(saleItem); currentSaleItem = saleItem"
+                                src="/assets/images/ico-edit.png"
+                            />
+                        </td>
+                    </tr>
+                </ng-container>
+            </ng-container>
         </tbody>
     </table>
 </div>

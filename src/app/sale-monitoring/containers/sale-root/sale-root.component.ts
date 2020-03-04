@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { SaleItem } from 'src/app/sale/types/sale-item.interface';
 import { Sale } from 'src/app/sale/types/sale.interface';
 import { FilterUpdates } from 'src/app/shared/types/filter-updates.interface';
 import { Page } from 'src/app/shared/types/page.interface';
 import { PeriodFilter } from 'src/app/shared/types/period-filter.interface';
 import { Sort } from 'src/app/shared/types/sort.interface';
+import { go } from 'src/app/shared/utils/go.utils';
 import {
     SALE_DEFAULT_FILTERS,
     SALE_FILTER_CATEGORY_LABELS,
-    SALE_FILTER_ITEM_LABELS
+    SALE_FILTER_ITEM_LABELS,
+    SALE_MONITORING_BASE_ROUTE
 } from '../../constants/sale-monitoring.constant';
 import { LoadSales } from '../../store/actions/sale-monitoring.actions';
 import { SaleMonitoringState } from '../../store/reducers/sale-monitoring.reducers';
 import {
+    getSale,
     getSaleCriteria,
     getSaleFilterUpdates,
     getSales,
@@ -31,6 +33,7 @@ import { SaleListBoxFilter } from '../../types/sale-list-box-filter.interface';
 })
 export class SaleRootComponent implements OnInit {
     sales$: Observable<Sale[]>;
+    sale$: Observable<Sale>;
     salesLoading$: Observable<boolean>;
     totalItems$: Observable<number>;
     saleFilterUpdates$: Observable<FilterUpdates>;
@@ -40,7 +43,6 @@ export class SaleRootComponent implements OnInit {
     saleDefaultFilters = SALE_DEFAULT_FILTERS;
     saleCriteria: SaleCriteria;
     periodFilter: PeriodFilter;
-    currentSaleItems: SaleItem[];
 
     constructor(private store: Store<SaleMonitoringState>) {}
 
@@ -49,6 +51,7 @@ export class SaleRootComponent implements OnInit {
         this.salesLoading$ = this.store.pipe(select(getSalesLoading));
         this.totalItems$ = this.store.pipe(select(getSalesTotalItem));
         this.saleFilterUpdates$ = this.store.pipe(select(getSaleFilterUpdates));
+        this.sale$ = this.store.pipe(select(getSale));
         this.store
             .pipe(select(getSaleCriteria))
             .subscribe(criteria => (this.saleCriteria = criteria));
@@ -80,7 +83,7 @@ export class SaleRootComponent implements OnInit {
     }
 
     onViewDetails(sale: Sale) {
-        this.currentSaleItems = sale.saleItems;
+        go(this.store, [`${SALE_MONITORING_BASE_ROUTE}/detail`, sale._id]);
     }
 
     private refreshList() {

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
-    addInFormArray,
     disableFormArray,
     enableFormArray,
     getFormArray,
@@ -9,7 +8,8 @@ import {
     removeInFormArray,
     resetFormArrayAt
 } from 'src/app/shared/utils/form.utils';
-import { Consignation, Payment, Sale } from '../../types/sale.interface';
+import { SaleItem } from '../../types/sale-item.interface';
+import { Consignation } from '../../types/sale.interface';
 
 @Component({
     selector: 'app-consignation-form',
@@ -17,12 +17,12 @@ import { Consignation, Payment, Sale } from '../../types/sale.interface';
     styleUrls: ['./consignation-form.component.scss']
 })
 export class ConsignationFormComponent implements OnChanges {
+    @Input() saleItem: SaleItem;
     @Input() isEditing: boolean;
-    @Input() consignation: Payment;
 
-    @Output() save: EventEmitter<Payment> = new EventEmitter();
-    @Output() edit: EventEmitter<void> = new EventEmitter();
-    @Output() cancel: EventEmitter<void> = new EventEmitter();
+    @Output() save: EventEmitter<SaleItem> = new EventEmitter<SaleItem>();
+    @Output() edit: EventEmitter<SaleItem> = new EventEmitter<SaleItem>();
+    @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 
     form: FormGroup;
 
@@ -31,59 +31,31 @@ export class ConsignationFormComponent implements OnChanges {
     constructor(private formBuilder: FormBuilder) {}
 
     ngOnChanges() {
-        if (this.consignation) {
-            const sale = this.consignation.sale;
-            this.form = this.initForm(sale);
-            !sale.consignations.length && this.add();
+        if (this.saleItem) {
+            this.form = this.initForm(this.saleItem);
+            !this.saleItem.consignations.length && this.add();
             this.isEditing ? this.enableForm() : this.disableForm();
         }
     }
 
-    getFormArray(): FormArray {
+    getFormArray() {
         return getFormArray(this.form, this.formArrayName);
     }
 
     add() {
-        addInFormArray(this.form, this.initFormArrayItem(), this.formArrayName);
+        this.getFormArray().push(this.initFormArrayItem());
+    }
+
+    clearAt(index: number) {
+        resetFormArrayAt(this.form, this.formArrayName, index);
     }
 
     removeAt(index: number) {
         removeInFormArray(this.form, this.formArrayName, index);
     }
 
-    clearAt(index: number) {
-        resetFormArrayAt(this.form, this.formArrayName, index);
-        getFormArray(this.form, this.formArrayName)
-            .at(index)
-            .patchValue({ date: new Date() });
-    }
-
     onSubmit() {
-        this.form.valid
-            ? this.save.emit({
-                  ...this.consignation,
-                  sale: { ...this.consignation.sale, consignations: this.form.value }
-              })
-            : this.showErrors();
-    }
-
-    private initForm(sale: Sale) {
-        return this.formBuilder.group({
-            _id: [sale._id],
-            consignations: this.initFormArray(sale.consignations)
-        });
-    }
-
-    private initFormArray(consignations: Consignation[]) {
-        return this.formBuilder.array(consignations.map(c => this.initFormArrayItem(c)));
-    }
-
-    private initFormArrayItem(consignation?: Consignation) {
-        return this.formBuilder.group({
-            selled: [consignation && consignation.selled, Validators.required],
-            returned: [consignation && consignation.returned, Validators.required],
-            date: [consignation ? consignation.date : new Date()]
-        });
+        this.form.valid ? this.save.emit(this.form.value) : this.showErrors();
     }
 
     private showErrors() {
@@ -96,5 +68,30 @@ export class ConsignationFormComponent implements OnChanges {
 
     private disableForm() {
         disableFormArray(this.formArrayName, this.form);
+    }
+
+    private initForm(saleItem: SaleItem) {
+        return this.formBuilder.group({
+            _id: [saleItem._id],
+            product: [saleItem.product],
+            quantity: [saleItem.quantity],
+            amount: [saleItem.amount],
+            consignations: this.formBuilder.array(
+                saleItem.consignations.map(this.initFormArrayItem.bind(this))
+            )
+        });
+    }
+
+    private initFormArrayItem(consignation?: Consignation) {
+        const form = this.formBuilder.group({
+            selled: [(consignation && consignation.selled) || 0, Validators.required],
+            returned: [(consignation && consignation.returned) || 0, Validators.required],
+            date: [consignation ? consignation.date : new Date()]
+        });
+        if (consignation) {
+            form.get('selled').disable();
+            form.get('returned').disable();
+        }
+        return form;
     }
 }

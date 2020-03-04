@@ -4,7 +4,7 @@ import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 import { select, Store } from '@ngrx/store';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { AppRouterState } from 'src/app/core/store/reducers/router.reducers';
-import { CLIENT_API_ROUTE } from '../../constants/client.constants';
+import { CLIENT_BASE_ROUTE } from '../../constants/client.constants';
 import { ClientService } from '../../services/client.service';
 import { Client } from '../../types/client.interface';
 import { LoadClient, LoadClients, LoadClientSuccess } from '../actions/client.actions';
@@ -25,7 +25,7 @@ export class ClientRouterEffects {
     clientRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes(`${CLIENT_API_ROUTE}`)),
+        filter(state => state.url.includes(`${CLIENT_BASE_ROUTE}`)),
         withLatestFrom(this.store.pipe(select(getClientCriteria))),
         map(([routerState, clientCriteria]) => new LoadClients(clientCriteria))
     );
@@ -36,8 +36,8 @@ export class ClientRouterEffects {
         map(this.mapToRouterStateUrl),
         filter(
             state =>
-                state.url.includes(`${CLIENT_API_ROUTE}/detail`) ||
-                state.url.includes(`${CLIENT_API_ROUTE}/edit`)
+                state.url.includes(`${CLIENT_BASE_ROUTE}/detail`) ||
+                state.url.includes(`${CLIENT_BASE_ROUTE}/edit`)
         ),
         map(routerState => new LoadClient(routerState.params.clientId))
     );
@@ -46,7 +46,7 @@ export class ClientRouterEffects {
     clientNewRoute$ = this.action$.pipe(
         ofType(ROUTER_NAVIGATION),
         map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes(`${CLIENT_API_ROUTE}/new`)),
+        filter(state => state.url.includes(`${CLIENT_BASE_ROUTE}/new`)),
         switchMap(() =>
             this.clientService
                 .clientFactory()

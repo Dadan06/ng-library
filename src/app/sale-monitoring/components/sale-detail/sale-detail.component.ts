@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SaleItem } from 'src/app/sale/types/sale-item.interface';
+import { Sale } from 'src/app/sale/types/sale.interface';
 
 @Component({
     selector: 'app-sale-detail',
@@ -7,5 +7,5 @@ import { SaleItem } from 'src/app/sale/types/sale-item.interface';
     styleUrls: ['./sale-detail.component.scss']
 })
 export class SaleDetailComponent {
-    @Input() saleItems: SaleItem[];
+    @Input() sale: Sale;
 }

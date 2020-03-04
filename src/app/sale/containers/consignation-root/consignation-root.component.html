@@ -5,7 +5,7 @@
     </div>
     <div class="list">
         <app-loader [isLoading]="consignationsLoading$ | async">
-            <app-consignation-list [consignations]="consignations$ | async" [currentConsignation]="currentConsignation$ | async" (view)="onViewDetail($event)" (edit)="onEdit($event)" (sort)="onSort($event)"></app-consignation-list>
+            <app-consignation-list [consignations]="consignations$ | async" [currentSaleItem]="currentSaleItem$ | async" (view)="onViewDetail($event)" (edit)="onEdit($event)" (sort)="onSort($event)"></app-consignation-list>
         </app-loader>
     </div>
     <footer>
@@ -16,3 +16,17 @@
         <router-outlet></router-outlet>
     </div>
 </div>
+
+<modal #consignationSaved class="popup-modal success" [closeOnOutsideClick]="false">
+    <ng-template #modalHeader>
+        Succès
+    </ng-template>
+    <ng-template #modalBody>
+        <p>
+            Consignation enregistrée
+        </p>
+    </ng-template>
+    <ng-template #modalFooter>
+        <button (click)="consignationSaved.close()" class="blue">OK</button>
+    </ng-template>
+</modal>

@@ -17,11 +17,11 @@ import { subscribeModal } from 'src/app/shared/utils/modal.utils';
 import { AddAsSaleItem, SaveSale } from '../../store/actions/sale.actions';
 import { SaleState } from '../../store/reducers/sale.reducers';
 import {
-    getNewAddedSaleItem,
     getPdfExporting,
     getProducts,
     getProductsLoading,
     getProductsTotalItems,
+    getSaleItems,
     getSaleSaved,
     getSaleSaveError,
     getSaleSaveFail
@@ -41,7 +41,6 @@ export class SaleRootComponent implements OnInit {
     totalItems$: Observable<number>;
     saleItems$: Observable<SaleItem[]>;
     clients$: Observable<Client[]>;
-    newAddedSaleItem$: Observable<SaleItem>;
     saleSaveError$: Observable<HttpErrorResponse>;
 
     productCriteria: ProductCriteria = cloneDeep(PRODUCT_DEFAULT_CRITERIA);
@@ -60,7 +59,7 @@ export class SaleRootComponent implements OnInit {
         this.pdfExporting$ = this.saleStore.pipe(select(getPdfExporting));
         this.totalItems$ = this.saleStore.pipe(select(getProductsTotalItems));
         this.clients$ = this.sharedStore.pipe(select(getClients));
-        this.newAddedSaleItem$ = this.saleStore.pipe(select(getNewAddedSaleItem));
+        this.saleItems$ = this.saleStore.pipe(select(getSaleItems));
         this.saleSaveError$ = this.saleStore.pipe(select(getSaleSaveError));
         this.subscribeModals();
     }

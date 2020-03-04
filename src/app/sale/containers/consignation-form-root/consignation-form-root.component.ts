@@ -3,9 +3,10 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { go } from 'src/app/shared/utils/go.utils';
 import { CONSIGNATION_BASE_ROUTE } from '../../constants/sale.constant';
+import { SaveConsignation } from '../../store/actions/sale.actions';
 import { SaleState } from '../../store/reducers/sale.reducers';
-import { getConsignation, getConsignationEditing } from '../../store/selectors/sale.selectors';
-import { Payment } from '../../types/sale.interface';
+import { getConsignationEditing, getSaleItem } from '../../store/selectors/sale.selectors';
+import { SaleItem } from '../../types/sale-item.interface';
 
 @Component({
     selector: 'app-consignation-form-root',
@@ -13,29 +14,29 @@ import { Payment } from '../../types/sale.interface';
     styleUrls: ['./consignation-form-root.component.scss']
 })
 export class ConsignationFormRootComponent implements OnInit {
-    consignation$: Observable<Payment>;
+    saleItem$: Observable<SaleItem>;
     isEditing$: Observable<boolean>;
 
     constructor(private saleStore: Store<SaleState>) {}
 
     ngOnInit() {
-        this.consignation$ = this.saleStore.pipe(select(getConsignation));
+        this.saleItem$ = this.saleStore.pipe(select(getSaleItem));
         this.isEditing$ = this.saleStore.pipe(select(getConsignationEditing));
     }
 
-    onEdit(consignation: Payment) {
-        go(this.saleStore, [`${CONSIGNATION_BASE_ROUTE}/edit`, consignation._id]);
+    onEdit(saleItem: SaleItem) {
+        go(this.saleStore, [`${CONSIGNATION_BASE_ROUTE}/edit`, saleItem._id]);
     }
 
-    onSave(consignation: Payment) {
-        /** */
+    onSave(saleItem: SaleItem) {
+        this.saleStore.dispatch(new SaveConsignation(saleItem));
     }
 
-    onCancelEdit(consignation: Payment) {
+    onCancelEdit(saleItem: SaleItem) {
         go(
             this.saleStore,
-            consignation._id
-                ? [`${CONSIGNATION_BASE_ROUTE}/detail`, consignation._id]
+            saleItem._id
+                ? [`${CONSIGNATION_BASE_ROUTE}/detail`, saleItem._id]
                 : [`${CONSIGNATION_BASE_ROUTE}`]
         );
     }

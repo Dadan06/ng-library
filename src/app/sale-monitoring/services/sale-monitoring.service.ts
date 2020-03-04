@@ -14,6 +14,12 @@ import { SaleCriteria } from '../types/sale-criteria.interface';
 export class SaleMonitoringService {
     constructor(private http: HttpClient) {}
 
+    loadSale(saleId: string): Observable<Sale> {
+        return this.http
+            .get(`${environment.apiBaseUrl}/${SALE_MONITORING_API_ROUTE}/${saleId}`)
+            .pipe(map((response: ApiResponse) => response.data as Sale));
+    }
+
     loadSales(criteria: SaleCriteria): Observable<Paginated<Sale>> {
         return this.http
             .get(`${environment.apiBaseUrl}/${SALE_MONITORING_API_ROUTE}`, {

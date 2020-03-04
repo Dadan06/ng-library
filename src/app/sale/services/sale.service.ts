@@ -7,7 +7,8 @@ import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
 import { flatten } from 'src/app/shared/utils/flatten';
 import { environment } from 'src/environments/environment';
-import { PAYMENT_API_ROUTE, SALE_API_ROUTE } from '../constants/sale.constant';
+import { PAYMENT_API_ROUTE, SALE_API_ROUTE, SALE_ITEM_API_ROUTE } from '../constants/sale.constant';
+import { SaleItem } from '../types/sale-item.interface';
 import { Payment, Sale } from '../types/sale.interface';
 
 @Injectable()
@@ -28,16 +29,16 @@ export class SaleService {
             .pipe(map((response: ApiResponse) => response.data as Paginated<Payment>));
     }
 
-    loadConsignation(consignationId: string): Observable<Payment> {
+    loadConsignationItem(saleItemId: string): Observable<SaleItem> {
         return this.http
-            .get(`${environment.apiBaseUrl}/${PAYMENT_API_ROUTE}/${consignationId}`)
-            .pipe(map((response: ApiResponse) => response.data as Payment));
+            .get(`${environment.apiBaseUrl}/${SALE_ITEM_API_ROUTE}/${saleItemId}`)
+            .pipe(map((response: ApiResponse) => response.data as SaleItem));
     }
 
-    saveConsignation(consignation: Payment): Observable<Payment> {
+    saveConsignationItem(saleItem: SaleItem): Observable<SaleItem> {
         return this.http
-            .put(`${environment.apiBaseUrl}/${PAYMENT_API_ROUTE}/consignation`, consignation)
-            .pipe(map((response: ApiResponse) => response.data as Payment));
+            .put(`${environment.apiBaseUrl}/${SALE_ITEM_API_ROUTE}/${saleItem._id}`, saleItem)
+            .pipe(map((response: ApiResponse) => response.data as SaleItem));
     }
 
     exportPdf(payment: Payment): Observable<string> {

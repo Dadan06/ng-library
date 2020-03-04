@@ -12,13 +12,13 @@
                     <div>
                         <div class="date-container">
                             <label>Date</label>
-                            <label>{{ item.get('date').value | date: 'dd/MM/y - HH:mm' }}</label>
+                            <label>{{ item.get('date').value | date: 'dd/MM/y - HH:mm:ss' }}</label>
                         </div>
                         <div class="control">
                             <label>
                                 Vendu *
                             </label>
-                            <input #first formControlName="selled" type="number" />
+                            <input #first formControlName="selled" type="number" min="0" appDigitOnly/>
                             <app-validation-error
                                 [control]="item.selled"
                             ></app-validation-error>
@@ -27,7 +27,7 @@
                             <label>
                                 Rendu *
                             </label>
-                            <input #first formControlName="returned" type="number" />
+                            <input #first formControlName="returned" type="number" min="0" appDigitOnly/>
                             <app-validation-error
                                 [control]="item.returned"
                             ></app-validation-error>
@@ -43,7 +43,7 @@
             <button
                 class="blue"
                 *ngIf="!isEditing"
-                (click)="edit.emit()"
+                (click)="edit.emit(form.value)"
             >
                 MODIFIER
             </button>

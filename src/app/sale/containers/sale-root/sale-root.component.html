@@ -21,7 +21,7 @@
         </div>
         <div class="selected-product-container">
             <app-selected-product-list
-                [newLoadedSaleItem]="newAddedSaleItem$ | async"
+                [saleItems]="saleItems$ | async"
                 [clients]="clients$ | async"
                 (save)="onSave($event)"
             ></app-selected-product-list>

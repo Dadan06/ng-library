@@ -4,6 +4,7 @@ import { ProductCriteria } from 'src/app/product/types/product-criteria.interfac
 import { Product } from 'src/app/product/types/product.interface';
 import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
+import { SaleItem } from '../../types/sale-item.interface';
 import { Payment, Sale } from '../../types/sale.interface';
 
 export const enum SaleActionTypes {
@@ -16,9 +17,9 @@ export const enum SaleActionTypes {
     LOAD_CONSIGNATIONS = '[Sale] Load Consignations',
     LOAD_CONSIGNATIONS_FAIL = '[Sale] Load Consignations Fail',
     LOAD_CONSIGNATIONS_SUCCESS = '[Sale] Load Consignations Success',
-    LOAD_CONSIGNATION = '[Sale] Load Consignation',
-    LOAD_CONSIGNATION_FAIL = '[Sale] Load Consignation Fail',
-    LOAD_CONSIGNATION_SUCCESS = '[Sale] Load Consignation Success',
+    LOAD_CONSIGNATION_ITEM = '[Sale] Load Consignation Item',
+    LOAD_CONSIGNATION_ITEM_FAIL = '[Sale] Load Consignation Item Fail',
+    LOAD_CONSIGNATION_ITEM_SUCCESS = '[Sale] Load Consignation Item Success',
     SAVE_CONSIGNATION = '[Sale] Save Consignation',
     SAVE_CONSIGNATION_FAIL = '[Sale] Save Consignation Fail',
     SAVE_CONSIGNATION_SUCCESS = '[Sale] Save Consignation Success',
@@ -73,24 +74,24 @@ export class LoadConsignationsSuccess implements Action {
     constructor(public payload: Paginated<Payment>) {}
 }
 
-export class LoadConsignation implements Action {
-    readonly type = SaleActionTypes.LOAD_CONSIGNATION;
+export class LoadConsignationItem implements Action {
+    readonly type = SaleActionTypes.LOAD_CONSIGNATION_ITEM;
     constructor(public payload: string) {}
 }
 
-export class LoadConsignationFail implements Action {
-    readonly type = SaleActionTypes.LOAD_CONSIGNATION_FAIL;
+export class LoadConsignationItemFail implements Action {
+    readonly type = SaleActionTypes.LOAD_CONSIGNATION_ITEM_FAIL;
     constructor(public payload: HttpErrorResponse) {}
 }
 
-export class LoadConsignationSuccess implements Action {
-    readonly type = SaleActionTypes.LOAD_CONSIGNATION_SUCCESS;
-    constructor(public payload: Payment) {}
+export class LoadConsignationItemSuccess implements Action {
+    readonly type = SaleActionTypes.LOAD_CONSIGNATION_ITEM_SUCCESS;
+    constructor(public payload: SaleItem) {}
 }
 
 export class SaveConsignation implements Action {
     readonly type = SaleActionTypes.SAVE_CONSIGNATION;
-    constructor(public payload: Payment) {}
+    constructor(public payload: SaleItem) {}
 }
 
 export class SaveConsignationFail implements Action {
@@ -100,7 +101,7 @@ export class SaveConsignationFail implements Action {
 
 export class SaveConsignationSuccess implements Action {
     readonly type = SaleActionTypes.SAVE_CONSIGNATION_SUCCESS;
-    constructor(public payload: Payment) {}
+    constructor(public payload: SaleItem) {}
 }
 
 export class ExportPdf implements Action {
@@ -132,9 +133,9 @@ export type SaleAction =
     | LoadConsignations
     | LoadConsignationsFail
     | LoadConsignationsSuccess
-    | LoadConsignation
-    | LoadConsignationFail
-    | LoadConsignationSuccess
+    | LoadConsignationItem
+    | LoadConsignationItemFail
+    | LoadConsignationItemSuccess
     | SaveConsignation
     | SaveConsignationFail
     | SaveConsignationSuccess

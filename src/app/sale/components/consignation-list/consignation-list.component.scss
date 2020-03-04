@@ -1,11 +1,15 @@
 @import 'tables.scss';
 
+.container {
+    width: 100%;
+    height: 100%;
+}
+
 $c1Width: 20%;
-$c2Width: 20%;
-$c3Width: 20%;
+$c2Width: 30%;
+$c3Width: 30%;
 $c4Width: 20%;
-$c5Width: 20%;
-$tableWidth: $c1Width + $c2Width + $c3Width + $c4Width + $c5Width;
+$tableWidth: $c1Width + $c2Width + $c3Width + $c4Width;
 
 @mixin thTdWidth($width) {
     width: $width;
@@ -34,14 +38,11 @@ $tableWidth: $c1Width + $c2Width + $c3Width + $c4Width + $c5Width;
         thead th:nth-child(4) {
             @include thTdWidth($c4Width);
         }
-        tbody td:nth-child(5),
-        thead th:nth-child(5) {
-            @include thTdWidth($c5Width);
-        }
     }
+}
 
-    img {
-        width: 20px;
-        height: 20px;
-    }
+.consignation {
+    background: #fff !important;
+    border: 1px solid red !important;
+    margin: 1px 0;
 }

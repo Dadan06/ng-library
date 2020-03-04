@@ -26,12 +26,13 @@ export const EMPTY_SALE: Sale = {
     discount: 0,
     saleStatus: SaleStatus.IN_PROGRESS,
     seller: null,
-    client: null,
-    consignations: []
+    client: null
 };
 
 export const EMPTY_SALE_ITEM: SaleItem = {
+    _id: undefined,
     product: undefined,
     quantity: 0,
-    amount: 0
+    amount: 0,
+    consignations: []
 };

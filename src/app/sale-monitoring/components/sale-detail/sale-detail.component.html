@@ -1,3 +1,18 @@
-<p>
-  sale-detail works!
-</p>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Qte</th>
+                <th>Sous-total (Ar)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let saleItem of sale?.saleItems">
+                <td>{{ saleItem.product.name | titlecase }}</td>
+                <td>{{ saleItem.quantity }}</td>
+                <td>{{ saleItem.amount | number: '1.0-0' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -75,7 +75,12 @@ export const getConsignationsLoading = createSelector(
     (sale: SaleState) => sale.consignationsLoading
 );
 
-export const getConsignation = createSelector(getSaleState, (sale: SaleState) => sale.consignation);
+export const getConsignationSaved = createSelector(
+    getSaleState,
+    (sale: SaleState) => sale.consignationSaved
+);
+
+export const getSaleItem = createSelector(getSaleState, (sale: SaleState) => sale.saleItem);
 
 export const getConsignationEditing = createSelector<
     SaleState,
@@ -88,7 +93,7 @@ export const getPdfExporting = createSelector<SaleState, SaleState, boolean>(
     (state: SaleState) => state.pdfExporting
 );
 
-export const getNewAddedSaleItem = createSelector<SaleState, SaleState, SaleItem>(
+export const getSaleItems = createSelector<SaleState, SaleState, SaleItem[]>(
     getSaleState,
-    (state: SaleState) => state.newAddedSaleItem
+    (state: SaleState) => state.saleItems
 );

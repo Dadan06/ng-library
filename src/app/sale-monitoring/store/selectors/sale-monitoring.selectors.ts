@@ -39,3 +39,8 @@ export const getSaleCriteria = createSelector<
     SaleMonitoringState,
     SaleCriteria
 >(getSaleMonitoringState, (state: SaleMonitoringState) => state.saleCriteria);
+
+export const getSale = createSelector<SaleMonitoringState, SaleMonitoringState, Sale>(
+    getSaleMonitoringState,
+    (state: SaleMonitoringState) => state.sale
+);

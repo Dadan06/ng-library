@@ -33,7 +33,6 @@ export interface Sale {
     saleStatus: SaleStatus;
     seller: User;
     client: Client;
-    consignations: Consignation[];
 }
 
 export interface PaginatedSale extends Paginated<Sale> {

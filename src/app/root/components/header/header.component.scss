@@ -126,8 +126,17 @@
                         cursor: pointer;
                         white-space: nowrap;
                         width: 100%;
-                        padding: 10px 5px;
-                        font-size: 0.6rem;
+                        padding: 5px;
+                        font-size: 1.2em;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        img {
+                            width: 25px;
+                            height: 25px;
+                        }
                     }
 
                     .dd-menu li:hover {
