@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { AppRouterState } from 'src/app/core/store/reducers/router.reducers';
 import { SALE_MONITORING_BASE_ROUTE } from '../../constants/sale-monitoring.constant';
-import { LoadSale, LoadSales } from '../actions/sale-monitoring.actions';
+import { LoadSales } from '../actions/sale-monitoring.actions';
 import { SaleMonitoringState } from '../reducers/sale-monitoring.reducers';
 import { getSaleCriteria } from '../selectors/sale-monitoring.selectors';
 
@@ -24,13 +24,5 @@ export class SaleMonitoringRouterEffects {
             routerState.url.endsWith(`${SALE_MONITORING_BASE_ROUTE}`)
         ),
         map(([routerState, criteria]) => new LoadSales(criteria))
-    );
-
-    @Effect()
-    saleFormRoute$ = this.actions$.pipe(
-        ofType(ROUTER_NAVIGATION),
-        map(this.mapToRouterStateUrl),
-        filter(state => state.url.includes(`${SALE_MONITORING_BASE_ROUTE}/detail`)),
-        map(routerState => new LoadSale(routerState.params.saleId))
     );
 }

@@ -7,12 +7,7 @@ import { AppRouterState } from 'src/app/core/store/reducers/router.reducers';
 import { PRODUCT_API_ROUTE } from '../../constants/product.constants';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../types/product.interface';
-import {
-    LoadAllSupplier,
-    LoadProduct,
-    LoadProducts,
-    LoadProductSuccess
-} from '../actions/product.actions';
+import { LoadProduct, LoadProducts, LoadProductSuccess } from '../actions/product.actions';
 import { ProductState } from '../reducers/product.reducers';
 import { getProductCriteria } from '../selectors/product.selectors';
 
@@ -57,17 +52,5 @@ export class ProductRouterEffects {
                 .productFactory()
                 .pipe(map((response: Product) => new LoadProductSuccess(response)))
         )
-    );
-
-    @Effect()
-    allSupplierRoute$ = this.action$.pipe(
-        ofType(ROUTER_NAVIGATION),
-        map(this.mapToRouterStateUrl),
-        filter(
-            state =>
-                state.url.includes(`${PRODUCT_API_ROUTE}/edit`) ||
-                state.url.includes(`${PRODUCT_API_ROUTE}/new`)
-        ),
-        map(routerState => new LoadAllSupplier())
     );
 }

@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
-import { ProductCriteria } from 'src/app/product/types/product-criteria.interface';
 import { Product } from 'src/app/product/types/product.interface';
 import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
@@ -26,12 +25,13 @@ export const enum SaleActionTypes {
     EXPORT_PDF = '[Sale] Export PDF',
     EXPORT_PDF_FAIL = '[Sale] Export PDF Fail',
     EXPORT_PDF_SUCCESS = '[Sale] Export PDF Success',
-    ADD_AS_SALE_ITEM = '[Sale] Add As Sale Item'
+    ADD_AS_SALE_ITEM = '[Sale] Add As Sale Item',
+    REMOVE_FROM_SALE_ITEMS = '[Sale] Remove From Sale Items'
 }
 
 export class LoadProducts implements Action {
     readonly type = SaleActionTypes.LOAD_PRODUCTS;
-    constructor(public payload: ProductCriteria) {}
+    constructor(public payload: ListCriteria) {}
 }
 
 export class LoadProductsSuccess implements Action {
@@ -123,6 +123,11 @@ export class AddAsSaleItem implements Action {
     constructor(public payload: Product) {}
 }
 
+export class RemoveFromSaleItems implements Action {
+    readonly type = SaleActionTypes.REMOVE_FROM_SALE_ITEMS;
+    constructor(public payload: number) {}
+}
+
 export type SaleAction =
     | LoadProducts
     | LoadProductsSuccess
@@ -142,4 +147,5 @@ export type SaleAction =
     | ExportPdf
     | ExportPdfFail
     | ExportPdfSuccess
-    | AddAsSaleItem;
+    | AddAsSaleItem
+    | RemoveFromSaleItems;

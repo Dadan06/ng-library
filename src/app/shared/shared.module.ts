@@ -6,6 +6,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { ModalModule } from 'angular-custom-modal';
 import { ClientService } from '../client/services/client.service';
+import { SupplierService } from '../supplier/services/supplier.service';
 import { ChipsComponent } from './components/chips/chips.component';
 import { CollapsibleChipsComponent } from './components/collapsible-chips/collapsible-chips.component';
 import { InputNumberComponent } from './components/input-number/input-number.component';
@@ -19,6 +20,8 @@ import { SortableColumnComponent } from './components/sortable-column/sortable-c
 import { SortableTableComponent } from './components/sortable-table/sortable-table.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
+import { ClientAutocompletionService } from './services/client-autocompletion.service';
+import { SupplierAutocompletionService } from './services/supplier-autocompletion.service';
 import { SharedEffects } from './store/effects/shared.effects';
 import { sharedReducer } from './store/reducers/shared.reducers';
 
@@ -65,6 +68,11 @@ import { sharedReducer } from './store/reducers/shared.reducers';
         SortableColumnComponent,
         SortableTableComponent
     ],
-    providers: [ClientService]
+    providers: [
+        ClientService,
+        ClientAutocompletionService,
+        SupplierService,
+        SupplierAutocompletionService
+    ]
 })
 export class SharedModule {}

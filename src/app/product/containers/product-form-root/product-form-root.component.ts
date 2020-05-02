@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
+import { SupplierAutocompletionService } from 'src/app/shared/services/supplier-autocompletion.service';
 import { go } from 'src/app/shared/utils/go.utils';
-import { Supplier } from 'src/app/supplier/types/supplier.interface';
 import { PRODUCT_BASE_ROUTE } from '../../constants/product.constants';
 import { SaveProduct } from '../../store/actions/product.actions';
 import { ProductState } from '../../store/reducers/product.reducers';
 import {
-    getAllSupplier,
     getProduct,
     getProductEditEnabled,
     getProductEditing
@@ -22,18 +21,17 @@ import { Product } from '../../types/product.interface';
 })
 export class ProductFormRootComponent implements OnInit {
     product$: Observable<Product>;
-    suppliers$: Observable<Supplier[]>;
     isEditing$: Observable<boolean>;
     productEditEnabled$: Observable<boolean>;
 
     constructor(
         private productStore: Store<ProductState>,
-        private authenticationStore: Store<AuthenticationState>
+        private authenticationStore: Store<AuthenticationState>,
+        public supplierAutocompletionService: SupplierAutocompletionService
     ) {}
 
     ngOnInit() {
         this.product$ = this.productStore.pipe(select(getProduct));
-        this.suppliers$ = this.productStore.pipe(select(getAllSupplier));
         this.isEditing$ = this.productStore.pipe(select(getProductEditing));
         this.productEditEnabled$ = this.authenticationStore.pipe(select(getProductEditEnabled));
     }

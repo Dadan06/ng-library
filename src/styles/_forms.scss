@@ -185,6 +185,10 @@ $date-padding: 5px;
         @extend %input-focus;
     }
 
+    &:disabled {
+        background-color: $generic-form-input-disabled-background;
+    }
+
     &.ng-invalid.ng-dirty {
         border: solid 1px $generic-form-error-border;
 
@@ -298,6 +302,7 @@ $date-padding: 5px;
     align-items: center;
     height: 30px;
     padding-right: 15px;
+    font-size: 12px;
 }
 
 %generic-radio-input {

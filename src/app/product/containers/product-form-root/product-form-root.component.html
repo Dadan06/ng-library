@@ -4,7 +4,7 @@
         [product]="product$ | async"
         [isEditing]="isEditing$ | async"
         [editEnabled]="productEditEnabled$ | async"
-        [suppliers]="suppliers$ | async"
+        [supplierAutocompletionService]="supplierAutocompletionService"
         (edit)="onEdit($event)"
         (save)="onSave($event)"
         (cancel)="onCancelEdit(product)"

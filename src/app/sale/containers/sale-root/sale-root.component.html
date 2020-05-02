@@ -22,8 +22,9 @@
         <div class="selected-product-container">
             <app-selected-product-list
                 [saleItems]="saleItems$ | async"
-                [clients]="clients$ | async"
+                [clientAutocompletionService]="clientAutocompletionService"
                 (save)="onSave($event)"
+                (remove)="onRemove($event)"
             ></app-selected-product-list>
         </div>
     </div>

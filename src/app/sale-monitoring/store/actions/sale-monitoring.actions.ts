@@ -7,9 +7,7 @@ export enum SaleMonitoringActionTypes {
     LOAD_SALES = '[Sale Monitoring] Load Sales',
     LOAD_SALES_FAIL = '[Sale Monitoring] Load Sales Fail',
     LOAD_SALES_SUCCESS = '[Sale Monitoring] Load Sales Success',
-    LOAD_SALE = '[Sale] Load Sale',
-    LOAD_SALE_FAIL = '[Sale] Load Sale Fail',
-    LOAD_SALE_SUCCESS = '[Sale] Load Sale Success'
+    LOAD_SALE = '[Sale] Load Sale'
 }
 
 export class LoadSales implements Action {
@@ -29,23 +27,7 @@ export class LoadSalesSuccess implements Action {
 
 export class LoadSale implements Action {
     readonly type = SaleMonitoringActionTypes.LOAD_SALE;
-    constructor(public payload: string) {}
-}
-
-export class LoadSaleFail implements Action {
-    readonly type = SaleMonitoringActionTypes.LOAD_SALE_FAIL;
-    constructor(public payload: HttpErrorResponse) {}
-}
-
-export class LoadSaleSuccess implements Action {
-    readonly type = SaleMonitoringActionTypes.LOAD_SALE_SUCCESS;
     constructor(public payload: Sale) {}
 }
 
-export type SaleMonitoringAction =
-    | LoadSales
-    | LoadSalesFail
-    | LoadSalesSuccess
-    | LoadSale
-    | LoadSaleFail
-    | LoadSaleSuccess;
+export type SaleMonitoringAction = LoadSales | LoadSalesFail | LoadSalesSuccess | LoadSale;

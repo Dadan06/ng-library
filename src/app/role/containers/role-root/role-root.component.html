@@ -35,7 +35,9 @@
     <ng-template #modalHeader>
         Succès
     </ng-template>
-    <ng-template #modalBody> Element enregistré avec succès</ng-template>
+    <ng-template #modalBody>
+        Role enregistré avec succès
+    </ng-template>
     <ng-template #modalFooter>
         <button (click)="saveSuccessModal.close()" class="blue">OK</button>
     </ng-template>
@@ -45,7 +47,9 @@
     <ng-template #modalHeader>
         Attention
     </ng-template>
-    <ng-template #modalBody> Êtes-vous sûr de vouloir supprimer cet element?<br /> </ng-template>
+    <ng-template #modalBody>
+        Êtes-vous sûr de vouloir supprimer ce role?
+    </ng-template>
     <ng-template #modalFooter>
         <button (click)="onDeleteRole()" class="blue">OUI</button>
         <button (click)="deleteWarningModal.close()" class="dark-purple">NON</button>

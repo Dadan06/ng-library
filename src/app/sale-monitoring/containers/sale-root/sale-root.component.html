@@ -29,7 +29,7 @@
     </div>
 
     <div class="detail">
-        <router-outlet></router-outlet>
+        <app-sale-detail *ngIf="sale$ | async as sale" [sale]="sale"></app-sale-detail>
     </div>
 
     <footer>

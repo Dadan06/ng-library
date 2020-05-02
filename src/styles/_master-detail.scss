@@ -57,7 +57,7 @@
     .detail {
         grid-area: detail;
         border: solid 1px $light-gray;
-        border-radius: 8px;
+        border-radius: 3px;
 
         &.no-border {
             border: 0px !important;

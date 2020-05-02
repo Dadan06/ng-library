@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { PRODUCT_DEFAULT_CRITERIA } from 'src/app/product/constants/product.constants';
-import { ProductCriteria } from 'src/app/product/types/product-criteria.interface';
 import { Product } from 'src/app/product/types/product.interface';
 import { SALE_DEFAULT_CRITERIA } from 'src/app/sale-monitoring/constants/sale-monitoring.constant';
 import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
@@ -22,6 +21,7 @@ import {
     LoadProducts,
     LoadProductsFail,
     LoadProductsSuccess,
+    RemoveFromSaleItems,
     SaleAction,
     SaleActionTypes,
     SaveConsignation,
@@ -36,7 +36,7 @@ export interface SaleState {
     products: Paginated<Product>;
     productsLoaded: boolean;
     productsLoading: boolean;
-    productCriteria: ProductCriteria;
+    productCriteria: ListCriteria;
     saleSaving: boolean;
     saleSaved: boolean;
     saleSaveError: HttpErrorResponse;
@@ -214,6 +214,16 @@ const addAsSaleItem = (state: SaleState, action: AddAsSaleItem): SaleState => ({
     ]
 });
 
+const removeFromSaleItems = (state: SaleState, action: RemoveFromSaleItems): SaleState => ({
+    ...state,
+    saleItems: state.saleItems.reduce((acc, current, index) => {
+        if (index !== action.payload) {
+            acc.push(current);
+        }
+        return acc;
+    }, [])
+});
+
 // tslint:disable-next-line: cyclomatic-complexity no-big-function
 export function saleReducer(state: SaleState = initialState, action: SaleAction): SaleState {
     // tslint:disable-next-line: max-switch-cases
@@ -256,6 +266,8 @@ export function saleReducer(state: SaleState = initialState, action: SaleAction)
             return exportPdfSuccess(state, action);
         case SaleActionTypes.ADD_AS_SALE_ITEM:
             return addAsSaleItem(state, action);
+        case SaleActionTypes.REMOVE_FROM_SALE_ITEMS:
+            return removeFromSaleItems(state, action);
         default:
             return state;
     }

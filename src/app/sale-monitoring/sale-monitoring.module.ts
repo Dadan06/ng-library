@@ -5,7 +5,6 @@ import { StoreModule } from '@ngrx/store';
 import { SharedModule } from '../shared/shared.module';
 import { SaleDetailComponent } from './components/sale-detail/sale-detail.component';
 import { SaleListComponent } from './components/sale-list/sale-list.component';
-import { SaleDetailRootComponent } from './containers/sale-detail-root/sale-detail-root.component';
 import { SaleRootComponent } from './containers/sale-root/sale-root.component';
 import { SaleMonitoringRoutingModule } from './sale-monitoring-routing.module';
 import { SaleMonitoringService } from './services/sale-monitoring.service';
@@ -14,12 +13,7 @@ import { SaleMonitoringEffects } from './store/effects/sale-monitoring.effects';
 import { saleMonitoringReducer } from './store/reducers/sale-monitoring.reducers';
 
 @NgModule({
-    declarations: [
-        SaleListComponent,
-        SaleRootComponent,
-        SaleDetailComponent,
-        SaleDetailRootComponent
-    ],
+    declarations: [SaleListComponent, SaleRootComponent, SaleDetailComponent],
     imports: [
         CommonModule,
         SaleMonitoringRoutingModule,

@@ -3,20 +3,20 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from 'src/app/shared/types/api-response.interface';
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
 import { flatten } from 'src/app/shared/utils/flatten';
 import { SUPPLIER_API_ROUTE } from 'src/app/supplier/constants/supplier.constants';
 import { Supplier } from 'src/app/supplier/types/supplier.interface';
 import { environment } from 'src/environments/environment';
 import { EMPTY_PRODUCT_MODEL, PRODUCT_API_ROUTE } from '../constants/product.constants';
-import { ProductCriteria } from '../types/product-criteria.interface';
 import { Product } from '../types/product.interface';
 
 @Injectable()
 export class ProductService {
     constructor(private http: HttpClient) {}
 
-    loadProducts(criteria: ProductCriteria): Observable<Paginated<Product>> {
+    loadProducts(criteria: ListCriteria): Observable<Paginated<Product>> {
         return this.http
             .get(`${environment.apiBaseUrl}/${PRODUCT_API_ROUTE}`, {
                 params: flatten(criteria)

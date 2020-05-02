@@ -1,10 +1,10 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NG_SELECT_TEXT } from 'src/app/shared/constants/ngselect.constant';
+import { SupplierAutocompletionService } from 'src/app/shared/services/supplier-autocompletion.service';
 import { markFormAsTouchedAndDirty } from 'src/app/shared/utils/form.utils';
-import { Supplier } from 'src/app/supplier/types/supplier.interface';
-import { TYPE_LABELS } from '../../constants/product.constants';
 import { ProductService } from '../../services/product.service';
-import { Product, Type } from '../../types/product.interface';
+import { Product } from '../../types/product.interface';
 
 @Component({
     selector: 'app-product-form',
@@ -23,7 +23,7 @@ export class ProductFormComponent {
         }
     }
     @Input() editEnabled = true;
-    @Input() suppliers: Supplier[];
+    @Input() supplierAutocompletionService: SupplierAutocompletionService;
 
     @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
     @Output() save: EventEmitter<Product> = new EventEmitter<Product>();
@@ -33,10 +33,8 @@ export class ProductFormComponent {
     @ViewChild('first') firstInput: ElementRef;
 
     form: FormGroup;
-    types = [
-        { name: TYPE_LABELS[Type.DATED], value: Type.DATED },
-        { name: TYPE_LABELS[Type.UNDATED], value: Type.UNDATED }
-    ];
+    notItemsFound = NG_SELECT_TEXT.NOT_ITEMS;
+    loading = NG_SELECT_TEXT.LOADING;
 
     constructor(private formBuilder: FormBuilder, private productService: ProductService) {}
 

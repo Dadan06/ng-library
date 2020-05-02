@@ -18,13 +18,32 @@
             </div>
         </div>
         <div class="control">
-            <label for="supplier">Client</label>
+            <label for="client">Client</label>
             <div class="custom-select">
                 <ng-select
-                    [items]="clients"
-                    bindLabel="name"
+                    #clientSelect
+                    [items]="clientAutocompletionService.items$ | async"
+                    [virtualScroll]="true"
+                    [loading]="clientAutocompletionService.loading$ | async"
+                    [dropdownPosition]="bottom"
+                    [notFoundText]="notItemsFound"
+                    [loadingText]="loadingText"
+                    (search)="clientAutocompletionService.load({ search: $event.term })"
+                    (open)="clientAutocompletionService.load({ search: '' })"
+                    (scrollToEnd)="clientAutocompletionService.loadMore()"
                     formControlName="client"
-                ></ng-select>
+                    bindLabel="name"
+                    placeholder="Client"
+                >
+                    <ng-template ng-footer-tmp>
+                        <a
+                            href="/root/home/client/new"
+                            target="_blank"
+                            (click)="clientSelect.close()"
+                            >Ajout client</a
+                        >
+                    </ng-template>
+                </ng-select>
             </div>
         </div>
         <div class="control">
@@ -52,7 +71,7 @@
                     </td>
                     <td>{{ item.get('amount')?.value | number: '1.0-0' }}</td>
                     <td>
-                        <img (click)="removeItem(i)" [src]="'/assets/images/ico-delete.png'" />
+                        <img (click)="remove.emit(i)" [src]="'/assets/images/ico-delete.png'" />
                     </td>
                 </tr>
             </tbody>

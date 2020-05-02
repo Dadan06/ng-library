@@ -1,8 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
-import { Supplier } from 'src/app/supplier/types/supplier.interface';
-import { ProductCriteria } from '../../types/product-criteria.interface';
 import { Product } from '../../types/product.interface';
 
 export const enum ProductActionTypes {
@@ -17,15 +15,12 @@ export const enum ProductActionTypes {
     DELETE_PRODUCT_SUCCESS = '[Product] Delete Product Success',
     SAVE_PRODUCT = '[Product] Save Product',
     SAVE_PRODUCT_FAIL = '[Product] Save Product Fail',
-    SAVE_PRODUCT_SUCCESS = '[Product] Save Product Success',
-    LOAD_ALL_SUPPLIER = '[Product] Load All Supplier',
-    LOAD_ALL_SUPPLIER_FAIL = '[Product] Load All Supplier Fail',
-    LOAD_ALL_SUPPLIER_SUCCESS = '[Product] Load All Supplier Success'
+    SAVE_PRODUCT_SUCCESS = '[Product] Save Product Success'
 }
 
 export class LoadProducts implements Action {
     readonly type = ProductActionTypes.LOAD_PRODUCTS;
-    constructor(public payload: ProductCriteria) {}
+    constructor(public payload: ListCriteria) {}
 }
 
 export class LoadProductsSuccess implements Action {
@@ -82,20 +77,6 @@ export class DeleteProductSuccess implements Action {
     readonly type = ProductActionTypes.DELETE_PRODUCT_SUCCESS;
 }
 
-export class LoadAllSupplier implements Action {
-    readonly type = ProductActionTypes.LOAD_ALL_SUPPLIER;
-}
-
-export class LoadAllSupplierSuccess implements Action {
-    readonly type = ProductActionTypes.LOAD_ALL_SUPPLIER_SUCCESS;
-    constructor(public payload: Supplier[]) {}
-}
-
-export class LoadAllSupplierFail implements Action {
-    readonly type = ProductActionTypes.LOAD_ALL_SUPPLIER_FAIL;
-    constructor(public payload: HttpErrorResponse) {}
-}
-
 export type ProductAction =
     | LoadProducts
     | LoadProductsSuccess
@@ -108,7 +89,4 @@ export type ProductAction =
     | DeleteProductSuccess
     | SaveProduct
     | SaveProductFail
-    | SaveProductSuccess
-    | LoadAllSupplier
-    | LoadAllSupplierFail
-    | LoadAllSupplierSuccess;
+    | SaveProductSuccess;

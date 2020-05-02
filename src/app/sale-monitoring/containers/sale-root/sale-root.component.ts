@@ -6,14 +6,12 @@ import { FilterUpdates } from 'src/app/shared/types/filter-updates.interface';
 import { Page } from 'src/app/shared/types/page.interface';
 import { PeriodFilter } from 'src/app/shared/types/period-filter.interface';
 import { Sort } from 'src/app/shared/types/sort.interface';
-import { go } from 'src/app/shared/utils/go.utils';
 import {
     SALE_DEFAULT_FILTERS,
     SALE_FILTER_CATEGORY_LABELS,
-    SALE_FILTER_ITEM_LABELS,
-    SALE_MONITORING_BASE_ROUTE
+    SALE_FILTER_ITEM_LABELS
 } from '../../constants/sale-monitoring.constant';
-import { LoadSales } from '../../store/actions/sale-monitoring.actions';
+import { LoadSale, LoadSales } from '../../store/actions/sale-monitoring.actions';
 import { SaleMonitoringState } from '../../store/reducers/sale-monitoring.reducers';
 import {
     getSale,
@@ -83,7 +81,7 @@ export class SaleRootComponent implements OnInit {
     }
 
     onViewDetails(sale: Sale) {
-        go(this.store, [`${SALE_MONITORING_BASE_ROUTE}/detail`, sale._id]);
+        this.store.dispatch(new LoadSale(sale));
     }
 
     private refreshList() {

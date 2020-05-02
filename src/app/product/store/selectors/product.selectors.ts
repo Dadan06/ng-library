@@ -7,7 +7,6 @@ import { getRouterState } from 'src/app/core/store/selectors/router.selectors';
 import { UserPrivileges } from 'src/app/role/constants/privilege.constants';
 import { Privilege } from 'src/app/role/types/privilege.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
-import { Supplier } from 'src/app/supplier/types/supplier.interface';
 import { Product } from '../../types/product.interface';
 import { ProductState } from '../reducers/product.reducers';
 
@@ -53,11 +52,6 @@ export const getProductSaving = createSelector<ProductState, ProductState, boole
 export const getProductSaved = createSelector<ProductState, ProductState, boolean>(
     getProductState,
     (state: ProductState) => state.productSaved
-);
-
-export const getAllSupplier = createSelector<ProductState, ProductState, Supplier[]>(
-    getProductState,
-    (state: ProductState) => state.suppliers
 );
 
 export const getProductEditEnabled = createSelector<AuthenticationState, Privilege[], boolean>(

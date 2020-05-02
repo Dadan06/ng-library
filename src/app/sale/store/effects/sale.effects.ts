@@ -8,6 +8,7 @@ import { getLoggedUser } from 'src/app/authentication/store/selectors/authentica
 import { Go } from 'src/app/core/store/actions/router.actions';
 import { ProductService } from 'src/app/product/services/product.service';
 import { Product } from 'src/app/product/types/product.interface';
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
 import { downloadFromUrl } from 'src/app/shared/utils/download.utils';
 import { User } from 'src/app/user/types/user.interface';
@@ -37,6 +38,8 @@ import {
     SaveSaleFail,
     SaveSaleSuccess
 } from '../actions/sale.actions';
+import { SaleState } from '../reducers/sale.reducers';
+import { getConsignationCriteria, getProductCriteria } from '../selectors/sale.selectors';
 
 @Injectable()
 export class SaleEffects {
@@ -44,7 +47,8 @@ export class SaleEffects {
         private action$: Actions,
         private authenticationStore: Store<AuthenticationState>,
         private saleService: SaleService,
-        private productService: ProductService
+        private productService: ProductService,
+        private store: Store<SaleState>
     ) {}
 
     @Effect()
@@ -64,10 +68,21 @@ export class SaleEffects {
         withLatestFrom<SaveSale, User>(this.authenticationStore.pipe(select(getLoggedUser))),
         switchMap(([action, seller]) =>
             this.saleService.saveSale({ ...action.payload, seller }).pipe(
-                mergeMap(response => [new SaveSaleSuccess(response), new ExportPdf(response)]),
+                map(response => new SaveSaleSuccess(response)),
                 catchError(error => of(new SaveSaleFail(error)))
             )
         )
+    );
+
+    @Effect()
+    saveSaleSuccess$ = this.action$.pipe(
+        ofType(SaleActionTypes.SAVE_SALE_SUCCESS),
+        withLatestFrom<SaveSaleSuccess, ListCriteria>(this.store.pipe(select(getProductCriteria))),
+        mergeMap(([action, productCriteria]) => [
+            new ExportPdf(action.payload),
+            new Go({ path: [`${SALE_BASE_ROUTE}`] }),
+            new LoadProducts(productCriteria)
+        ])
     );
 
     @Effect()
@@ -109,6 +124,15 @@ export class SaleEffects {
     );
 
     @Effect()
+    saveConsignationSuccess$ = this.action$.pipe(
+        ofType(SaleActionTypes.SAVE_CONSIGNATION_SUCCESS),
+        withLatestFrom<SaveConsignationSuccess, ListCriteria>(
+            this.store.pipe(select(getConsignationCriteria))
+        ),
+        map(([action, consignationCriteria]) => new LoadConsignations(consignationCriteria))
+    );
+
+    @Effect()
     exportPdf$ = this.action$.pipe(
         ofType(SaleActionTypes.EXPORT_PDF),
         switchMap((action: ExportPdf) =>
@@ -120,11 +144,5 @@ export class SaleEffects {
                 catchError(error => of(new ExportPdfFail(error)))
             )
         )
-    );
-
-    @Effect()
-    exportPdfSuccess$ = this.action$.pipe(
-        ofType(SaleActionTypes.EXPORT_PDF_SUCCESS),
-        map(() => new Go({ path: [`${SALE_BASE_ROUTE}`] }))
     );
 }

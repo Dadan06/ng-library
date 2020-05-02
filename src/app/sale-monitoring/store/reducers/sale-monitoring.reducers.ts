@@ -5,11 +5,9 @@ import { SALE_DEFAULT_CRITERIA } from '../../constants/sale-monitoring.constant'
 import { SaleCriteria } from '../../types/sale-criteria.interface';
 import {
     LoadSale,
-    LoadSaleFail,
     LoadSales,
     LoadSalesFail,
     LoadSalesSuccess,
-    LoadSaleSuccess,
     SaleMonitoringAction,
     SaleMonitoringActionTypes
 } from '../actions/sale-monitoring.actions';
@@ -63,22 +61,7 @@ const loadSalesSuccess = (
 const loadSale = (state: SaleMonitoringState, action: LoadSale): SaleMonitoringState => ({
     ...state,
     saleLoading: true,
-    saleLoaded: false
-});
-
-const loadSaleFail = (state: SaleMonitoringState, action: LoadSaleFail): SaleMonitoringState => ({
-    ...state,
-    saleLoading: false,
-    saleLoaded: false
-});
-
-const loadSaleSuccess = (
-    state: SaleMonitoringState,
-    action: LoadSaleSuccess
-): SaleMonitoringState => ({
-    ...state,
-    saleLoading: false,
-    saleLoaded: true,
+    saleLoaded: false,
     sale: action.payload
 });
 
@@ -95,10 +78,6 @@ export function saleMonitoringReducer(
             return loadSalesSuccess(state, action);
         case SaleMonitoringActionTypes.LOAD_SALE:
             return loadSale(state, action);
-        case SaleMonitoringActionTypes.LOAD_SALE_FAIL:
-            return loadSaleFail(state, action);
-        case SaleMonitoringActionTypes.LOAD_SALE_SUCCESS:
-            return loadSaleSuccess(state, action);
         default:
             return initialState;
     }

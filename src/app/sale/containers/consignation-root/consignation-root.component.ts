@@ -65,10 +65,6 @@ export class ConsignationRootComponent implements OnInit {
         go(this.saleStore, [`${CONSIGNATION_BASE_ROUTE}/detail`, saleItem._id]);
     }
 
-    onEdit(saleItem: SaleItem) {
-        go(this.saleStore, [`${CONSIGNATION_BASE_ROUTE}/edit`, saleItem._id]);
-    }
-
     private refreshList() {
         this.saleStore.dispatch(new LoadConsignations({ ...this.consignationCriteria }));
     }

@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 import { select, Store } from '@ngrx/store';
-import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { AppRouterState } from 'src/app/core/store/reducers/router.reducers';
-import { LoadClients } from 'src/app/shared/store/actions/shared.actions';
 import { CONSIGNATION_BASE_ROUTE, SALE_BASE_ROUTE } from '../../constants/sale.constant';
 import { LoadConsignationItem, LoadConsignations, LoadProducts } from '../actions/sale.actions';
 import { SaleState } from '../reducers/sale.reducers';
@@ -22,10 +21,7 @@ export class SaleRouterEffects {
         map(this.mapToRouterStateUrl),
         filter(state => state.url.endsWith(`${SALE_BASE_ROUTE}`)),
         withLatestFrom(this.store.pipe(select(getProductCriteria))),
-        mergeMap(([routerState, productCriteria]) => [
-            new LoadClients(),
-            new LoadProducts(productCriteria)
-        ])
+        map(([routerState, productCriteria]) => new LoadProducts(productCriteria))
     );
 
     @Effect()

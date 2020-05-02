@@ -7,7 +7,7 @@
             <ng-container formArrayName="consignations">
                 <div class="form-content" *ngFor="let item of getFormArray().controls; let i = index" [formGroupName]="i">
                     <div class="x-button-container">
-                        <button class="x-button" (click)="i > 0 ? removeAt(i) : clearAt(i)">X</button>
+                        <button *ngIf="i > 0" class="x-button" (click)="removeAt(i)">X</button>
                     </div>
                     <div>
                         <div class="date-container">
@@ -36,21 +36,11 @@
                 </div>
             </ng-container>
         </form>
-        <button *ngIf="isEditing" class="btn-new" (click)="add()">+</button>
+        <button *ngIf="saleItem.consignationStatus === 'UNPAID'" class="btn-new" (click)="add()">+</button>
     </main>
     <footer>
         <div class="buttons">
-            <button
-                class="blue"
-                *ngIf="!isEditing"
-                (click)="edit.emit(form.value)"
-            >
-                MODIFIER
-            </button>
-            <button class="blue" *ngIf="isEditing" (click)="onSubmit()">ENREGISTRER</button>
-            <button class="dark-purple" *ngIf="isEditing" (click)="cancel.emit()">
-                ANNULER
-            </button>
+            <button *ngIf="saleItem.consignationStatus === 'UNPAID'" class="blue" (click)="onSubmit()">ENREGISTRER</button>
         </div>
     </footer>
 </div>

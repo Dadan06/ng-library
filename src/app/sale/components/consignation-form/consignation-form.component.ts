@@ -5,10 +5,9 @@ import {
     enableFormArray,
     getFormArray,
     markFormArrayAsTouchedAndDirty,
-    removeInFormArray,
-    resetFormArrayAt
+    removeInFormArray
 } from 'src/app/shared/utils/form.utils';
-import { SaleItem } from '../../types/sale-item.interface';
+import { ConsignationStatus, SaleItem } from '../../types/sale-item.interface';
 import { Consignation } from '../../types/sale.interface';
 
 @Component({
@@ -18,7 +17,6 @@ import { Consignation } from '../../types/sale.interface';
 })
 export class ConsignationFormComponent implements OnChanges {
     @Input() saleItem: SaleItem;
-    @Input() isEditing: boolean;
 
     @Output() save: EventEmitter<SaleItem> = new EventEmitter<SaleItem>();
     @Output() edit: EventEmitter<SaleItem> = new EventEmitter<SaleItem>();
@@ -34,7 +32,7 @@ export class ConsignationFormComponent implements OnChanges {
         if (this.saleItem) {
             this.form = this.initForm(this.saleItem);
             !this.saleItem.consignations.length && this.add();
-            this.isEditing ? this.enableForm() : this.disableForm();
+            this.saleItem.consignationStatus === ConsignationStatus.PAID && this.disableForm();
         }
     }
 
@@ -44,10 +42,6 @@ export class ConsignationFormComponent implements OnChanges {
 
     add() {
         this.getFormArray().push(this.initFormArrayItem());
-    }
-
-    clearAt(index: number) {
-        resetFormArrayAt(this.form, this.formArrayName, index);
     }
 
     removeAt(index: number) {
@@ -83,15 +77,10 @@ export class ConsignationFormComponent implements OnChanges {
     }
 
     private initFormArrayItem(consignation?: Consignation) {
-        const form = this.formBuilder.group({
+        return this.formBuilder.group({
             selled: [(consignation && consignation.selled) || 0, Validators.required],
             returned: [(consignation && consignation.returned) || 0, Validators.required],
             date: [consignation ? consignation.date : new Date()]
         });
-        if (consignation) {
-            form.get('selled').disable();
-            form.get('returned').disable();
-        }
-        return form;
     }
 }

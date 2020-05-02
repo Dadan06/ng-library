@@ -8,7 +8,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let saleItem of sale?.saleItems">
+            <tr *ngFor="let saleItem of sale.saleItems">
                 <td>{{ saleItem.product.name | titlecase }}</td>
                 <td>{{ saleItem.quantity }}</td>
                 <td>{{ saleItem.amount | number: '1.0-0' }}</td>

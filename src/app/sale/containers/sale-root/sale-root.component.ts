@@ -4,17 +4,15 @@ import { select, Store } from '@ngrx/store';
 import { ModalComponent } from 'angular-custom-modal';
 import * as cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
-import { Client } from 'src/app/client/types/client.interface';
 import { PRODUCT_DEFAULT_CRITERIA } from 'src/app/product/constants/product.constants';
 import { LoadProducts } from 'src/app/product/store/actions/product.actions';
-import { ProductCriteria } from 'src/app/product/types/product-criteria.interface';
 import { Product } from 'src/app/product/types/product.interface';
-import { SharedState } from 'src/app/shared/store/reducers/shared.reducers';
-import { getClients } from 'src/app/shared/store/selectors/shared.selectors';
+import { ClientAutocompletionService } from 'src/app/shared/services/client-autocompletion.service';
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Page } from 'src/app/shared/types/page.interface';
 import { Sort } from 'src/app/shared/types/sort.interface';
 import { subscribeModal } from 'src/app/shared/utils/modal.utils';
-import { AddAsSaleItem, SaveSale } from '../../store/actions/sale.actions';
+import { AddAsSaleItem, RemoveFromSaleItems, SaveSale } from '../../store/actions/sale.actions';
 import { SaleState } from '../../store/reducers/sale.reducers';
 import {
     getPdfExporting,
@@ -40,16 +38,18 @@ export class SaleRootComponent implements OnInit {
     pdfExporting$: Observable<boolean>;
     totalItems$: Observable<number>;
     saleItems$: Observable<SaleItem[]>;
-    clients$: Observable<Client[]>;
     saleSaveError$: Observable<HttpErrorResponse>;
 
-    productCriteria: ProductCriteria = cloneDeep(PRODUCT_DEFAULT_CRITERIA);
+    productCriteria: ListCriteria = cloneDeep(PRODUCT_DEFAULT_CRITERIA);
     currentSaleItem: SaleItem;
 
     @ViewChild('saleSaved') saleSaved: ModalComponent;
     @ViewChild('saleSaveError') saleSaveError: ModalComponent;
 
-    constructor(private saleStore: Store<SaleState>, private sharedStore: Store<SharedState>) {
+    constructor(
+        private saleStore: Store<SaleState>,
+        public clientAutocompletionService: ClientAutocompletionService
+    ) {
         /** */
     }
 
@@ -58,7 +58,6 @@ export class SaleRootComponent implements OnInit {
         this.productsLoading$ = this.saleStore.pipe(select(getProductsLoading));
         this.pdfExporting$ = this.saleStore.pipe(select(getPdfExporting));
         this.totalItems$ = this.saleStore.pipe(select(getProductsTotalItems));
-        this.clients$ = this.sharedStore.pipe(select(getClients));
         this.saleItems$ = this.saleStore.pipe(select(getSaleItems));
         this.saleSaveError$ = this.saleStore.pipe(select(getSaleSaveError));
         this.subscribeModals();
@@ -81,6 +80,10 @@ export class SaleRootComponent implements OnInit {
 
     onSave(sale: Sale) {
         this.saleStore.dispatch(new SaveSale(sale));
+    }
+
+    onRemove(index: number) {
+        this.saleStore.dispatch(new RemoveFromSaleItems(index));
     }
 
     onAddProduct(product: Product) {

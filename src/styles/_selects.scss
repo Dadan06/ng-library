@@ -2,8 +2,9 @@
 
 %custom-select ::ng-deep {
     * {
-        font-size: 15px;
+        font-size: 12px;
     }
+
     .ng-select.ng-select-opened > .ng-select-container {
         background: #fff;
         border-color: #b3b3b3 #ccc #d9d9d9;
@@ -399,5 +400,9 @@
     [dir='rtl'] .ng-dropdown-panel {
         direction: rtl;
         text-align: right;
+    }
+
+    a {
+        text-decoration: none;
     }
 }

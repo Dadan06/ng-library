@@ -56,10 +56,29 @@
                 <label>Fournisseur *</label>
                 <div class="custom-select">
                     <ng-select
-                        [items]="suppliers"
-                        bindLabel="name"
-                        formControlName="supplier"
-                    ></ng-select>
+                    #supplierSelect
+                    [items]="supplierAutocompletionService.items$ | async"
+                    [virtualScroll]="true"
+                    [loading]="supplierAutocompletionService.loading$ | async"
+                    [dropdownPosition]="bottom"
+                    [notFoundText]="notItemsFound"
+                    [loadingText]="loadingText"
+                    (search)="supplierAutocompletionService.load({ search: $event.term })"
+                    (open)="supplierAutocompletionService.load({ search: '' })"
+                    (scrollToEnd)="supplierAutocompletionService.loadMore()"
+                    formControlName="supplier"
+                    bindLabel="name"
+                    placeholder="Fournisseur"
+                    >
+                        <ng-template ng-footer-tmp>
+                            <a
+                                href="/root/home/supplier/new"
+                                target="_blank"
+                                (click)="supplierSelect.close()"
+                                >Ajout fournisseur</a
+                            >
+                        </ng-template>
+                    </ng-select>
                 </div>
                 <app-validation-error [control]="form.controls['supplier']"></app-validation-error>
             </div>

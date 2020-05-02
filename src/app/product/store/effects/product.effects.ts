@@ -5,7 +5,6 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
 import { Go } from 'src/app/core/store/actions/router.actions';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
-import { Supplier } from 'src/app/supplier/types/supplier.interface';
 import { PRODUCT_BASE_ROUTE } from '../../constants/product.constants';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../types/product.interface';
@@ -13,9 +12,6 @@ import {
     DeleteProduct,
     DeleteProductFail,
     DeleteProductSuccess,
-    LoadAllSupplier,
-    LoadAllSupplierFail,
-    LoadAllSupplierSuccess,
     LoadProduct,
     LoadProductFail,
     LoadProducts,
@@ -105,15 +101,5 @@ export class ProductEffects {
         ofType(ProductActionTypes.DELETE_PRODUCT_SUCCESS),
         withLatestFrom(this.store.pipe(select(getProductCriteria))),
         map(([action, criteria]) => new LoadProducts(criteria))
-    );
-
-    @Effect()
-    loadAllSupplier$ = this.action$.pipe(
-        ofType(ProductActionTypes.LOAD_ALL_SUPPLIER),
-        switchMap(
-            (action: LoadAllSupplier): Observable<Supplier[]> => this.productService.loadSuppliers()
-        ),
-        map((response: Supplier[]) => new LoadAllSupplierSuccess(response)),
-        catchError(error => of(new LoadAllSupplierFail(error)))
     );
 }

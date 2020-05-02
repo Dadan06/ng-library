@@ -1,11 +1,8 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Client } from 'src/app/client/types/client.interface';
-import {
-    getFormArray,
-    markFormArrayAsTouchedAndDirty,
-    removeInFormArray
-} from 'src/app/shared/utils/form.utils';
+import { NG_SELECT_TEXT } from 'src/app/shared/constants/ngselect.constant';
+import { ClientAutocompletionService } from 'src/app/shared/services/client-autocompletion.service';
+import { getFormArray, markFormArrayAsTouchedAndDirty } from 'src/app/shared/utils/form.utils';
 import { EMPTY_SALE } from '../../constants/sale.constant';
 import { SaleItem } from '../../types/sale-item.interface';
 import { Sale } from '../../types/sale.interface';
@@ -15,16 +12,22 @@ import { Sale } from '../../types/sale.interface';
     templateUrl: './selected-product-list.component.html',
     styleUrls: ['./selected-product-list.component.scss']
 })
-export class SelectedProductListComponent implements OnChanges {
-    @Input() clients: Client[];
-    @Input() saleItems: SaleItem[];
+export class SelectedProductListComponent {
+    @Input() set saleItems(values: SaleItem[]) {
+        if (values) {
+            this.form = this.initForm({ ...EMPTY_SALE, saleItems: values });
+            this.onFormArrayItemChange();
+        }
+    }
+    @Input() clientAutocompletionService: ClientAutocompletionService;
 
-    @Output() cancel: EventEmitter<void> = new EventEmitter();
     @Output() save: EventEmitter<Sale> = new EventEmitter();
+    @Output() remove: EventEmitter<number> = new EventEmitter();
 
     form: FormGroup;
-
     formArrayName = 'saleItems';
+    notItemsFound = NG_SELECT_TEXT.NOT_ITEMS;
+    loading = NG_SELECT_TEXT.LOADING;
 
     constructor(private formBuilder: FormBuilder) {}
 
@@ -32,19 +35,8 @@ export class SelectedProductListComponent implements OnChanges {
         return this.computeTotalWithoutDiscount() - this.computeDiscount();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (this.saleItems) {
-            this.form = this.initForm({ ...EMPTY_SALE, saleItems: this.saleItems });
-            this.onFormArrayItemChange();
-        }
-    }
-
     getFormArray() {
         return getFormArray(this.form, this.formArrayName);
-    }
-
-    removeItem(index: number) {
-        removeInFormArray(this.form, this.formArrayName, index);
     }
 
     onSubmit() {
@@ -76,7 +68,7 @@ export class SelectedProductListComponent implements OnChanges {
     private initFormArrayItem(s: SaleItem) {
         return this.formBuilder.group({
             product: [s.product],
-            quantity: [s.quantity, Validators.required],
+            quantity: [s.quantity, [Validators.required, Validators.min(1)]],
             amount: [s.amount]
         });
     }

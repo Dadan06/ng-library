@@ -1,15 +1,11 @@
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Paginated } from 'src/app/shared/types/paginated.interface';
-import { Supplier } from 'src/app/supplier/types/supplier.interface';
 import { PRODUCT_DEFAULT_CRITERIA } from '../../constants/product.constants';
-import { ProductCriteria } from '../../types/product-criteria.interface';
 import { Product } from '../../types/product.interface';
 import {
     DeleteProduct,
     DeleteProductFail,
     DeleteProductSuccess,
-    LoadAllSupplier,
-    LoadAllSupplierFail,
-    LoadAllSupplierSuccess,
     LoadProduct,
     LoadProductFail,
     LoadProducts,
@@ -27,7 +23,7 @@ export interface ProductState {
     products: Paginated<Product>;
     productsLoaded: boolean;
     productsLoading: boolean;
-    productCriteria: ProductCriteria;
+    productCriteria: ListCriteria;
     product: Product;
     productLoaded: boolean;
     productLoading: boolean;
@@ -35,9 +31,6 @@ export interface ProductState {
     productSaving: boolean;
     productDeleting: boolean;
     productDeleted: boolean;
-    suppliers: Supplier[];
-    allSupplierLoaded: boolean;
-    allSupplierLoading: boolean;
 }
 
 const initialState: ProductState = {
@@ -51,10 +44,7 @@ const initialState: ProductState = {
     productSaving: false,
     productSaved: false,
     productDeleting: false,
-    productDeleted: false,
-    suppliers: [],
-    allSupplierLoaded: false,
-    allSupplierLoading: false
+    productDeleted: false
 };
 
 const loadProducts = (state: ProductState, action: LoadProducts): ProductState => ({
@@ -132,28 +122,6 @@ const deleteProductSuccess = (state: ProductState, action: DeleteProductSuccess)
     productDeleted: true
 });
 
-const loadAllSupplier = (state: ProductState, action: LoadAllSupplier): ProductState => ({
-    ...state,
-    allSupplierLoaded: false,
-    allSupplierLoading: true
-});
-
-const loadAllSupplierFail = (state: ProductState, action: LoadAllSupplierFail): ProductState => ({
-    ...state,
-    allSupplierLoaded: false,
-    allSupplierLoading: false
-});
-
-const loadAllSupplierSuccess = (
-    state: ProductState,
-    action: LoadAllSupplierSuccess
-): ProductState => ({
-    ...state,
-    allSupplierLoaded: true,
-    allSupplierLoading: false,
-    suppliers: action.payload
-});
-
 // tslint:disable-next-line:cyclomatic-complexity
 export function productReducer(
     state: ProductState = initialState,
@@ -184,12 +152,6 @@ export function productReducer(
             return deleteProductFail(state, action);
         case ProductActionTypes.DELETE_PRODUCT_SUCCESS:
             return deleteProductSuccess(state, action);
-        case ProductActionTypes.LOAD_ALL_SUPPLIER:
-            return loadAllSupplier(state, action);
-        case ProductActionTypes.LOAD_ALL_SUPPLIER_FAIL:
-            return loadAllSupplierFail(state, action);
-        case ProductActionTypes.LOAD_ALL_SUPPLIER_SUCCESS:
-            return loadAllSupplierSuccess(state, action);
         default:
             return state;
     }

@@ -2,9 +2,6 @@
     <app-consignation-form
         *ngIf="saleItem$ | async as saleItem"
         [saleItem]="saleItem$ | async"
-        [isEditing]="isEditing$ | async"
-        (edit)="onEdit($event)"
-        (save)="onSave($event)"
-        (cancel)="onCancelEdit(saleItem)">
+        (save)="onSave($event)">
     </app-consignation-form>
 </div>

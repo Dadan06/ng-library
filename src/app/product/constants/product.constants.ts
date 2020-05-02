@@ -1,8 +1,8 @@
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { SortDirection } from 'src/app/shared/types/sort.interface';
-import { ProductCriteria } from '../types/product-criteria.interface';
 import { Product, Type } from '../types/product.interface';
 
-export const PRODUCT_DEFAULT_CRITERIA: ProductCriteria = {
+export const PRODUCT_DEFAULT_CRITERIA: ListCriteria = {
     page: { page: 1, pageSize: 15 },
     search: '',
     sort: { by: 'name', direction: SortDirection.asc }

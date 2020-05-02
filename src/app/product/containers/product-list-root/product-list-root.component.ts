@@ -4,6 +4,7 @@ import { ModalComponent } from 'angular-custom-modal';
 import * as cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 import { AuthenticationState } from 'src/app/authentication/store/reducers/authentication.reducers';
+import { ListCriteria } from 'src/app/shared/types/list-criteria.interface';
 import { Page } from 'src/app/shared/types/page.interface';
 import { Sort } from 'src/app/shared/types/sort.interface';
 import { go } from 'src/app/shared/utils/go.utils';
@@ -22,7 +23,6 @@ import {
     getProductsLoading,
     getProductsTotalItems
 } from '../../store/selectors/product.selectors';
-import { ProductCriteria } from '../../types/product-criteria.interface';
 import { Product } from '../../types/product.interface';
 
 @Component({
@@ -39,7 +39,7 @@ export class ProductListRootComponent implements OnInit {
     isEditingOrDetail$: Observable<boolean>;
     totalItems$: Observable<number>;
     currentProduct$: Observable<Product>;
-    productCriteria: ProductCriteria = cloneDeep(PRODUCT_DEFAULT_CRITERIA);
+    productCriteria: ListCriteria = cloneDeep(PRODUCT_DEFAULT_CRITERIA);
     toBeDeletedProduct: Product;
 
     @ViewChild('deletionConfirmModal') deletionConfirmModal: ModalComponent;
