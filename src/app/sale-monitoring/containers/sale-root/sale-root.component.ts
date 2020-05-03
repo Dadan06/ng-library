@@ -58,7 +58,10 @@ export class SaleRootComponent implements OnInit {
     }
 
     onSort(sort: Sort) {
-        this.saleCriteria.sort = sort;
+        this.saleCriteria = {
+            ...this.saleCriteria,
+            sort
+        };
         this.refreshList();
     }
 

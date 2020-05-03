@@ -3,7 +3,7 @@
         <header>Gestion des ventes</header>
         <div class="selectable-product-container">
             <main>
-                <app-search-bar (search)="onSearch($event)"></app-search-bar>
+                <app-search-bar (search)="onSearch($event)" [placeholder]="'Rechercher par nom, fournisseur'"></app-search-bar>
                 <app-loader [isLoading]="productsLoading$ | async">
                     <app-selectable-product-list
                         [products]="products$ | async"

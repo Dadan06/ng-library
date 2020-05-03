@@ -21,6 +21,7 @@ export class ConsignationFormComponent implements OnChanges {
     @Output() save: EventEmitter<SaleItem> = new EventEmitter<SaleItem>();
     @Output() edit: EventEmitter<SaleItem> = new EventEmitter<SaleItem>();
     @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
+    @Output() close: EventEmitter<void> = new EventEmitter<void>();
 
     form: FormGroup;
 

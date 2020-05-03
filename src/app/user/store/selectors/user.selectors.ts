@@ -13,20 +13,14 @@ import { UserState } from '../reducers/user.reducers';
 
 export const getUserState = createFeatureSelector<UserState>('user');
 
-export const getPaginatedUsers = createSelector(
-    getUserState,
-    (state: UserState) => state.users
-);
+export const getPaginatedUsers = createSelector(getUserState, (state: UserState) => state.users);
 
 export const getUsers = createSelector(
     getPaginatedUsers,
     (paginatedUsers: Paginated<User>) => paginatedUsers.items
 );
 
-export const getRoles = createSelector(
-    getUserState,
-    (state: UserState) => state.roles
-);
+export const getRoles = createSelector(getUserState, (state: UserState) => state.roles);
 
 export const getUsersTotalItems = createSelector(
     getPaginatedUsers,
@@ -43,10 +37,7 @@ export const getUsersLoading = createSelector<UserState, UserState, boolean>(
     (state: UserState) => state.usersLoading
 );
 
-export const getCurrentUser = createSelector(
-    getUserState,
-    (state: UserState) => state.user
-);
+export const getCurrentUser = createSelector(getUserState, (state: UserState) => state.user);
 
 export const getUserLoading = createSelector<UserState, UserState, boolean>(
     getUserState,
@@ -85,6 +76,18 @@ export const getUserEditing = createSelector<
 >(
     getRouterState,
     router => router.state.url.includes('user/edit') || router.state.url.includes('user/new')
+);
+
+export const getIsEditingOrDetail = createSelector<
+    UserState,
+    RouterReducerState<AppRouterState>,
+    boolean
+>(
+    getRouterState,
+    router =>
+        router.state.url.includes('user/detail') ||
+        router.state.url.includes('user/edit') ||
+        router.state.url.includes('user/new')
 );
 
 export const getUserSavingError = createSelector<UserState, UserState, HttpErrorResponse>(

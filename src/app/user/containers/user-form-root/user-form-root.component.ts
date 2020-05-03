@@ -53,4 +53,8 @@ export class UserFormRootComponent implements OnInit {
             user._id ? [`${USER_BASE_ROUTE}/detail`, user._id] : [`${USER_BASE_ROUTE}`]
         );
     }
+
+    onClose() {
+        go(this.userStore, [`${USER_BASE_ROUTE}`]);
+    }
 }

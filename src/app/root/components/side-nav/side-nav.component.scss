@@ -3,7 +3,7 @@
 @import 'colors.scss';
 
 $green-left-border-width: 8px;
-$general-padding-left: 26px;
+$general-padding-left: 1px;
 $arrow-height: 10px;
 
 %sideNavMenu {
@@ -137,7 +137,7 @@ $arrow-height: 10px;
         color: white;
         padding-bottom: 25px;
         padding-left: 10px;
-        font-size: 1.4rem;
+        font-size: 1.2em;
 
         .day-display {
             font-family: $worksans-light;

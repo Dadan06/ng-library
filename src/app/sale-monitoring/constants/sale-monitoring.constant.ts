@@ -6,7 +6,7 @@ import { SaleCriteria } from '../types/sale-criteria.interface';
 export const SALE_DEFAULT_CRITERIA: SaleCriteria = {
     page: { page: 1, pageSize: 15 },
     search: '',
-    sort: { by: 'paymentDate', direction: SortDirection.asc },
+    sort: { by: 'no', direction: SortDirection.asc },
     filter: {
         from: ((d = new Date()) => `${d.getMonth() + 1}-${d.getDate()}-${d.getFullYear()} 00:00`)(),
         to: ((d = new Date()) => `${d.getMonth() + 1}-${d.getDate()}-${d.getFullYear()} 23:59`)(),
@@ -18,10 +18,10 @@ export const SALE_DEFAULT_CRITERIA: SaleCriteria = {
 };
 
 export const SALE_FILTER_CATEGORY_LABELS: Record<string, string> = {
-    sellers: 'Vendeurs',
-    types: 'Types vente',
-    clients: 'Clients',
-    clientTypes: 'Types client'
+    sellers: 'Vendeur',
+    types: 'Type vente',
+    clients: 'Client',
+    clientTypes: 'Type client'
 };
 
 export const SALE_FILTER_ITEM_LABELS: Record<string, Object> = {

@@ -22,11 +22,7 @@ export class UserFormComponent {
     @Input() set user(user: User) {
         if (user) {
             this.form = this.initForm(user);
-            if (this.isEditing) {
-                this.form.enable();
-            } else {
-                this.form.disable();
-            }
+            this.isEditing ? this.form.enable() : this.form.disable();
             setTimeout(() => this.isEditing && this.setFocusOnFirstInput());
         }
     }
@@ -36,6 +32,7 @@ export class UserFormComponent {
     @Output() edit: EventEmitter<User> = new EventEmitter<User>();
     @Output() save: EventEmitter<User> = new EventEmitter<User>();
     @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
+    @Output() close: EventEmitter<void> = new EventEmitter<void>();
 
     form: FormGroup;
     @ViewChild('first') firstInput: ElementRef;

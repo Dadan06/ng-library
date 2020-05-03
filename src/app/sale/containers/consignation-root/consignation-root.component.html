@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container" [class.detail-hidden]="!(isEditingOrDetail$ | async)">
     <header>Gestion des consignations</header>
     <div class="search-bar">
-        <app-search-bar (search)="onSearch($event)"></app-search-bar>
+        <app-search-bar (search)="onSearch($event)" [placeholder]="'Rechercher par client, vendeur'"></app-search-bar>
     </div>
     <div class="list">
         <app-loader [isLoading]="consignationsLoading$ | async">
@@ -12,7 +12,7 @@
         <div></div>
         <app-pagination [totalItems]="totalItems$ | async" (paginate)="onPaginate($event)"></app-pagination>
     </footer>
-    <div class="detail">
+    <div class="detail" [class.no-border]="!(isEditingOrDetail$ | async)">
         <router-outlet></router-outlet>
     </div>
 </div>

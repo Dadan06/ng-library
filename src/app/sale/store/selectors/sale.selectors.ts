@@ -97,3 +97,9 @@ export const getSaleItems = createSelector<SaleState, SaleState, SaleItem[]>(
     getSaleState,
     (state: SaleState) => state.saleItems
 );
+
+export const getIsEditingOrDetail = createSelector<
+    SaleState,
+    RouterReducerState<AppRouterState>,
+    boolean
+>(getRouterState, router => router.state.url.includes('consignation/detail'));

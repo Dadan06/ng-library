@@ -29,7 +29,7 @@ export const enum UserPrivileges {
 export const USER_PRIVILEGE_LABELS: Record<UserPrivileges, string> = {
     [UserPrivileges.VIEW_USER]: 'Consultation utilisateurs',
     [UserPrivileges.CREATE_USER]: 'Création utilisateur',
-    [UserPrivileges.EDIT_USER]: 'Modification utilisateur',
+    [UserPrivileges.EDIT_USER]: 'Edition utilisateur',
     [UserPrivileges.DELETE_USER]: 'Suppression utilisateur',
     [UserPrivileges.VIEW_ROLE]: 'Consultation rôles',
     [UserPrivileges.CREATE_ROLE]: 'Création rôle',
@@ -37,21 +37,21 @@ export const USER_PRIVILEGE_LABELS: Record<UserPrivileges, string> = {
     [UserPrivileges.DELETE_ROLE]: 'Suppression rôle',
     [UserPrivileges.VIEW_PRODUCT]: 'Consultation produits',
     [UserPrivileges.CREATE_PRODUCT]: 'Création produit',
-    [UserPrivileges.EDIT_PRODUCT]: 'Modification produit',
+    [UserPrivileges.EDIT_PRODUCT]: 'Edition produit',
     [UserPrivileges.DELETE_PRODUCT]: 'Suppression produit',
     [UserPrivileges.VIEW_SUPPLIER]: 'Consultation fournisseurs',
     [UserPrivileges.CREATE_SUPPLIER]: 'Création fournisseur',
-    [UserPrivileges.EDIT_SUPPLIER]: 'Modification fournisseur',
+    [UserPrivileges.EDIT_SUPPLIER]: 'Edition fournisseur',
     [UserPrivileges.DELETE_SUPPLIER]: 'Suppression fournisseur',
     [UserPrivileges.VIEW_SALES]: 'Consultation ventes',
     [UserPrivileges.CREATE_SALE]: 'Création vente',
     [UserPrivileges.SALE_MONITORING]: 'Suivi vente',
     [UserPrivileges.VIEW_CLIENT]: 'Consultation clients',
     [UserPrivileges.CREATE_CLIENT]: 'Création client',
-    [UserPrivileges.EDIT_CLIENT]: 'Modification client',
+    [UserPrivileges.EDIT_CLIENT]: 'Edition client',
     [UserPrivileges.DELETE_CLIENT]: 'Suppression client',
     [UserPrivileges.VIEW_CONSIGNATIONS]: 'Consultation consignations',
-    [UserPrivileges.EDIT_CONSIGNATION]: 'Modification consignation'
+    [UserPrivileges.EDIT_CONSIGNATION]: 'Edition consignation'
 };
 
 export const enum PrivilegeCategories {

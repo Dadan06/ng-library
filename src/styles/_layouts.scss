@@ -5,7 +5,7 @@
     height: 100%;
     max-height: 100%;
     display: grid;
-    grid-template-columns: 15% 85%;
+    grid-template-columns: 215px auto;
     grid-template-rows: minmax(0, 100%);;
     grid-template-areas:
         "aside main";
@@ -14,7 +14,7 @@
     }
     main {
         grid-area: main;
-        padding: 10px;
+        padding: 8px;
         background-color: $feature-root-background;
     }
 }

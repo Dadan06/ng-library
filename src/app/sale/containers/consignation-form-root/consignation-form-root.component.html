@@ -2,6 +2,7 @@
     <app-consignation-form
         *ngIf="saleItem$ | async as saleItem"
         [saleItem]="saleItem$ | async"
-        (save)="onSave($event)">
+        (save)="onSave($event)"
+        (close)="onClose()">
     </app-consignation-form>
 </div>

@@ -17,6 +17,7 @@ import {
     getConsignationSaved,
     getConsignationsLoading,
     getConsignationsTotalItems,
+    getIsEditingOrDetail,
     getSaleItem
 } from '../../store/selectors/sale.selectors';
 import { SaleItem } from '../../types/sale-item.interface';
@@ -33,6 +34,7 @@ export class ConsignationRootComponent implements OnInit {
     totalItems$: Observable<number>;
     consignationCriteria: ListCriteria = cloneDeep(SALE_DEFAULT_CRITERIA);
     currentSaleItem$: Observable<SaleItem>;
+    isEditingOrDetail$: Observable<boolean>;
 
     @ViewChild('consignationSaved') consignationSaved: ModalComponent;
 
@@ -43,6 +45,7 @@ export class ConsignationRootComponent implements OnInit {
         this.consignations$ = this.saleStore.pipe(select(getConsignations));
         this.totalItems$ = this.saleStore.pipe(select(getConsignationsTotalItems));
         this.currentSaleItem$ = this.saleStore.pipe(select(getSaleItem));
+        this.isEditingOrDetail$ = this.saleStore.pipe(select(getIsEditingOrDetail));
         this.subscribeModals();
     }
 

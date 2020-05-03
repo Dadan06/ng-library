@@ -26,12 +26,12 @@ import { Role } from '../../types/role.interface';
 export class RoleFormComponent implements OnChanges {
     @Input() role: Role;
     @Input() isEditing: boolean;
-    @Input() editEnabled = true;
     @Input() privileges: Privilege[];
 
     @Output() save: EventEmitter<Role> = new EventEmitter();
     @Output() edit: EventEmitter<Role> = new EventEmitter();
     @Output() cancel: EventEmitter<void> = new EventEmitter();
+    @Output() close: EventEmitter<void> = new EventEmitter();
 
     categoryLabels = PRIVILEGE_CATEGORY_LABELS;
     userPrivilegeLabels = USER_PRIVILEGE_LABELS;
@@ -47,8 +47,8 @@ export class RoleFormComponent implements OnChanges {
     }
 
     ngOnChanges(): void {
-        if (this.role && this.privileges) {
-            this.form = this.initForm(this.role, this.privileges);
+        if (this.role) {
+            this.form = this.initForm(this.role, this.privileges || []);
             this.isEditing ? this.form.enable() : this.form.disable();
             this.first && this.first.nativeElement.focus();
             this.setAsyncValidators();

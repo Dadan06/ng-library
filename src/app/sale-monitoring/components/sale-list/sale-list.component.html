@@ -2,20 +2,24 @@
     <table>
         <thead>
             <tr>
-                <th app-sortable-column="saleDate" (sort)="onSort($event)" [sortDirections]="sortDirections" initialDirection="asc">Date</th>
+                <th app-sortable-column="no" (sort)="onSort($event)" [sortDirections]="sortDirections" initialDirection="asc">No</th>
+                <th app-sortable-column="saleDate" (sort)="onSort($event)" [sortDirections]="sortDirections">Date</th>
                 <th>Type</th>
                 <th app-sortable-column="seller.login" (sort)="onSort($event)" [sortDirections]="sortDirections">Vendeur</th>
                 <th app-sortable-column="client.name" (sort)="onSort($event)" [sortDirections]="sortDirections">Client</th>
+                <th app-sortable-column="discount" (sort)="onSort($event)" [sortDirections]="sortDirections">Remise (Ar)</th>
                 <th app-sortable-column="amount" (sort)="onSort($event)" [sortDirections]="sortDirections">Total (Ar)</th>
                 <th></th>
             </tr>
         </thead>
         <tbody data-simplebar>
             <tr *ngFor="let sale of sales"  [class.selected]="sale._id === currentSale?._id">
+                <td>{{ sale.no }}</td>
                 <td>{{ sale.saleDate | date: 'dd/MM/y - HH:mm' }}</td>
                 <td>{{ saleTypeLabels[sale.saleType] }}</td>
                 <td>{{ sale.seller.login | uppercase }}</td>
                 <td>{{ (sale.client?.name | uppercase) || '-' }}</td>
+                <td>{{ sale.discount | number: '1.0-0' }}</td>
                 <td>{{ sale.amount | number: '1.0-0' }}</td>
                 <td class="actions">
                     <img

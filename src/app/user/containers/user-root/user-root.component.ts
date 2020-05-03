@@ -14,6 +14,7 @@ import { DeleteUser, LoadUsers } from '../../store/actions/user.actions';
 import { UserState } from '../../store/reducers/user.reducers';
 import {
     getCurrentUser,
+    getIsEditingOrDetail,
     getUserCreateEnabled,
     getUserDeleteEnabled,
     getUserEditEnabled,
@@ -35,8 +36,10 @@ export class UserRootComponent implements OnInit {
     userEditEnabled$: Observable<boolean>;
     userDeleteEnabled$: Observable<boolean>;
     userCreateEnabled$: Observable<boolean>;
+    isEditingOrDetail$: Observable<boolean>;
     totalItems$: Observable<number>;
     currentUser$: Observable<User>;
+
     userCriteria: ListCriteria = cloneDeep(USER_DEFAULT_CRITERIA);
     toBeDeletedUser: User;
 
@@ -52,6 +55,7 @@ export class UserRootComponent implements OnInit {
         this.users$ = this.userStore.pipe(select(getUsers));
         this.usersLoading$ = this.userStore.pipe(select(getUsersLoading));
         this.totalItems$ = this.userStore.pipe(select(getUsersTotalItems));
+        this.isEditingOrDetail$ = this.userStore.pipe(select(getIsEditingOrDetail));
         this.userEditEnabled$ = this.authenticationStore.pipe(select(getUserEditEnabled));
         this.userDeleteEnabled$ = this.authenticationStore.pipe(select(getUserDeleteEnabled));
         this.userCreateEnabled$ = this.authenticationStore.pipe(select(getUserCreateEnabled));

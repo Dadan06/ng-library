@@ -1,13 +1,13 @@
-<div class="container">
+<div class="container" [class.detail-hidden]="!(isEditingOrDetail$ | async)">
     <header>Gestion des rôles</header>
     <div class="search-bar">
-        <app-search-bar (search)="onSearch($event)"></app-search-bar>
+        <app-search-bar (search)="onSearch($event)" [placeholder]="'Rechercher par nom'"></app-search-bar>
     </div>
     <div class="list">
         <app-loader [isLoading]="rolesLoading$ | async">
             <app-role-list
                 [roles]="roles$ | async"
-                [currentRole]="selectedRole$ | async"
+                [currentRole]="currentRole$ | async"
                 [editEnabled]="roleEditEnabled$ | async"
                 [deleteEnabled]="roleDeleteEnabled$ | async"
                 (delete)="deleteRole($event)"
@@ -18,7 +18,7 @@
         </app-loader>
     </div>
     <footer>
-        <button class="btn-new" (click)="onCreate()" [disabled]="!(roleCreatedEnabled$ | async)">
+        <button class="btn-new" (click)="onCreate()" [disabled]="!(roleCreateEnabled$ | async)">
             +
         </button>
         <app-pagination
@@ -26,7 +26,7 @@
             (paginate)="onPaginate($event)"
         ></app-pagination>
     </footer>
-    <div class="detail">
+    <div class="detail" [class.no-border]="!(isEditingOrDetail$ | async)">
         <router-outlet></router-outlet>
     </div>
 </div>

@@ -4,9 +4,9 @@
         [role]="role$ | async"
         [privileges]="privileges$ | async"
         [isEditing]="isEditing$ | async"
-        [editEnabled]="roleEditEnabled$ | async"
         (edit)="onEdit($event)"
         (save)="onSave($event)"
         (cancel)="onCancelEdit(role)"
+        (close)="onClose()"
     ></app-role-form>
 </div>

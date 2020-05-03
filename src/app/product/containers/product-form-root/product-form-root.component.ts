@@ -50,4 +50,8 @@ export class ProductFormRootComponent implements OnInit {
             product._id ? [`${PRODUCT_BASE_ROUTE}/detail`, product._id] : [`${PRODUCT_BASE_ROUTE}`]
         );
     }
+
+    onClose() {
+        go(this.productStore, [`${PRODUCT_BASE_ROUTE}`]);
+    }
 }

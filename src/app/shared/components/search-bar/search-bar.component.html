@@ -1,4 +1,4 @@
 <div class="container">
     <img src="assets/images/ico-search.png" />
-    <input type="text" placeholder="Recherche" [(ngModel)]="searchTerm" (input)="onChange()" />
+    <input type="text" [placeholder]="placeholder" [(ngModel)]="searchTerm" (input)="onChange()" />
 </div>

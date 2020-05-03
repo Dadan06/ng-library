@@ -113,4 +113,8 @@ $disabled: #d6d6d6;
     &:hover {
         cursor: pointer;
     }
+
+    &:disabled {
+        background-color: $disabled;
+    }
 }

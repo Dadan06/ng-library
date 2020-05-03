@@ -13,6 +13,7 @@ import { ROLE_BASE_ROUTE, ROLE_DEFAULT_CRITERIA } from '../../constants/role.con
 import { DeleteRole, LoadRoles } from '../../store/actions/role.actions';
 import { RoleState } from '../../store/reducers/role.reducer';
 import {
+    getIsEditingOrDetail,
     getRole,
     getRoleCreateEnabled,
     getRoleDeleteEnabled,
@@ -32,11 +33,13 @@ import { Role } from '../../types/role.interface';
 export class RoleRootComponent implements OnInit {
     rolesLoading$: Observable<boolean>;
     roles$: Observable<Role[]>;
-    selectedRole$: Observable<Role>;
+    currentRole$: Observable<Role>;
+    totalItems$: Observable<number>;
     roleEditEnabled$: Observable<boolean>;
     roleDeleteEnabled$: Observable<boolean>;
-    roleCreatedEnabled$: Observable<boolean>;
-    totalItems$: Observable<number>;
+    roleCreateEnabled$: Observable<boolean>;
+    isEditingOrDetail$: Observable<boolean>;
+
     roleToBeDeleted: Role;
     roleCriteria: ListCriteria = cloneDeep(ROLE_DEFAULT_CRITERIA);
 
@@ -50,12 +53,13 @@ export class RoleRootComponent implements OnInit {
 
     ngOnInit() {
         this.roles$ = this.store.pipe(select(getRoles));
-        this.roleEditEnabled$ = this.authenticationStore.pipe(select(getRoleEditEnabled));
-        this.roleDeleteEnabled$ = this.authenticationStore.pipe(select(getRoleDeleteEnabled));
-        this.roleCreatedEnabled$ = this.authenticationStore.pipe(select(getRoleCreateEnabled));
         this.rolesLoading$ = this.store.pipe(select(getRolesLoading));
         this.totalItems$ = this.store.pipe(select(getRolesTotalItems));
-        this.selectedRole$ = this.store.pipe(select(getRole));
+        this.currentRole$ = this.store.pipe(select(getRole));
+        this.roleEditEnabled$ = this.authenticationStore.pipe(select(getRoleEditEnabled));
+        this.roleDeleteEnabled$ = this.authenticationStore.pipe(select(getRoleDeleteEnabled));
+        this.roleCreateEnabled$ = this.authenticationStore.pipe(select(getRoleCreateEnabled));
+        this.isEditingOrDetail$ = this.store.pipe(select(getIsEditingOrDetail));
         this.subscribeModals();
     }
 

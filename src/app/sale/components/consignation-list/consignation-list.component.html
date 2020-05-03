@@ -10,7 +10,7 @@
         </thead>
         <tbody data-simplebar>
             <ng-container *ngFor="let consignation of consignations">
-                <tr class="consignation">
+                <tr class="info-container">
                     <td>{{ consignation.paymentDate | date: 'dd/MM/y - HH:mm' }}</td>
                     <td>{{ (consignation.sale.client?.name | uppercase) || '-' }}</td>
                     <td>{{ (consignation.sale.seller.login | uppercase) || '-' }}</td>

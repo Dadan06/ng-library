@@ -38,8 +38,6 @@
 
     .filter {
         grid-area: filter;
-        display: flex;
-        flex-direction: column;
     }
 
     .bordered-wrapper {
@@ -87,7 +85,7 @@
         grid-area: detail;
         margin-bottom: 25px;
         border: solid 1px $light-gray;
-        border-radius: 8px;
+        border-radius: 3px;
         &.no-border {
             border: 0px !important;
         }
